@@ -1,4 +1,5 @@
 import "./App.css";
+
 import About from "./components/AboutPage/About";
 import Discover from "./components/DiscoverPage/Discover";
 import Emergency from "./components/Emergency/Emergency";
@@ -13,10 +14,11 @@ import Poisoning from "./components/EmergencyHandling/Poisoning";
 import Seizures from "./components/EmergencyHandling/Seizures";
 import Cats from "./components/ManagingIllness/Cats";
 import Dogs from "./components/ManagingIllness/Dogs";
-
 import ManagingIllness from "./components/ManagingIllness/ManagingIlness";
-
 import GeneralPetCare from "./components/PetCare/GeneralPetCare";
+import Profile from "./components/Profile/profile";
+import Signup from "./components/Profile/Signup";
+import ValidationCode from "./components/Profile/ValidationCode";
 import Exercising from "./GeneralPetCare/Exercising";
 import Feeding from "./GeneralPetCare/Feeding";
 import Grooming from "./GeneralPetCare/Grooming";
@@ -29,6 +31,9 @@ function App() {
       <Routes>
         <Route>
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/validation-code" element={<ValidationCode />} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/about" element={<About />} />
           <Route path="/emergency" element={<Emergency />} />
