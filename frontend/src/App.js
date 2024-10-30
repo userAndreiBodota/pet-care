@@ -16,6 +16,9 @@ import Cats from "./components/ManagingIllness/Cats";
 import Dogs from "./components/ManagingIllness/Dogs";
 import ManagingIllness from "./components/ManagingIllness/ManagingIlness";
 import GeneralPetCare from "./components/PetCare/GeneralPetCare";
+import DashboardPage from "./components/Profile/Dashboard";
+import ForgotPasswordPage from "./components/Profile/ForgotPasswordPage";
+import Login from "./components/Profile/Login";
 import Profile from "./components/Profile/profile";
 import Signup from "./components/Profile/Signup";
 import ValidationCode from "./components/Profile/ValidationCode";
@@ -23,7 +26,40 @@ import Exercising from "./GeneralPetCare/Exercising";
 import Feeding from "./GeneralPetCare/Feeding";
 import Grooming from "./GeneralPetCare/Grooming";
 import Home from "./main/Home";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import { useAuthStore } from "./store/authStore";
+import ResetPasswordPage from "./components/Profile/ResetPasswordPage";
+
+// protect routes that require authentication
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user.isVerified) {
+    return <Navigate to="/verify-email" replace />;
+  }
+
+  return children;
+};
+
+// redirect authenticated users to the home page
+const RedirectAuthenticatedUser = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (isAuthenticated && user.isVerified) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
@@ -31,9 +67,57 @@ function App() {
       <Routes>
         <Route>
           <Route path="/" element={<Home />} />
+          {/*PROFILE */}
           <Route path="/profile" element={<Profile />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/validation-code" element={<ValidationCode />} />
+          <Route
+            path="/signup"
+            element={
+              <RedirectAuthenticatedUser>
+                <Signup />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/validation-code"
+            element={
+              <RedirectAuthenticatedUser>
+                <ValidationCode />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RedirectAuthenticatedUser>
+                <Login />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <RedirectAuthenticatedUser>
+                <ForgotPasswordPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/reset-password/:token"
+            element={
+              <RedirectAuthenticatedUser>
+                <ResetPasswordPage />
+              </RedirectAuthenticatedUser>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          {/*PROFILE */}
           <Route path="/discover" element={<Discover />} />
           <Route path="/about" element={<About />} />
           <Route path="/emergency" element={<Emergency />} />
