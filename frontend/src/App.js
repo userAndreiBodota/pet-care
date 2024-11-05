@@ -34,6 +34,9 @@ import {
 } from "react-router-dom";
 import { useAuthStore } from "./store/authStore";
 import ResetPasswordPage from "./components/Profile/ResetPasswordPage";
+import Addpets from "./components/AddPets/Addpets";
+import Kilogram from "./components/Kilogram/Kilogram";
+import AddBirthdate from "./components/AddBirthdate/AddBirthdate";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -142,6 +145,9 @@ function App() {
           {/*RECOGNIZING AND MANAGING ILLNESS ROUTES */}
           <Route path="/dogs" element={<Dogs />} />
           <Route path="/cats" element={<Cats />} />
+          <Route path="/add-pet" element={<Addpets />} />
+          <Route path="/kilogram" element={<Kilogram />} />
+          <Route path="/addbirthdate" element={<AddBirthdate />} />
         </Route>
       </Routes>
     </Router>

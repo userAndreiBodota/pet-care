@@ -99,14 +99,17 @@ const Dashboard = () => {
             </p>
             <div className="flex justify-center mb-8">
               <img
-                src="/path/to/placeholder-image.png" // Add your image path here
+                src="/path/to/placeholder-image.png"
                 alt="No Pets"
                 className="w-40 h-40 opacity-50"
               />
             </div>
-            <button className="bg-green-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-700 transition">
-              Add a pet now
-            </button>
+            <Link to="/add-pet">
+              {" "}
+              <button className="bg-green-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-700 transition">
+                Add a pet now
+              </button>
+            </Link>
           </motion.div>
         </motion.main>
       </div>

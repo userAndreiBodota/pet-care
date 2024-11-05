@@ -15,6 +15,9 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
   isCheckingAuth: true,
   message: null,
+  petImage: null,
+
+  setPetImage: (image) => set({ petImage: image }),
 
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
@@ -69,6 +72,7 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: false,
         error: null,
         isLoading: false,
+        petImage: null,
       });
     } catch (error) {
       set({ error: "Error logging out", isLoading: false });
