@@ -1,16 +1,29 @@
+//hirap gawing responsive, natatakluban yung hamburger menu
+
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
 import Blur from "../DiscoverPage/images/discoverBlur.png";
 
 const DiscoverTitle = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative h-lvh mx">
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-4 left-4 flex items-center text-gray-600 hover:text-green-500 z-10"
+      >
+        <IoArrowBack size={24} />
+        <span className="ml-2">Back</span>
+      </button>
       <img
         src={Blur}
         alt="Container for Discover Title"
         style={{ width: "80%", height: "500px" }}
         className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 ">
+      <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
         <h1 className="text-2xl md:text-4xl text-center text-gray-900 mb-4">
           What is <span className="font-bold text-gray-950">Pet Care</span>{" "}
           <span className="text-green-700">Hub?</span>

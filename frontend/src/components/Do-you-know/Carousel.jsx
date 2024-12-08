@@ -1,3 +1,5 @@
+//RESPONSIVENESS DONE
+
 import React, { useState } from "react";
 import Cat from "../Do-you-know/image/cat.png";
 
@@ -19,30 +21,40 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-8 flex items-center justify-between mb-12">
-      <div className="w-2/3">
-        <h2 className="text-lg font-bold">Do you know?</h2>
-        <p className="text-sm mt-4">{texts[currentIndex]}</p>
+    <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between mb-12 shadow-lg">
+      {/* Text Section */}
+      <div className="w-full sm:w-2/3 text-center sm:text-left mb-6 sm:mb-0">
+        <h2 className="text-lg sm:text-xl font-bold text-gray-900">Do you know?</h2>
+        <p className="text-sm sm:text-base mt-4 text-gray-700 leading-relaxed">
+          {texts[currentIndex]}
+        </p>
       </div>
 
-      <div className="w-1/3">
-        <img src={Cat} alt="Cat Illustration" className="object-cover h-52" />
+      {/* Image Section */}
+      <div className="w-full sm:w-1/3 flex justify-center">
+        <img
+          src={Cat}
+          alt="Cat Illustration"
+          className="object-cover h-40 sm:h-52 rounded-md"
+        />
       </div>
 
+      {/* Indicators */}
       <div className="absolute bottom-4 w-full flex justify-center space-x-2">
         {texts.map((_, index) => (
           <span
             key={index}
-            className={`h-2 w-2 rounded-full ${
+            className={`h-2 w-2 sm:h-3 sm:w-3 rounded-full transition-colors duration-300 ${
               index === currentIndex ? "bg-gray-800" : "bg-gray-400"
             }`}
           ></span>
         ))}
       </div>
 
+      {/* Next Button */}
       <button
         onClick={nextText}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2  p-2 rounded-full cursor-pointer"
+        className="absolute right-4 sm:right-6 top-1/2 transform -translate-y-1/2 p-2 sm:p-3 bg-gray-200 hover:bg-gray-300 rounded-full cursor-pointer shadow-md transition-transform duration-300"
       >
         &gt;
       </button>
