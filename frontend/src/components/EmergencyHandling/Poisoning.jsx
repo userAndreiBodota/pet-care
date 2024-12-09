@@ -90,12 +90,12 @@ const Poisoning = () => {
             className="w-full sm:w-4/5 md:w-3/4 lg:w-1/2 h-80 object-cover rounded-md shadow-lg"
             style={{ objectFit: "cover" }}
           />
-          <div className="absolute inset-0 flex justify-center items-center bg-gradient-to-t from-black to-transparent opacity-60">
-            <div className="bg-white bg-opacity-80 backdrop-blur-sm p-6 rounded-lg w-11/12 sm:w-96 flex flex-col items-center">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="overlay absolute inset-0 flex justify-center items-center">
+            <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
+              <h2 className="text-white text-lg sm:text-xl font-semibold mb-2">
                 How to handle
               </h2>
-              <h1 className="text-green-500 text-3xl font-bold">
+              <h1 className="text-customGray text-3xl font-bold">
                 PET POISONING?
               </h1>
             </div>

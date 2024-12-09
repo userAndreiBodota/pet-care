@@ -96,12 +96,12 @@ const Choking = () => {
             alt="Choking Pet"
             className="w-full sm:w-5/6 h-64 sm:h-80 object-cover rounded-md"
           />
-          <div className="overlay absolute inset-0 flex justify-center items-center">
-            <div className="text-content bg-white bg-opacity-20 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
+          <div className="overlay absolute left-60">
+            <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
               <h2 className="text-white text-lg sm:text-xl font-semibold mb-2">
                 How to handle
               </h2>
-              <h1 className="text-green-500 text-2xl sm:text-3xl font-bold">
+              <h1 className="text-customGray text-2xl sm:text-3xl font-bold">
                 CHOKING PET?
               </h1>
             </div>
