@@ -38,14 +38,23 @@ const EmergencyOptions = () => {
 
   return (
     <div className="relative">
-      {/* ArrowBack Button */}
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-10 left-20 flex items text-gray-600 hover:text-green-500"
-      >
-        <IoArrowBack size={30} />
-        {/* <span className="ml-2 text-left">Back </span> */}
-      </button>
+        {/* Back Arrow Button */}
+        <Link to="/" className="absolute top-6 left-6 text-xl text-gray-600 hover:text-gray-800">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-8 h-8"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </Link>
 
       {/* Main Content */}
       <div className="emergency-page p-6 flex flex-col items-center mt-12">

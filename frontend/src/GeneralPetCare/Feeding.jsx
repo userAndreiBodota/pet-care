@@ -1,3 +1,5 @@
+//responsive
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
@@ -23,11 +25,11 @@ const Feeding = () => {
     <>
       <Header />
       <div className="min-h-screen">
-        <div className="emergency-page p-6 flex justify-center mt-12">
+        <div className="emergency-page p-6 mt-12">
           <div className="text-center max-w-6xl relative">
             <button
               onClick={handleBack}
-              className="absolute top-6 -left-96 mt-2 ml-4"
+              className="absolute -top-8 left-4 mt-2"
             >
               <IoArrowBack size={24} color="#9dbeb7" />
             </button>
@@ -42,22 +44,22 @@ const Feeding = () => {
           </div>
         </div>
 
-        <div className="flex flex-col m-24 gap-6">
+        <div className="flex flex-col px-6 sm:px-8 lg:px-24 pb-6 gap-6">
           <h1 className="font-bold text-3xl">Feeding Guidelines:</h1>
           <h2 className="font-semibold text-2xl">Dogs:</h2>
-          <p className="font-normal text-xl tracking tracking-wide">
+          <p className="font-normal text-xl tracking-wide">
             Proper nutrition is key to maintaining your dog’s health, energy,
             and overall quality of life. Feeding routines and diet composition
             should be tailored to their age, breed, and activity level.
           </p>
         </div>
 
-        <div className="flex justify-between items-center bg-customGray rounded-lg w-4/5 mx-auto mb-10">
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Scheduled Meals
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Establish a regular feeding schedule by offering meals at the same
               time each day. This helps create structure and can prevent
               digestive issues like bloating.
@@ -66,32 +68,34 @@ const Feeding = () => {
           <img
             src={dogScheduled}
             alt="Dog Schedules Meals"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
         </div>
-        <div className="flex justify-between items-center bg-customGrey rounded-lg w-4/5 mx-auto mb-10">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
           <img
             src={dogPortion}
             alt="Dog Portion"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Portion Control
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Measure out portion sizes according to your dog’s weight, age, and
               activity level. Overfeeding can lead to obesity, so it’s important
               to follow feeding guidelines provided by your veterinarian.
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center bg-customGray rounded-lg w-4/5 mx-auto mb-10">
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Balanced Diet
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Provide a balanced diet with the correct ratio of protein, fats,
               and carbohydrates. Dogs need a variety of nutrients for strong
               muscles, healthy skin, and a shiny coat. Consult your vet for
@@ -101,32 +105,34 @@ const Feeding = () => {
           <img
             src={dogBalanced}
             alt="Dog Balanced Eating"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
         </div>
-        <div className="flex justify-between items-center bg-customGrey rounded-lg w-4/5 mx-auto mb-10">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
           <img
             src={dogWater}
             alt="Dog Fresh Water"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Fresh Water
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Always ensure your dog has access to fresh water throughout the
               day, especially after exercise. Proper hydration is essential for
               their overall health.
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center bg-customGray rounded-lg w-4/5 mx-auto mb-10">
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Healthy Treats
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Treats are useful for training but should be given in moderation.
               Opt for low-fat, low-sugar options like fruits (e.g., apple
               slices) or vet-approved treats to maintain a healthy diet.
@@ -135,25 +141,26 @@ const Feeding = () => {
           <img
             src={dogTreats}
             alt="Dog Treats"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
         </div>
-        {/*CATS */}
-        <div className="flex flex-col m-24 gap-6">
+
+        {/* Cats */}
+        <div className="flex flex-col px-6 sm:px-8 lg:px-24 pb-6 gap-6">
           <h2 className="font-semibold text-2xl">Cats:</h2>
-          <p className="font-normal text-xl tracking tracking-wide">
+          <p className="font-normal text-xl tracking-wide">
             Cats are obligate carnivores, meaning their diet should be rich in
             animal-based proteins. Proper feeding habits ensure they receive the
             necessary nutrients for a long, healthy life.
           </p>
         </div>
 
-        <div className="flex justify-between items-center bg-customGray rounded-lg w-4/5 mx-auto mb-10">
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Multiple Small Meals
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Unlike dogs, cats prefer to eat smaller meals multiple times
               throughout the day. Offering 3-4 small meals a day helps mimic
               their natural hunting and eating patterns
@@ -162,20 +169,21 @@ const Feeding = () => {
           <img
             src={catSmallMeals}
             alt="Cat Small Meals"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
         </div>
-        <div className="flex justify-between items-center bg-customGrey rounded-lg w-4/5 mx-auto mb-10">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
           <img
             src={catHighProtein}
             alt="Cat High Protein"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               High Protein Diet
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Choose high-quality cat food that is rich in animal-based
               proteins. Cats thrive on diets that include meats like chicken,
               turkey, or fish, which provide essential amino acids for muscle
@@ -183,12 +191,13 @@ const Feeding = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center bg-customGray rounded-lg w-4/5 mx-auto mb-10">
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Wet Food
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Incorporate wet food into your cat’s diet to increase their
               hydration levels. Cats often do not drink enough water on their
               own, and wet food can help compensate for this.
@@ -197,32 +206,34 @@ const Feeding = () => {
           <img
             src={catWetFood}
             alt="Chase Wet Food"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
         </div>
-        <div className="flex justify-between items-center bg-customGrey rounded-lg w-4/5 mx-auto mb-10">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
           <img
             src={catMonitor}
             alt="Cat Monitor Weight"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Monitor Weight
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Regularly assess your cat’s weight and adjust portion sizes based
               on their activity level and age. Overfeeding can lead to obesity,
               which is a common issue in house cats.
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center bg-customGray rounded-lg w-4/5 mx-auto mb-40">
-          <div className="flex-grow">
-            <h2 className="text-xl font-bold mb-2 pl-10 text-customWhite">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-40">
+          <div className="flex-grow p-4 sm:p-10">
+            <h2 className="text-xl font-bold mb-2 text-customWhite">
               Fresh Water
             </h2>
-            <p className="pl-10 text-customWhite">
+            <p className="text-customWhite">
               Keep a constant supply of fresh water available. Consider using a
               pet fountain, as many cats prefer running water and are more
               likely to drink from it.
@@ -231,7 +242,7 @@ const Feeding = () => {
           <img
             src={catWater}
             alt="Cat Fresh Water"
-            className="w-1/3 h-auto rounded-lg object-cover"
+            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
           />
         </div>
       </div>
