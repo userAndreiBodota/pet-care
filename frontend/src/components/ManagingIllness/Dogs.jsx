@@ -24,11 +24,11 @@ const Dogs = () => {
       <div className="min-h-screen">
         <div className="emergency-page p-6 flex justify-center mt-12">
           <div className="text-center max-w-6xl relative">
-            <button
+          <button
               onClick={handleBack}
-              className="absolute -top-8 -left-80 mt-2"
+              className="absolute -top-8 left-4 mt-2"
             >
-              <IoArrowBack size={24} color="#00000" />
+              <IoArrowBack size={24} color="#9dbeb7" />
             </button>
 
             <h1 className="font-semibold text-3xl mb-4 tracking-wider">

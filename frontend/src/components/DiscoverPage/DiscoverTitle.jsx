@@ -15,7 +15,7 @@ const DiscoverTitle = () => {
         className="absolute top-4 left-4 flex items-center text-gray-600 hover:text-green-500 z-10"
       >
         <IoArrowBack size={24} />
-        <span className="ml-2">Back</span>
+        <span className="ml-2"></span>
       </button>
       <img
         src={Blur}

@@ -26,9 +26,9 @@ const Cats = () => {
           <div className="text-center max-w-6xl relative">
             <button
               onClick={handleBack}
-              className="absolute top-6 -left-80 mt-2 "
+              className="absolute -top-8 left-4 mt-2"
             >
-              <IoArrowBack size={24} color="#00000" />
+              <IoArrowBack size={24} color="#9dbeb7" />
             </button>
 
             <h1 className="font-semibold text-3xl mb-4 tracking-wider">
@@ -46,7 +46,11 @@ const Cats = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img src={URI} alt="URI" className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0" />
+          <img
+            src={URI}
+            alt="URI"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
+          />
           <div className="flex-grow sm:pl-10">
             <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Upper Respiratory Infection (URI):
@@ -62,9 +66,13 @@ const Cats = () => {
             </p>
           </div>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img src={FLUTD} alt="FLUTD" className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0" />
+          <img
+            src={FLUTD}
+            alt="FLUTD"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
+          />
           <div className="flex-grow sm:pl-10">
             <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Lower Urinary Tract Disease (FLUTD):
@@ -82,9 +90,13 @@ const Cats = () => {
             </p>
           </div>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img src={Diabetes} alt="Diabetes" className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0" />
+          <img
+            src={Diabetes}
+            alt="Diabetes"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
+          />
           <div className="flex-grow sm:pl-10">
             <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Diabetes:
@@ -148,7 +160,7 @@ const Cats = () => {
             </p>
           </div>
         </div>
-        
+
         <Footer />
       </div>
     </>
