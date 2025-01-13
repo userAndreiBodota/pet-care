@@ -2,31 +2,44 @@ import React, { useState } from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PlusCircle, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuthStore } from "../../store/authStore";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AddBirthdate = () => {
-  const { user, logout, petImage } = useAuthStore();
+  const { user, logout, petImage, registerPetStage3 } = useAuthStore();
   const [startDate, setStartDate] = useState(null);
   const [petAge, setPetAge] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!startDate || !petAge) {
       setError("Please select both the birthdate and enter the pet's age.");
       return;
     }
-    // Reset error if validation passes
+
     setError("");
-    // Proceed with further actions (e.g., saving data, moving to the next step)
-    alert("Pet information confirmed!");
+    const petId = localStorage.getItem("petId"); // Retrieve petId from localStorage
+    if (!petId) {
+      setError("Pet ID not found. Please start the process again.");
+      return;
+    }
+
+    try {
+      await registerPetStage3(petId, startDate, petAge); // Submit birthdate and age
+      alert("Pet information confirmed!");
+      navigate("/dashboard"); // Navigate to the next step or finish
+    } catch (error) {
+      console.error("Error submitting pet info:", error);
+      alert("An error occurred while confirming the pet's information.");
+    }
   };
 
   return (
@@ -114,21 +127,10 @@ const AddBirthdate = () => {
 
             <div className="flex justify-center items-center">
               <div className="relative max-w-sm">
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                  </svg>
-                </div>
                 <DatePicker
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholderText="Select date"
                 />
               </div>
@@ -145,23 +147,12 @@ const AddBirthdate = () => {
 
             <div className="flex justify-center items-center mt-4">
               <div className="relative max-w-sm">
-                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 2a8 8 0 1 0 8 8 8 8 0 0 0-8-8Zm0 14a6 6 0 1 1 6-6 6 6 0 0 1-6 6Z" />
-                  </svg>
-                </div>
                 <input
                   type="number"
                   min="0"
                   value={petAge}
                   onChange={(e) => setPetAge(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="Enter pet's age in years"
                 />
               </div>
@@ -171,14 +162,12 @@ const AddBirthdate = () => {
 
             <motion.div className="flex justify-between mt-6">
               Go to the next step
-              <Link to="/addbirthdate" className="text-gray-500">
-                <button
-                  onClick={handleSubmit}
-                  className="bg-black text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-800 transition"
-                >
-                  Confirm
-                </button>
-              </Link>
+              <button
+                onClick={handleSubmit}
+                className="bg-black text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+              >
+                Confirm
+              </button>
             </motion.div>
           </div>
         </motion.div>
