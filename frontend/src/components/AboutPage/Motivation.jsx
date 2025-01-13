@@ -1,17 +1,18 @@
+//responsive na
+
 import React from "react";
 
 const Motivation = () => {
   return (
-    <section className="flex items-center flex-col h-96">
-      <h1 className="text-4xl text-gray-950 tracking-wider font-semibold mb-4">
+    <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8 py-10 h-auto">
+      <h1 className="text-3xl md:text-4xl text-gray-950 tracking-wider font-semibold mb-4 text-center">
         Motivation behind <span className="text-green-600">the Website</span>
       </h1>
-      <h2 className="text-lg text-center mb-8 text-gray-600">
-        {" "}
+      <h2 className="text-md md:text-lg text-center mb-8 text-gray-600">
         Inspiring Pet Owners to Provide Exceptional Care for Their Furry Friends
       </h2>
 
-      <div className="relative bg-gray-100 rounded-lg p-8 w-4/5">
+      <div className="relative bg-gray-100 rounded-lg p-4 sm:p-6 md:p-8 w-full max-w-4xl">
         <img
           src="/images/paw.png"
           alt="PetCare Hub Image"
@@ -19,7 +20,7 @@ const Motivation = () => {
         />
 
         <div className="relative z-10">
-          <p className="text-gray-600 text-lg leading-relaxed">
+          <p className="text-gray-600 text-base sm:text-lg md:text-xl leading-relaxed text-center">
             &quot;The idea for PetCare Hub came from our love for animals and
             the need to make pet care easier for owners. We saw that many pet
             owners have a hard time finding trustworthy information about

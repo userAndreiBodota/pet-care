@@ -1,3 +1,5 @@
+//responsive na
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
@@ -51,6 +53,7 @@ const stepsToHandleChokingPets = [
       "Watch for symptoms like rapid breathing, weak pulse, or pale gums, which indicate shock and require immediate veterinary attention.",
   },
 ];
+
 const Bleeding = () => {
   const navigate = useNavigate();
 
@@ -61,38 +64,38 @@ const Bleeding = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen">
-        <div className="emergency-page p-6 flex justify-center mt-12">
-          <div className="text-center max-w-6xl relative">
-            <button
-              onClick={handleBack}
-              className="absolute top-6 -left-96 mt-2 ml-4"
-            >
-              <IoArrowBack size={24} color="#9dbeb7" />
-            </button>
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 bg-gray-100">
+        <div className="flex justify-between items-center mt-6 mb-12">
+          <button
+            onClick={handleBack}
+            className="flex items-center text-gray-600 hover:text-green-500 transition"
+          >
+            <IoArrowBack size={24} color="#9dbeb7" />
+            <span className="ml-2 hidden sm:inline">Back</span>
+          </button>
 
-            <h1 className="font-semibold text-3xl mb-4 tracking-wider">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 tracking-wide">
               Emergency Handling
             </h1>
-
-            <p className="text-green-600">
+            <p className="text-green-600 text-lg">
               Some Essential Actions for Pet Emergencies
             </p>
           </div>
         </div>
-        <div className="img-holder relative w-full flex justify-center items-center">
+
+        <div className="relative w-full flex justify-center items-center mt-4 mb-8">
           <img
             src={petBleeding}
             alt="Choking Pet"
-            className="w-5/6 h-80 object-cover rounded-md"
-            style={{ objectFit: "cover" }}
+            className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 h-80 object-cover rounded-md shadow-lg"
           />
-          <div className="overlay absolute inset-0 flex justify-center items-center -left-2/4">
-            <div className="text-content bg-white bg-opacity-20 backdrop-blur-sm p-6 rounded-lg w-96 h-52 flex flex-col justify-center">
-              <h2 className="text-white text-xl font-semibold mb-2">
-                How to handle
+          <div className="overlay absolute inset-0 flex justify-center items-center">
+            <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
+              <h2 className="text-white text-lg sm:text-xl font-semibold mb-2">
+                How to handle How to handle
               </h2>
-              <h1 className="text-green-500 text-3xl font-bold">
+              <h1 className="text-customGray text-3xl font-bold">
                 PET BLEEDING?
               </h1>
             </div>
@@ -100,11 +103,11 @@ const Bleeding = () => {
         </div>
 
         <div className="bg-[#F5F5F5CC] p-6 rounded-lg shadow-md mt-6 w-4/5 mx-auto relative flex flex-col items-center mb-20">
-          <FaPaw className="absolute top-4 right-4 text-green-500 w-12 h-12" />{" "}
+          <FaPaw className="absolute top-4 right-4 text-green-500 w-12 h-12" />
           <h2 className="text-xl font-bold mb-4">
             STEPS TO HANDLE PET BLEEDING:
           </h2>
-          <ul className="list-disc list-inside text-left">
+          <ul className="list-disc list-inside text-justify">
             {stepsToHandleChokingPets.map((step) => (
               <li key={step.id} className="mb-2">
                 <span className="font-semibold">{step.title}: </span>
@@ -114,37 +117,35 @@ const Bleeding = () => {
           </ul>
         </div>
 
-        <div className="flex justify-center flex-col items-center h-4/5 mb-28">
-          <h1 className="font-bold text-4xl mb-10 tracking-wide">
+        <div className="flex flex-col items-center mt-12 mb-20">
+          <h1 className="font-bold text-3xl sm:text-4xl mb-6 text-gray-800">
             Visual Guide
           </h1>
-          <img src={petBleedingGuide} alt="Choking Guide" width={850} />
+          <img
+            src={petBleedingGuide}
+            alt="Choking Guide"
+            className="w-full sm:w-3/4 lg:w-1/2 rounded-lg shadow-lg"
+          />
         </div>
-      </div>
 
-      <div className="flex flex-col justify-center items-center mb-20">
-        <h1 className="font-medium tracking-wider text-2xl">
-          Want to know more?
-        </h1>
-        <div className="flex">
-          <div
-            className="bg-[#F6F8F9] backdrop-blur-[24px] rounded-lg p-6 mt-10 max-w-4xl shadow-md 
-      gap-10 flex"
-          >
+        <div className="flex flex-col items-center mt-12 mb-20 bg-white p-6 rounded-lg shadow-md max-w-4xl">
+          <h1 className="font-medium text-2xl mb-4 text-gray-800">
+            Want to know more?
+          </h1>
+          <div className="w-full flex flex-col sm:flex-row justify-between items-center">
             <h1 className="font-bold text-base">Visit:</h1>
-            <div className="flex flex-col">
-              <a
-                href="https://veterinarypartner.vin.com/default.aspx?pid=19239&id=4951317"
-                className="underline text-blue-600 font-medium text-lg"
-              >
-                https://veterinarypartner.vin.com/default.aspx?pid=19239&id=4951317
-              </a>
-              <h2 className="text-center text-green-500">
-                {" "}
-                AND SEEK IMMEDIATE VETERINARY ASSISTANCE
-              </h2>
-            </div>
+            <a
+              href="https://veterinarypartner.vin.com/default.aspx?pid=19239&id=4951317"
+              className="underline text-blue-600 font-medium text-lg mt-2 sm:mt-0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              https://veterinarypartner.vin.com/default.aspx?pid=19239&id=4951317
+            </a>
           </div>
+          <h2 className="text-center text-green-500 mt-4">
+            AND SEEK IMMEDIATE VETERINARY ASSISTANCE
+          </h2>
         </div>
       </div>
       <Footer />

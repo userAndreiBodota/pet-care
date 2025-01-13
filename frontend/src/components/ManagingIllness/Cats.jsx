@@ -1,3 +1,5 @@
+//responsiveness
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
@@ -24,9 +26,9 @@ const Cats = () => {
           <div className="text-center max-w-6xl relative">
             <button
               onClick={handleBack}
-              className="absolute top-6 -left-80 mt-2 "
+              className="absolute -top-8 left-4 mt-2"
             >
-              <IoArrowBack size={24} color="#00000" />
+              <IoArrowBack size={24} color="#9dbeb7" />
             </button>
 
             <h1 className="font-semibold text-3xl mb-4 tracking-wider">
@@ -39,39 +41,48 @@ const Cats = () => {
           </div>
         </div>
 
-        <div className="flex flex-col m-24">
+        <div className="flex flex-col m-6 sm:m-12 lg:m-24">
           <h2 className="font-semibold text-4xl uppercase">cats</h2>
         </div>
 
-        <div className="flex justify-between items-center  w-4/5 mx-auto mb-10">
-          <img src={URI} alt="URI" className="w-1/3 h-auto object-cover" />
-          <div className="flex-grow">
-            <h2 className="text-3xl font-bold mb-2 pl-10 text-green-500">
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
+          <img
+            src={URI}
+            alt="URI"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
+          />
+          <div className="flex-grow sm:pl-10">
+            <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Upper Respiratory Infection (URI):
             </h2>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Symptoms:</span> Sneezing,
               runny nose, watery eyes, coughing, fever, lethargy.
             </p>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Management:</span> Keep your
               cat in a warm, humid environment, ensure hydration, and consult a
               vet for possible antibiotics or antiviral medications.
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center  w-4/5 mx-auto mb-10">
-          <img src={FLUTD} alt="FLUTD" className="w-1/3 h-auto object-cover" />
-          <div className="flex-grow">
-            <h2 className="text-3xl font-bold mb-2 pl-10 text-green-500">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
+          <img
+            src={FLUTD}
+            alt="FLUTD"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
+          />
+          <div className="flex-grow sm:pl-10">
+            <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Lower Urinary Tract Disease (FLUTD):
             </h2>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Symptoms:</span> Straining to
               urinate, frequent urination, blood in urine, crying out while
               urinating, licking the genital area.
             </p>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Management:</span> Increase
               water intake, maintain a stress-free environment, and consult a
               vet for dietary adjustments or medication. In severe cases,
@@ -79,66 +90,69 @@ const Cats = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center  w-4/5 mx-auto mb-10">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
           <img
             src={Diabetes}
             alt="Diabetes"
-            className="w-1/3 h-auto object-cover"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-3xl font-bold mb-2 pl-10 text-green-500">
+          <div className="flex-grow sm:pl-10">
+            <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Diabetes:
             </h2>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Symptoms:</span> Increased
               thirst, frequent urination, weight loss, increased appetite,
               lethargy.
             </p>
-            <p className="pl-10 text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Management:</span>Insulin
+            <p className="text-black block text-lg tracking-tight">
+              <span className="font-bold text-xl">Management:</span> Insulin
               injections as prescribed by a vet, dietary management, and regular
               blood glucose monitoring.
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center  w-4/5 mx-auto mb-10">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
           <img
             src={Hyperthyrodism}
             alt="Hyperthyroidism"
-            className="w-1/3 h-auto object-cover"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-3xl font-bold mb-2 pl-10 text-green-500">
+          <div className="flex-grow sm:pl-10">
+            <h2 className="text-3xl font-bold mb-2 text-green-500">
               Hyperthyroidism:
             </h2>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Symptoms:</span> Weight loss
               despite increased appetite, hyperactivity, increased thirst and
               urination, vomiting, diarrhea.
             </p>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Management:</span> Medication
               to manage thyroid levels, radioactive iodine treatment, or
               surgery. Regular vet check-ups are crucial.
             </p>
           </div>
         </div>
-        <div className="flex justify-between items-center  w-4/5 mx-auto mb-40">
+
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-40">
           <img
             src={Distemper}
             alt="Distemper"
-            className="w-1/3 h-auto object-cover"
+            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
           />
-          <div className="flex-grow">
-            <h2 className="text-3xl font-bold mb-2 pl-10 text-green-500">
+          <div className="flex-grow sm:pl-10">
+            <h2 className="text-3xl font-bold mb-2 text-green-500">
               Feline Panleukopenia (Feline Distemper):
             </h2>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Symptoms:</span> Severe
               vomiting, diarrhea, fever, loss of appetite, lethargy,
               dehydration.
             </p>
-            <p className="pl-10 text-black block text-lg tracking-tight">
+            <p className="text-black block text-lg tracking-tight">
               <span className="font-bold text-xl">Management:</span> Immediate
               veterinary care is essential. Treatment focuses on supportive
               care, such as fluids and anti-nausea medications. Vaccination is
@@ -146,7 +160,7 @@ const Cats = () => {
             </p>
           </div>
         </div>
-        {""}
+
         <Footer />
       </div>
     </>
