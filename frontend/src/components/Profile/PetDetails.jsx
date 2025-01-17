@@ -121,7 +121,6 @@ function PetDetails() {
           Pet Identification
         </h1>
 
-        {/* Parent container for the Pet ID Card */}
         <div className=" max-w-3xl mx-auto flex justify-center">
           <div
             id="pet-id-card"
@@ -165,7 +164,6 @@ function PetDetails() {
             <div className="flex justify-between items-center mt-8">
               <div>
                 <p className="font-semibold">{pet.owner}</p>
-                <p>{pet.ownerEmail}</p>
               </div>
               <p className="font-bold">OWNER</p>
             </div>
