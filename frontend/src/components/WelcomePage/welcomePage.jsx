@@ -25,7 +25,7 @@ const WelcomePage = () => {
         </p>
         <Link
           to="/discover"
-          className="inline-block mt-6 bg-black text-white text-sm sm:text-lg font-semibold py-3 px-6 rounded-full hover:bg-green-800 transition-colors"
+          className="inline-block mt-6 bg-black text-white text-sm sm:text-lg font-semibold py-3 px-6 rounded-full hover:bg-green-800 transform hover:translate-y-[-15px] shadow-md hover:shadow-lg transition duration-500 ease-in-out"
         >
           Discover More
         </Link>

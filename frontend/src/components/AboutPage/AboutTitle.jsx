@@ -35,13 +35,13 @@ const AboutSection = () => {
     <section className="flex flex-col items-center mt-10 px-4 sm:px-6 lg:px-8 w-full mb-32">
       <h1 className="text-4xl md:text-5xl text-center mb-6 md:mb-8 tracking-wider font-bold">
         About Us
-      </h1>
+      </h1> 
 
       <h2 className="text-md sm:text-lg text-center mb-8 text-gray-600">
         Meet the Team Behind PetCare Hub
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-8">
         {teamMembers.map((member, index) => (
           <div
             key={index}

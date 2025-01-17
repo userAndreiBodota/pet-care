@@ -47,7 +47,7 @@ const Header = () => {
             <li>
               <Link
                 to="/"
-                className="hover:text-white transition-colors"
+                className="hover:text-white hover:scale-105 transition-all duration-200 ease-in-out"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home

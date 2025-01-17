@@ -38,23 +38,26 @@ const EmergencyOptions = () => {
 
   return (
     <div className="relative">
-        {/* Back Arrow Button */}
-        <Link to="/" className="absolute top-6 left-6 text-xl text-gray-600 hover:text-gray-800">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-8 h-8"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </Link>
+      {/* Back Arrow Button */}
+      <Link
+        to="/"
+        className="absolute top-6 left-6 text-xl text-gray-600 hover:text-gray-800"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          className="w-8 h-8"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </Link>
 
       {/* Main Content */}
       <div className="emergency-page p-6 flex flex-col items-center mt-12">
@@ -70,12 +73,13 @@ const EmergencyOptions = () => {
             {emergencies.map((emergency, index) => (
               <div
                 key={index}
-                className="relative w-full max-w-xs rounded-2xl shadow-lg flex flex-col items-center"
+                className="relative w-full max-w-xs rounded-full shadow-lg flex flex-col items-center transform transition-all duration-300 ease-in-out hover:scale-105"
+
               >
                 <img
                   src={emergency.image}
                   alt={emergency.name}
-                  className="w-full h-40 md:h-48 lg:h-56 object-cover rounded-t-2xl"
+                  className="w-full h-40 md:h-48 lg:h-56 object-cover rounded-2xl"
                 />
                 <Link
                   to={emergency.link}

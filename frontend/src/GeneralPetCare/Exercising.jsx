@@ -30,7 +30,7 @@ const Exercising = () => {
           <div className="text-center max-w-6xl relative">
             <button
               onClick={handleBack}
-              className="absolute -top-8 left-4 mt-2"
+              className="absolute -top-8 -left-96 mt-2"
             >
               <IoArrowBack size={24} color="#9dbeb7" />
             </button>
@@ -63,7 +63,7 @@ const Exercising = () => {
               local park. This helps maintain cardiovascular health and allows
               your dog to explore its surroundings, which is mentally
               stimulating.
-            </p>
+            </p>  
           </div>
           <img
             src={dogWalking}

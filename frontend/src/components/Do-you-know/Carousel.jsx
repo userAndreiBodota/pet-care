@@ -1,6 +1,4 @@
-//RESPONSIVENESS DONE
-
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Cat from "../Do-you-know/image/cat.png";
 
 const Carousel = () => {
@@ -13,17 +11,36 @@ const Carousel = () => {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState("left"); // Direction for sliding effect (left or right)
 
-  const nextText = () => {
+  const nextText = useCallback(() => {
+    setDirection("left"); // Slide to the left when moving forward
     setCurrentIndex((prevIndex) =>
       prevIndex === texts.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [texts.length]);
+
+  // Automatic sliding with a 5-second interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextText();
+    }, 5000); // 5000ms = 5 seconds
+
+    return () => clearInterval(interval); // Clear interval on component unmount
+  }, [nextText]);
 
   return (
     <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between mb-12 shadow-lg">
       {/* Text Section */}
-      <div className="w-full sm:w-2/3 text-center sm:text-left mb-6 sm:mb-0">
+      <div
+        className={`w-full sm:w-2/3 text-center sm:text-left mb-6 sm:mb-0 transition-all duration-500 ease-in-out transform ${
+          direction === "left" ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{
+          opacity: 1,
+          transition: "opacity 0.5s ease, transform 0.5s ease",
+        }}
+      >
         <h2 className="text-lg sm:text-xl font-bold text-gray-900">Do you know?</h2>
         <p className="text-sm sm:text-base mt-4 text-gray-700 leading-relaxed">
           {texts[currentIndex]}
@@ -31,7 +48,14 @@ const Carousel = () => {
       </div>
 
       {/* Image Section */}
-      <div className="w-full sm:w-1/3 flex justify-center">
+      <div
+        className={`w-full sm:w-1/3 flex justify-center transition-transform duration-500 ease-in-out transform ${
+          direction === "left" ? "translate-x-0" : "translate-x-full"
+        }`}
+        style={{
+          transition: "transform 0.5s ease",
+        }}
+      >
         <img
           src={Cat}
           alt="Cat Illustration"

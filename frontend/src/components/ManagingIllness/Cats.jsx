@@ -21,145 +21,92 @@ const Cats = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-white">
         <div className="emergency-page p-6 flex justify-center mt-12">
           <div className="text-center max-w-6xl relative">
             <button
               onClick={handleBack}
-              className="absolute -top-8 left-4 mt-2"
+              className="absolute -top-8 -left-96 mt-2 transform hover:scale-110 transition-all duration-300"
             >
               <IoArrowBack size={24} color="#9dbeb7" />
             </button>
 
-            <h1 className="font-semibold text-3xl mb-4 tracking-wider">
+            <h1 className="font-semibold text-3xl mb-4 tracking-wider text-gray-800 transition-all duration-500 ease-in-out">
               Recognizing and Managing Illness
             </h1>
 
-            <p className="text-green-600">
+            <p className="text-green-600 text-lg tracking-wide">
               Early Detection and Care Tips to Keep Your Pets Healthy
             </p>
           </div>
         </div>
 
         <div className="flex flex-col m-6 sm:m-12 lg:m-24">
-          <h2 className="font-semibold text-4xl uppercase">cats</h2>
+          <h2 className="font-bold text-4xl uppercase text-left text-green-700 tracking-wider">
+            Cats
+          </h2>
         </div>
 
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img
-            src={URI}
-            alt="URI"
-            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow sm:pl-10">
-            <h2 className="text-3xl font-bold mb-2 text-green-500">
-              Feline Upper Respiratory Infection (URI):
-            </h2>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Symptoms:</span> Sneezing,
-              runny nose, watery eyes, coughing, fever, lethargy.
-            </p>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Management:</span> Keep your
-              cat in a warm, humid environment, ensure hydration, and consult a
-              vet for possible antibiotics or antiviral medications.
-            </p>
+        {/* Disease Cards with Background Colors and Hover Effect */}
+        {[ 
+          {
+            image: URI,
+            name: "Feline Upper Respiratory Infection (URI)",
+            symptoms: "Sneezing, runny nose, watery eyes, coughing, fever, lethargy.",
+            management: "Keep your cat in a warm, humid environment, ensure hydration, and consult a vet for possible antibiotics or antiviral medications.",
+            bgColor: "bg-customGray"
+          },
+          {
+            image: FLUTD,
+            name: "Feline Lower Urinary Tract Disease (FLUTD)",
+            symptoms: "Straining to urinate, frequent urination, blood in urine, crying out while urinating, licking the genital area.",
+            management: "Increase water intake, maintain a stress-free environment, and consult a vet for dietary adjustments or medication. In severe cases, surgery may be required.",
+            bgColor: "bg-customGrey"
+          },
+          {
+            image: Diabetes,
+            name: "Feline Diabetes",
+            symptoms: "Increased thirst, frequent urination, weight loss, increased appetite, lethargy.",
+            management: "Insulin injections as prescribed by a vet, dietary management, and regular blood glucose monitoring.",
+            bgColor: "bg-customGray"
+          },
+          {
+            image: Hyperthyrodism,
+            name: "Hyperthyroidism",
+            symptoms: "Weight loss despite increased appetite, hyperactivity, increased thirst and urination, vomiting, diarrhea.",
+            management: "Medication to manage thyroid levels, radioactive iodine treatment, or surgery. Regular vet check-ups are crucial.",
+            bgColor: "bg-customGrey"
+          },
+          {
+            image: Distemper,
+            name: "Feline Panleukopenia (Feline Distemper)",
+            symptoms: "Severe vomiting, diarrhea, fever, loss of appetite, lethargy, dehydration.",
+            management: "Immediate veterinary care is essential. Treatment focuses on supportive care, such as fluids and anti-nausea medications. Vaccination is crucial for prevention.",
+            bgColor: "bg-customGray"
+          }
+        ].map((disease, index) => (
+          <div
+            key={index}
+            className={`flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-12 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl hover:bg-gray-200 rounded-2xl p-4 sm:p-6 ${disease.bgColor}`}
+          >
+            <img
+              src={disease.image}
+              alt={disease.name}
+              className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0 rounded-2xl transition-all duration-300 ease-in-out transform hover:scale-110"
+            />
+            <div className="flex-grow sm:pl-10 transition-all duration-300">
+              <h2 className="text-3xl font-bold mb-2 text-white">
+                {disease.name}:
+              </h2>
+              <p className="text-white block text-lg tracking-tight">
+                <span className="font-bold text-xl">Symptoms:</span> {disease.symptoms}
+              </p>
+              <p className="text-white block text-lg tracking-tight">
+                <span className="font-bold text-xl">Management:</span> {disease.management}
+              </p>
+            </div>
           </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img
-            src={FLUTD}
-            alt="FLUTD"
-            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow sm:pl-10">
-            <h2 className="text-3xl font-bold mb-2 text-green-500">
-              Feline Lower Urinary Tract Disease (FLUTD):
-            </h2>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Symptoms:</span> Straining to
-              urinate, frequent urination, blood in urine, crying out while
-              urinating, licking the genital area.
-            </p>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Management:</span> Increase
-              water intake, maintain a stress-free environment, and consult a
-              vet for dietary adjustments or medication. In severe cases,
-              surgery may be required.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img
-            src={Diabetes}
-            alt="Diabetes"
-            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow sm:pl-10">
-            <h2 className="text-3xl font-bold mb-2 text-green-500">
-              Feline Diabetes:
-            </h2>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Symptoms:</span> Increased
-              thirst, frequent urination, weight loss, increased appetite,
-              lethargy.
-            </p>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Management:</span> Insulin
-              injections as prescribed by a vet, dietary management, and regular
-              blood glucose monitoring.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-10">
-          <img
-            src={Hyperthyrodism}
-            alt="Hyperthyroidism"
-            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow sm:pl-10">
-            <h2 className="text-3xl font-bold mb-2 text-green-500">
-              Hyperthyroidism:
-            </h2>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Symptoms:</span> Weight loss
-              despite increased appetite, hyperactivity, increased thirst and
-              urination, vomiting, diarrhea.
-            </p>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Management:</span> Medication
-              to manage thyroid levels, radioactive iodine treatment, or
-              surgery. Regular vet check-ups are crucial.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center w-full sm:w-4/5 mx-auto mb-40">
-          <img
-            src={Distemper}
-            alt="Distemper"
-            className="w-full sm:w-1/3 h-auto object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow sm:pl-10">
-            <h2 className="text-3xl font-bold mb-2 text-green-500">
-              Feline Panleukopenia (Feline Distemper):
-            </h2>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Symptoms:</span> Severe
-              vomiting, diarrhea, fever, loss of appetite, lethargy,
-              dehydration.
-            </p>
-            <p className="text-black block text-lg tracking-tight">
-              <span className="font-bold text-xl">Management:</span> Immediate
-              veterinary care is essential. Treatment focuses on supportive
-              care, such as fluids and anti-nausea medications. Vaccination is
-              crucial for prevention.
-            </p>
-          </div>
-        </div>
+        ))}
 
         <Footer />
       </div>
@@ -168,3 +115,4 @@ const Cats = () => {
 };
 
 export default Cats;
+

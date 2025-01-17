@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -32,12 +33,12 @@ const Profile = () => {
           community.
         </p>
         <div className="flex flex-col items-center w-full max-w-xs">
-          <button
+          <motion.button
             onClick={handleGetStarted}
-            className="bg-black text-white w-full py-3 rounded-md text-lg font-semibold mb-4 hover:bg-gray-800"
+            className="bg-black text-white w-full py-3 rounded-md text-lg font-semibold mb-4 hover:bg-gray-800 hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out"
           >
             Get Started
-          </button>
+          </motion.button>
           <button
             onClick={handleBack}
             className="text-gray-500 hover:text-gray-700"

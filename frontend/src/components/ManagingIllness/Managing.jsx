@@ -46,7 +46,7 @@ const Managing = () => {
             {emergencies.map((emergency, index) => (
               <div
                 key={index}
-                className="relative w-80 h-56 rounded-2xl shadow-lg"
+                className="relative w-80 h-56 rounded-2xl shadow-lg transform transition-all duration-300 ease-in-out hover:scale-105"
               >
                 <img
                   src={emergency.image}
@@ -55,7 +55,7 @@ const Managing = () => {
                 />
                 <div className="absolute bottom-10 left-0 right-0 flex justify-center">
                   <Link to={emergency.link}>
-                    <div className="bg-black w-28 h-28 rounded-full flex items-center justify-center transform translate-y-1/2">
+                    <div className="bg-green-950 w-28 h-28 rounded-full flex items-center justify-center transform translate-y-1/2">
                       <span className="text-white text-lg font-semibold">
                         {emergency.name}
                       </span>
