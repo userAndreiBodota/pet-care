@@ -64,7 +64,7 @@ const Bleeding = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen px-4 sm:px-6 lg:px-8 bg-gray-100">
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 bg-white">
         <div className="flex justify-between items-center mt-6 mb-12">
           <button
             onClick={handleBack}
@@ -75,7 +75,7 @@ const Bleeding = () => {
           </button>
 
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 tracking-wide">
+            <h1 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 mt-14 tracking-wide">
               Emergency Handling
             </h1>
             <p className="text-green-600 text-lg">

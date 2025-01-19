@@ -53,7 +53,7 @@ const Tips = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center mt-10 mb-8 px-4">
+      <div className="flex flex-col items-center mt-28 mb-8 px-4">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-wide mb-5 text-center">
           Tips for Maintaining Healthy Pets
         </h1>
