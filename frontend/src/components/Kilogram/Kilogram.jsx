@@ -2,23 +2,34 @@ import React, { useState } from "react";
 import { useAuthStore } from "../../store/authStore";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PlusCircle, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Kilogram = () => {
-  const { user, logout, petImage } = useAuthStore();
+  const { user, logout, petImage, registerPetStage2 } = useAuthStore();
   const [weight, setWeight] = useState(22.2);
   const [gender, setGender] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!gender) {
       alert("Please select your pet's gender.");
-    } else {
-      console.log({
-        gender,
-        weight,
-      });
+      return;
+    }
+
+    const petId = localStorage.getItem("petId");
+    if (!petId) {
+      alert("Pet ID not found. Please start the process again.");
+      return;
+    }
+
+    try {
+      await registerPetStage2(petId, gender, weight);
+      navigate("/addbirthdate");
+    } catch (error) {
+      console.error("Error updating pet details:", error);
+      alert(`An error occurred: ${error.message || error}`);
     }
   };
 
@@ -112,15 +123,11 @@ const Kilogram = () => {
                 <h3 className="text-sm">Let us know what gender your pet is</h3>
               </div>
               <form className="max-w-md mx-auto">
-                <label
-                  htmlFor="gender"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                ></label>
                 <select
                   id="gender"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
                   <option value="">Your pet's gender</option>
                   <option value="Male">Male</option>
@@ -131,30 +138,10 @@ const Kilogram = () => {
 
             <div className="mt-10">
               <h2 className="text-lg font-semibold mb-2">
-                What's your pet's size?
-              </h2>
-              <p className="text-sm text-gray-500 mb-4">
-                Automatic selection based on your pet's breed. Adjust according
-                to reality.
-              </p>
-              <div className="flex justify-center space-x-8">
-                <button className="border p-4 rounded-lg hover:bg-gray-200">
-                  Small <br /> <span className="text-xs">under 14kg</span>
-                </button>
-                <button className="border p-4 rounded-lg bg-green-100">
-                  Medium <br /> <span className="text-xs">14-25kg</span>
-                </button>
-                <button className="border p-4 rounded-lg hover:bg-gray-200">
-                  Large <br /> <span className="text-xs">over 25kg</span>
-                </button>
-              </div>
-
-              <h2 className="text-lg font-semibold mt-8">
                 What's your pet's weight?
               </h2>
               <p className="text-sm text-gray-500 mb-4">
-                Automatic selection based on your pet's breed. Adjust according
-                to reality.
+                Adjust the weight according to reality.
               </p>
               <div className="text-center">
                 <h3 className="text-4xl font-bold mb-4">{weight} kg</h3>
@@ -176,15 +163,12 @@ const Kilogram = () => {
                   <span className="ml-2">kg</span>
                 </div>
                 <motion.div className="flex justify-between mt-6">
-                  Go to the next step
-                  <Link to="/addbirthdate" className="text-gray-500">
-                    <button
-                      onClick={handleSubmit}
-                      className="bg-black text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-800 transition"
-                    >
-                      Confirm
-                    </button>
-                  </Link>
+                  <button
+                    onClick={handleSubmit}
+                    className="bg-black text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+                  >
+                    Confirm
+                  </button>
                 </motion.div>
               </div>
             </div>

@@ -5,14 +5,17 @@ import Footer from "../Footer/Footer";
 import { PlusCircle, LogOut, Camera, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuthStore } from "../../store/authStore";
+
 import Dog from "../AddPets/images/dog.png";
 import Cat from "../AddPets/images/cat.png";
 
 const AddPets = () => {
-  const { user, logout, setPetImage, petImage } = useAuthStore();
+  const { user, logout, setPetImage, petImage, registerPetStage1 } =
+    useAuthStore();
   const [petName, setPetName] = useState("");
   const [petType, setPetType] = useState("");
   const [petBreed, setPetBreed] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -22,8 +25,25 @@ const AddPets = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const imageURL = URL.createObjectURL(file);
-      setPetImage(imageURL);
+      const reader = new FileReader();
+
+      // Determine MIME type based on file type
+      let mimeType;
+      if (file.type === "image/png") {
+        mimeType = "data:image/png;base64,";
+      } else if (file.type === "image/jpeg" || file.type === "image/jpg") {
+        mimeType = "data:image/jpeg;base64,";
+      } else {
+        alert("Unsupported file type. Please upload a JPG, JPEG, or PNG.");
+        return;
+      }
+
+      reader.onloadend = () => {
+        const base64String = reader.result.split(",")[1]; // Get only the Base64 part
+        const fullBase64Image = mimeType + base64String; // Combine MIME type with Base64
+        setPetImage(fullBase64Image); // Save the Base64 image with MIME type prefix
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL
     }
   };
 
@@ -31,13 +51,27 @@ const AddPets = () => {
     setPetImage(null);
   };
 
-  const handleSubmit = () => {
-    // Check if all fields are filled out
+  const handleSubmit = async () => {
     if (!petName || !petType || !petBreed || !petImage) {
       alert("All fields are required, including the pet image.");
-    } else {
-      console.log({ petName, petType, petBreed });
-      navigate("/kilogram"); // Navigate only if all fields are filled
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      const petId = await registerPetStage1(
+        petName,
+        petType,
+        petBreed,
+        petImage,
+        user.name
+      );
+      localStorage.setItem("petId", petId);
+      navigate("/kilogram");
+    } catch (error) {
+      console.error("Error adding pet:", error);
+      alert("An error occurred while adding the pet.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -191,7 +225,12 @@ const AddPets = () => {
               Go to the next step
               <button
                 onClick={handleSubmit}
-                className="bg-black text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+                disabled={isSubmitting}
+                className={`bg-black text-white font-semibold px-6 py-3 rounded-lg transition ${
+                  isSubmitting
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-gray-800"
+                }`}
               >
                 Confirm
               </button>

@@ -1,5 +1,4 @@
 import "./App.css";
-
 import About from "./components/AboutPage/About";
 import Discover from "./components/DiscoverPage/Discover";
 import Emergency from "./components/Emergency/Emergency";
@@ -26,6 +25,8 @@ import Exercising from "./GeneralPetCare/Exercising";
 import Feeding from "./GeneralPetCare/Feeding";
 import Grooming from "./GeneralPetCare/Grooming";
 import Home from "./main/Home";
+import PetDetails from "./components/Profile/PetDetails";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -124,8 +125,11 @@ function App() {
           <Route path="/discover" element={<Discover />} />
           <Route path="/about" element={<About />} />
           <Route path="/emergency" element={<Emergency />} />
-          <Route path="/general" element={<GeneralPetCare />} />\
-          <Route path="/recognizing" element={<ManagingIllness />} />\
+          <Route path="/general" element={<GeneralPetCare />} />
+          <Route path="/recognizing" element={<ManagingIllness />} />
+
+          <Route path="/pets/:id" element={<PetDetails />} />
+
           {/*EMERGENCY HANDLING ROUTES */}
           <Route path="/choking" element={<Choking />} />
           <Route path="/seizures" element={<Seizures />} />

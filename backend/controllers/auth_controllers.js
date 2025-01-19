@@ -1,4 +1,4 @@
-import { User } from "../models/user_models.js";
+import { Pet, User } from "../models/user_models.js";
 import crypto from "crypto";
 import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
@@ -8,6 +8,8 @@ import {
   sendVerificationEmail,
   sendWelcomeEmail,
 } from "../mailtrap/emails.js";
+import fs from "fs";
+import path from "path";
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -212,5 +214,112 @@ export const checkAuth = async (req, res) => {
   } catch (error) {
     console.log("Error in checkAuth ", error);
     res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const registerPetStage1 = async (req, res) => {
+  const { name, type, breed, owner, image } = req.body;
+
+  try {
+    // Basic field validation
+    if (!name || !type || !breed || !image) {
+      throw new Error("All fields (name, type, breed, image) are required.");
+    }
+
+    // Validate image format
+    const base64Pattern = /^data:image\/(png|jpg|jpeg);base64,/;
+    if (!base64Pattern.test(image)) {
+      throw new Error(
+        "Invalid image format. Please upload a PNG, JPG, or JPEG image."
+      );
+    }
+
+    // Save the pet to the database, with the Base64-encoded image
+    const pet = new Pet({ name, type, breed, owner, image });
+    await pet.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Pet initially registered successfully.",
+      petId: pet._id,
+    });
+  } catch (error) {
+    console.error("Error in registerPetStage1:", error.message);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const registerPetStage2 = async (req, res) => {
+  const { petId, gender, weight } = req.body;
+
+  try {
+    if (!petId || !gender || weight === undefined) {
+      throw new Error("All fields (petId, gender, weight) are required.");
+    }
+
+    // Find the pet by ID and update gender and weight
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      throw new Error("Pet not found.");
+    }
+
+    pet.gender = gender;
+    pet.weight = weight;
+    await pet.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Pet details updated successfully.",
+      pet,
+    });
+  } catch (error) {
+    console.error("Error in registerPetStage2:", error.message);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const registerPetStage3 = async (req, res) => {
+  const { petId, birthday, age } = req.body;
+
+  try {
+    if (!petId || !birthday || age === undefined) {
+      throw new Error("All fields (petId, birthday, age) are required.");
+    }
+
+    const birthDate = new Date(birthday);
+
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      throw new Error("Pet not found.");
+    }
+
+    pet.birthday = birthDate;
+    pet.age = age;
+    await pet.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Pet birthday and age updated successfully.",
+      pet,
+    });
+  } catch (error) {
+    console.error("Error in registerPetStage3:", error.message);
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const getRegisteredPets = async (req, res) => {
+  try {
+    const pets = await Pet.find();
+    res.status(200).json({
+      success: true,
+      pets,
+    });
+  } catch (error) {
+    console.error("Error fetching registered pets:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch registered pets",
+    });
   }
 };

@@ -16,8 +16,87 @@ export const useAuthStore = create((set) => ({
   isCheckingAuth: true,
   message: null,
   petImage: null,
+  pets: [],
 
   setPetImage: (image) => set({ petImage: image }),
+
+  registerPetStage1: async (name, type, breed, image, owner) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(`${API_URL}/add-pet-stage1`, {
+        name,
+        type,
+        breed,
+        image,
+        owner,
+      });
+      set({ isLoading: false, message: "Pet Stage 1 registered successfully" });
+      return response.data.petId;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error registering pet stage 1",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  registerPetStage2: async (petId, gender, weight) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(`${API_URL}/add-pet-stage2`, {
+        petId,
+        gender,
+        weight,
+      });
+      set({ isLoading: false, message: "Pet details updated successfully" });
+      return response.data;
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error updating pet details",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  registerPetStage3: async (petId, birthday, age) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.post(`${API_URL}/add-pet-stage3`, {
+        petId,
+        birthday,
+        age,
+      });
+      set({
+        isLoading: false,
+        message: "Pet birthday and age updated successfully",
+      });
+      return response.data;
+    } catch (error) {
+      set({
+        error:
+          error.response?.data?.message ||
+          "Error updating pet's birthday and age",
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  getRegisteredPets: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/get-user-pets`);
+      console.log(response.data.pets);
+      set({ pets: response.data.pets, isLoading: false });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error fetching pets",
+        isLoading: false,
+      });
+    }
+  },
 
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });

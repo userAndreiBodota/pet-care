@@ -32,3 +32,20 @@ const userSchema = new mongoose.Schema(
 );
 
 export const User = mongoose.model("User", userSchema);
+
+const petSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    breed: { type: String, required: true },
+    owner: { type: String, required: true },
+    type: { type: String, enum: ["Dog", "Cat"], required: true },
+    weight: { type: Number, required: false },
+    gender: { type: String, enum: ["Male", "Female"], required: false },
+    birthday: { type: Date, required: false },
+    age: { type: Number, required: false },
+    image: { type: String, required: false },
+  },
+  { timestamps: true }
+);
+
+export const Pet = mongoose.model("Pet", petSchema);
