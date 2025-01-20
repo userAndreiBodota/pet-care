@@ -1,33 +1,81 @@
-//reponsiveness done!
-
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const GoogleMaps = () => {
+  const [currentLocation, setCurrentLocation] = useState(null);
+  const [vetClinics, setVetClinics] = useState([]);
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyARLZY2L1jjZ8_MtPadHDfiSn98UPDenAI", // Replace with your API key
+    libraries: ["places"], // Load the Places library
+  });
+
+  useEffect(() => {
+    // Get user's current location
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setCurrentLocation({ lat: latitude, lng: longitude });
+      },
+      (error) => console.error("Error fetching location: ", error),
+      { enableHighAccuracy: true }
+    );
+  }, []);
+
+  useEffect(() => {
+    if (currentLocation) {
+      const service = new window.google.maps.places.PlacesService(
+        document.createElement("div")
+      );
+      const request = {
+        location: currentLocation,
+        radius: 5000, // Radius in meters
+        type: "veterinary_care", // Type of place
+      };
+
+      service.nearbySearch(request, (results, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+          setVetClinics(results);
+        } else {
+          console.error("Places API error: ", status);
+        }
+      });
+    }
+  }, [currentLocation]);
+
+  if (!isLoaded) return <div>Loading...</div>;
+
   return (
     <div className="container mx-auto px-4 lg:px-8">
-      {/* Title Section */}
       <div className="title text-center mb-4">
         <h1 className="font-semibold text-2xl md:text-3xl mb-4 mt-32 tracking-wide">
-          Find Nearby <span className="text-green-800">Vet Clinic</span>
+          Find Nearby <span className="text-green-800">Vet Clinics</span>
         </h1>
       </div>
 
-      {/* Subtitle Section */}
       <div className="paragraph text-center tracking-wider text-gray-600 mb-8">
         <p className="text-sm md:text-base">
           Locate Trusted Veterinary Services in your Area
         </p>
       </div>
 
-      {/* Map Section */}
       <div className="flex justify-center">
-        <iframe
-          title="Google Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31599.56837448644!2d121.07440816022445!3d14.31596055775225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd6b55c60e3cb1%3A0x401cc70e6606e7c1!2sBi%C3%B1an%2C%20Laguna%2C%20Philippines!5e0!3m2!1sen!2sus!4v1694715867687!5m2!1sen!2sus"
-          className="w-full max-w-4xl h-64 sm:h-96 border-0 rounded-lg shadow-md mb-24"
-          allowFullScreen=""
-          loading="lazy"
-        ></iframe>
+        <GoogleMap
+          center={currentLocation || { lat: 0, lng: 0 }}
+          zoom={currentLocation ? 14 : 2}
+          mapContainerClassName="w-full max-w-4xl h-64 sm:h-96 border-0 rounded-lg shadow-md mb-24"
+        >
+          {currentLocation && <Marker position={currentLocation} label="You" />}
+          {vetClinics.map((clinic, index) => (
+            <Marker
+              key={index}
+              position={{
+                lat: clinic.geometry.location.lat(),
+                lng: clinic.geometry.location.lng(),
+              }}
+              title={clinic.name}
+            />
+          ))}
+        </GoogleMap>
       </div>
     </div>
   );
