@@ -6,28 +6,29 @@ const ChatSupport = () => {
 
   const questionsAndAnswers = [
     {
-      question: "How do I reset my password?",
-      answer: "Go to the account settings and click 'Reset Password'.",
+      question: "How often should i take my pet to the vet?",
+      answer:
+        "Schedule annual wellness exams with your veterinarian. Regular visits help detect health issues early and keep vaccinations up to date.",
     },
     {
-      question: "Where can I view my orders?",
+      question: "What should I feed my pey to keep them healthy?",
       answer:
-        "You can view your orders in the 'My Orders' section of your account.",
+        "Provide a balanced diet tailored to their age, breed, size and activity level.",
     },
     {
-      question: "How do I contact support?",
+      question: "How can I mentally stimulate my pet?",
       answer:
-        "You can contact support via the 'Contact Us' page or email us at support@example.com.",
+        "Use puzzle toys, training sessions, and interactive play like fetch or hide and seek. These keep your pet mentally engaged and happy.",
     },
     {
-      question: "What is the return policy?",
+      question: "How do I maintain my pet's dental health?",
       answer:
-        "Our return policy allows returns within 30 days of purchase. See details on our 'Return Policy' page.",
+        "Brush their teeth regularly with pet-safe toothpaste and provide dental treats or toys to prevent oral issues.",
     },
     {
-      question: "How can I update my profile information?",
+      question: "How do I protect my pet from fleas and ticks?",
       answer:
-        "Go to 'My Account' and click 'Edit Profile' to update your information.",
+        "Use veterinaria-recommended preventive medications and check your pet regularly for signs like scratching or skin irritation.",
     },
   ];
 
