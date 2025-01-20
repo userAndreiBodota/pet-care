@@ -100,8 +100,6 @@ const Exercising = () => {
           <>
             {/* Dog Walking */}
             <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
-<<<<<<< HEAD
-=======
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
                   Walking
@@ -127,7 +125,6 @@ const Exercising = () => {
                 alt="Dog Fetching"
                 className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
               />
->>>>>>> 92e46d15369893622455f9cfdb61fe1a0e9d7969
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
                   Walking
@@ -327,10 +324,7 @@ const Exercising = () => {
           </>
         )}
       </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 92e46d15369893622455f9cfdb61fe1a0e9d7969
       <Footer />
     </>
   );
