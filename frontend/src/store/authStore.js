@@ -97,6 +97,23 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+  deletePet: async (petId) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.delete(`${API_URL}/delete-pet/${petId}`);
+      set((state) => ({
+        pets: state.pets.filter((pet) => pet._id !== petId),
+        isLoading: false,
+        message: response.data.message || "Pet deleted successfully",
+      }));
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response?.data?.message || "Error deleting pet",
+      });
+      throw error;
+    }
+  },
 
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
@@ -220,6 +237,35 @@ export const useAuthStore = create((set) => ({
       set({
         isLoading: false,
         error: error.response?.data?.message || "Error resetting password",
+      });
+      throw error;
+    }
+  },
+
+  addMilestone: async (petId, stage, image) => {
+    set({ isLoading: true, error: null });
+    try {
+      const formData = new FormData();
+      formData.append("stage", stage);
+      if (image) {
+        formData.append("image", image);
+      }
+
+      const response = await axios.post(
+        `${API_URL}/pets/${petId}/milestones`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      set({ isLoading: false, message: response.data.message });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error adding milestone",
+        isLoading: false,
       });
       throw error;
     }

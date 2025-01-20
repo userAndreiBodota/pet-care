@@ -221,12 +221,10 @@ export const registerPetStage1 = async (req, res) => {
   const { name, type, breed, owner, image } = req.body;
 
   try {
-    // Basic field validation
     if (!name || !type || !breed || !image) {
       throw new Error("All fields (name, type, breed, image) are required.");
     }
 
-    // Validate image format
     const base64Pattern = /^data:image\/(png|jpg|jpeg);base64,/;
     if (!base64Pattern.test(image)) {
       throw new Error(
@@ -234,7 +232,6 @@ export const registerPetStage1 = async (req, res) => {
       );
     }
 
-    // Save the pet to the database, with the Base64-encoded image
     const pet = new Pet({ name, type, breed, owner, image });
     await pet.save();
 
@@ -321,5 +318,57 @@ export const getRegisteredPets = async (req, res) => {
       success: false,
       message: "Failed to fetch registered pets",
     });
+  }
+};
+
+export const deletePet = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const pet = await Pet.findByIdAndDelete(id);
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    res.status(200).json({ message: "Pet deleted successfully", pet });
+  } catch (error) {
+    console.error("Error deleting pet:", error);
+    res.status(500).json({ message: "Failed to delete the pet" });
+  }
+};
+
+export const addMilestone = async (req, res) => {
+  const { id } = req.params;
+  const { stage, description } = req.body;
+  const imageUrl = req.file ? req.file.path : null;
+
+  try {
+    const pet = await Pet.findById(id); // Find the pet by ID
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    const milestoneIndex = pet.milestones.findIndex((m) => m.stage === stage);
+    if (milestoneIndex !== -1) {
+      pet.milestones[milestoneIndex].imageUrl = imageUrl;
+    } else {
+      const newMilestone = {
+        stage,
+        imageUrl,
+      };
+      pet.milestones.push(newMilestone);
+    }
+
+    await pet.save();
+
+    res.status(201).json({
+      message: "Milestone added successfully",
+      milestone: newMilestone,
+    });
+  } catch (error) {
+    console.error("Error adding milestone:", error);
+    res.status(500).json({ message: "Failed to add milestone" });
   }
 };

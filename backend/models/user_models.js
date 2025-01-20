@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema(
 
 export const User = mongoose.model("User", userSchema);
 
+const milestoneSchema = new mongoose.Schema({
+  stage: { type: String, required: true },
+  description: { type: String, required: false },
+  imageUrl: { type: String, required: false },
+});
 const petSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -44,6 +49,7 @@ const petSchema = new mongoose.Schema(
     birthday: { type: Date, required: false },
     age: { type: Number, required: false },
     image: { type: String, required: false },
+    milestoneSchema: [milestoneSchema],
   },
   { timestamps: true }
 );

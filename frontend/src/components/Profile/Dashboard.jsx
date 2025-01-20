@@ -23,10 +23,10 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, pets, getRegisteredPets, logout } = useAuthStore();
+  const { user, pets, getRegisteredPets, logout, deletePet } = useAuthStore();
   const [currentPetIndex, setCurrentPetIndex] = useState(0);
   const [uploadedPhotos, setUploadedPhotos] = useState({});
-
+  const addMilestone = useAuthStore((state) => state.addMilestone);
   useEffect(() => {
     if (user) {
       getRegisteredPets();
@@ -51,17 +51,37 @@ const Dashboard = () => {
     );
   };
 
-  const handlePhotoUpload = (event, type, stage) => {
-    const file = event.target.files[0];
+  const handleDelete = async (petId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this pet?"
+    );
+    if (!confirmed) return;
+
+    try {
+      await deletePet(petId);
+      alert("Pet deleted successfully");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete the pet");
+    }
+  };
+
+  const handlePhotoUpload = async (e, petType, stage) => {
+    const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setUploadedPhotos((prev) => ({
-          ...prev,
-          [`${type}-${stage}`]: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
+      setUploadedPhotos((prev) => ({
+        ...prev,
+        [`${petType}-${stage}`]: URL.createObjectURL(file),
+      }));
+
+      const petId = pets[currentPetIndex]._id; // Replace with the actual pet ID
+
+      try {
+        await addMilestone(petId, stage, file);
+        console.log("Photo uploaded successfully");
+      } catch (error) {
+        console.log("Error uploading photo", error);
+      }
     }
   };
 
@@ -189,15 +209,24 @@ const Dashboard = () => {
               >
                 <span className="text-lg font-semibold">Dashboard</span>
               </Link>
-              <div className="flex flex-wrap gap-4 justify-center items-center">
+
+              <div className="flex flex-wrap gap-4 ">
                 {pets.map((pet) => (
-                  <img
-                    key={pet.id}
-                    src={pet.image}
-                    alt={pet.name}
-                    className="w-16 h-16 object-cover rounded-full cursor-pointer"
-                    onClick={() => handlePetClick(pet._id)}
-                  />
+                  <div key={pet._id} className="relative">
+                    <img
+                      key={pet.id}
+                      src={pet.image}
+                      alt={pet.name}
+                      className="w-16 h-16 object-cover rounded-full cursor-pointer"
+                      onClick={() => handlePetClick(pet._id)}
+                    />
+                    <button
+                      onClick={() => handleDelete(pet._id)}
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                    >
+                      &times;
+                    </button>
+                  </div>
                 ))}
               </div>
 
@@ -300,7 +329,6 @@ const Dashboard = () => {
                       key={index}
                       className="relative flex flex-col items-center gap-4"
                     >
-                      {/* Upload Button with Preview */}
                       <div className="relative w-24 h-24 rounded-lg overflow-hidden">
                         <label
                           htmlFor={`upload-${pets[currentPetIndex]?.type}-${milestone.stage}`}
