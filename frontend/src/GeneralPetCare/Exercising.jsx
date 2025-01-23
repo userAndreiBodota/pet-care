@@ -100,6 +100,34 @@ const Exercising = () => {
           <>
             {/* Dog Walking */}
             <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+<<<<<<< HEAD
+=======
+              <div className="flex-grow p-4 sm:p-10">
+                <h2 className="text-xl font-bold mb-2 text-customWhite">
+                  Walking
+                </h2>
+                <p className="text-customWhite">
+                  Take your dog on a brisk 30-minute walk around the
+                  neighborhood or local park. This helps maintain cardiovascular
+                  health and allows your dog to explore its surroundings, which
+                  is mentally stimulating.
+                </p>
+              </div>
+              <img
+                src={dogWalking}
+                alt="Dog Walking"
+                className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
+              />
+            </div>
+
+            {/* Dog Fetch */}
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+              <img
+                src={dogFetch}
+                alt="Dog Fetching"
+                className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
+              />
+>>>>>>> 268e472eddcc563eebbf57b036de264fe8c6ed36
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
                   Walking
@@ -299,6 +327,10 @@ const Exercising = () => {
           </>
         )}
       </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 268e472eddcc563eebbf57b036de264fe8c6ed36
       <Footer />
     </>
   );
