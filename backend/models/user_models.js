@@ -15,6 +15,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    contactNo: {
+      type: String,
+      required: true,
+    },
+    dob: {
+      type: Date,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+
     lastLogin: {
       type: Date,
       default: Date.now,
@@ -34,9 +47,9 @@ const userSchema = new mongoose.Schema(
 export const User = mongoose.model("User", userSchema);
 
 const milestoneSchema = new mongoose.Schema({
-  stage: { type: String, required: true },
+  stage: { type: String, required: false },
   description: { type: String, required: false },
-  imageUrl: { type: String, required: false },
+  imageUrl: { type: String, required: true },
 });
 const petSchema = new mongoose.Schema(
   {

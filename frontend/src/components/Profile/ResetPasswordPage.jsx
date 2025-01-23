@@ -5,8 +5,6 @@ import { Loader, Lock } from "lucide-react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../../store/authStore";
 import Input from "../../parts/Input";
-import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");

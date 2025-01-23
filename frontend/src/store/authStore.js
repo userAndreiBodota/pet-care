@@ -9,7 +9,9 @@ const API_URL =
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
-  user: null,
+  user: JSON.parse(localStorage.getItem("user")) || null, // Load user from localStorage
+
+  // user: null,
   isAuthenticated: false,
   error: null,
   isLoading: false,
@@ -17,6 +19,20 @@ export const useAuthStore = create((set) => ({
   message: null,
   petImage: null,
   pets: [],
+
+  setUser: (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    set({ user });
+  },
+  setAuthenticated: (value) => {
+    localStorage.setItem("isAuthenticated", value ? "true" : "false");
+    set({ isAuthenticated: value });
+  },
+  clearAuth: () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
+    set({ user: null, isAuthenticated: false });
+  },
 
   setPetImage: (image) => set({ petImage: image }),
 
@@ -115,13 +131,16 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  signup: async (email, password, name) => {
+  signup: async (email, password, name, contactNo, dob, address) => {
     set({ isLoading: true, error: null });
     try {
       const response = await axios.post(`${API_URL}/signup`, {
         email,
         password,
         name,
+        contactNo,
+        dob,
+        address,
       });
       set({
         user: response.data.user,

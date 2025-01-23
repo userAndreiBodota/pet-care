@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuthStore } from "../../store/authStore.js";
-
 import toast from "react-hot-toast";
 import Footer from "../Footer/Footer.jsx";
 import Header from "../Header/Header.jsx";
@@ -48,10 +47,14 @@ const ValidationCode = () => {
     const verificationCode = code.join("");
     try {
       await verifyEmail(verificationCode);
-      navigate("/");
+
+      useAuthStore.getState().setAuthenticated(false); // Ensure user is not marked as logged in yet
       toast.success("Email verified successfully");
+
+      navigate("/login"); // Explicitly go to the login page
     } catch (error) {
       console.log(error);
+      toast.error("Verification failed. Please try again.");
     }
   };
 
@@ -86,7 +89,7 @@ const ValidationCode = () => {
                     key={index}
                     ref={(el) => (inputRefs.current[index] = el)}
                     type="text"
-                    maxLength="6"
+                    maxLength="1"
                     value={digit}
                     onChange={(e) => handleChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}

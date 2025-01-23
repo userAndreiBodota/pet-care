@@ -19,10 +19,10 @@ import { verifyToken } from "../middleware/verifyToken.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/"); // specify the destination directory
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname); // specify the file name
+    cb(null, Date.now() + "-" + file.originalname);
   },
 });
 

@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../Header/Header";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import { motion } from "framer-motion";
+import { useAuthStore } from "../../store/authStore";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    const emailVerified = localStorage.getItem("emailVerified");
+    if (isAuthenticated && !emailVerified) {
+      navigate("/dashboard");
+    } else if (!isAuthenticated && emailVerified) {
+      localStorage.removeItem("emailVerified");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleBack = () => {
     const isSignupInProgress = localStorage.getItem("signupEmail") !== null;

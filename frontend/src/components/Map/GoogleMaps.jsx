@@ -5,12 +5,11 @@ const GoogleMaps = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [vetClinics, setVetClinics] = useState([]);
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyARLZY2L1jjZ8_MtPadHDfiSn98UPDenAI", // Replace with your API key
-    libraries: ["places"], // Load the Places library
+    googleMapsApiKey: "AIzaSyARLZY2L1jjZ8_MtPadHDfiSn98UPDenAI",
+    libraries: ["places"],
   });
 
   useEffect(() => {
-    // Get user's current location
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -28,8 +27,8 @@ const GoogleMaps = () => {
       );
       const request = {
         location: currentLocation,
-        radius: 5000, // Radius in meters
-        type: "veterinary_care", // Type of place
+        radius: 5000,
+        type: "veterinary_care",
       };
 
       service.nearbySearch(request, (results, status) => {

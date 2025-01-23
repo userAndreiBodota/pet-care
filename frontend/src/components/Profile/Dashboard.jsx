@@ -317,7 +317,6 @@ const Dashboard = () => {
           </section>
 
           <div>
-            {/* Pet milestones section */}
             <section>
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Your Pet's Growth

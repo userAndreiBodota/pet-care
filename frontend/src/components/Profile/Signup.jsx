@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Loader, Lock, Mail, User } from "lucide-react";
+import { Loader, Lock, Mail, User, Phone, Calendar, Home } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,6 +13,9 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [dob, setDob] = useState("");
+  const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
   const { signup, error, isLoading } = useAuthStore();
@@ -21,7 +24,7 @@ const Signup = () => {
     e.preventDefault();
 
     try {
-      await signup(email, password, name);
+      await signup(email, password, name, contactNo, dob, address);
       navigate("/validation-code");
     } catch (error) {
       console.log(error);
@@ -37,14 +40,13 @@ const Signup = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-md w-full "
+          className="max-w-md w-full"
         >
           <div className="p-8">
-            <h2 className="text-3xl font-bold mb-6 text-center  text-black">
+            <h2 className="text-3xl font-bold mb-6 text-center text-black">
               Create Account
             </h2>
-            <p className="text-xl  mb-6 text-center  text-gray-600">
-              {" "}
+            <p className="text-xl mb-6 text-center text-gray-600">
               Welcome! Please enter your information below and get started.
             </p>
 
@@ -70,9 +72,32 @@ const Signup = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <Input
+                icon={Phone}
+                type="text"
+                placeholder="Contact Number"
+                value={contactNo}
+                onChange={(e) => setContactNo(e.target.value)}
+              />
+              <Input
+                icon={Calendar}
+                type="date"
+                placeholder="Date of Birth"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+              />
+              <Input
+                icon={Home}
+                type="text"
+                placeholder="Address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+
               {error && (
                 <p className="text-red-500 font-semibold mt-2">{error}</p>
               )}
+
               <PasswordStrengthMeter password={password} />
 
               <motion.button
@@ -90,7 +115,7 @@ const Signup = () => {
               </motion.button>
             </form>
           </div>
-          <div className="px-8 py-4  flex justify-center">
+          <div className="px-8 py-4 flex justify-center">
             <p className="text-sm text-gray-400">
               Already have an account?{" "}
               <Link to={"/login"} className="text-green-400 hover:underline">

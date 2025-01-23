@@ -33,11 +33,13 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuthStore } from "./store/authStore";
 import ResetPasswordPage from "./components/Profile/ResetPasswordPage";
 import Addpets from "./components/AddPets/Addpets";
 import Kilogram from "./components/Kilogram/Kilogram";
 import AddBirthdate from "./components/AddBirthdate/AddBirthdate";
+import Account from "./components/Profile/Account";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -66,6 +68,12 @@ const RedirectAuthenticatedUser = ({ children }) => {
 };
 
 function App() {
+  const { checkAuth } = useAuthStore();
+
+  useEffect(() => {
+    checkAuth(); // Check authentication status on app load
+  }, [checkAuth]);
+
   return (
     <Router>
       <Routes>
@@ -115,6 +123,14 @@ function App() {
           />
           <Route
             path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account"
             element={
               <ProtectedRoute>
                 <DashboardPage />
