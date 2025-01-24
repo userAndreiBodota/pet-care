@@ -255,38 +255,61 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response?.data?.message || "Error resetting password",
+        error: error.response.data.message || "Error resetting password",
       });
       throw error;
     }
   },
 
-  addMilestone: async (petId, stage, image) => {
+  updateUser: async (userData) => {
+    try {
+      const response = await axios.put(`${API_URL}/update`, userData);
+      set((state) => ({ user: { ...state.user, ...userData } }));
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  },
+
+  addMilestone: async (petId, base64Image) => {
     set({ isLoading: true, error: null });
+
     try {
       const formData = new FormData();
-      formData.append("stage", stage);
-      if (image) {
-        formData.append("image", image);
-      }
+      formData.append("image", base64Image); // Append the image to FormData
 
+      // Send the request to the server
       const response = await axios.post(
-        `${API_URL}/pets/${petId}/milestones`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        `${API_URL}/pets/${petId}/milestones`, // Ensure this is the correct API endpoint
+        formData
       );
 
+      // Assuming the server returns an image URL
+      const uploadedImageUrl = response.data.imageUrl;
+
       set({ isLoading: false, message: response.data.message });
+
+      return uploadedImageUrl; // Return the image URL to be used in the UI
     } catch (error) {
       set({
-        error: error.response?.data?.message || "Error adding milestone",
+        error: error.response?.data?.message || "Error uploading image",
         isLoading: false,
       });
       throw error;
+    }
+  },
+
+  getMilestones: async (petId) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/pets/${petId}/milestones`);
+      set({ milestones: response.data.milestones, isLoading: false });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error fetching milestones",
+        isLoading: false,
+      });
     }
   },
 }));

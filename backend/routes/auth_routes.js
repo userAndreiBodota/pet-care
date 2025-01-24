@@ -5,6 +5,7 @@ import {
   checkAuth,
   deletePet,
   forgotPassword,
+  getMilestones,
   getRegisteredPets,
   login,
   logout,
@@ -13,6 +14,7 @@ import {
   registerPetStage3,
   resetPassword,
   signup,
+  updateUser,
   verifyEmail,
 } from "../controllers/auth_controllers.js";
 import { verifyToken } from "../middleware/verifyToken.js";
@@ -55,6 +57,10 @@ router.get("/get-user-pets", getRegisteredPets);
 router.delete("/delete-pet/:id", deletePet);
 
 router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
+
+router.get("/milestones", getMilestones);
+
+router.put("/update", updateUser);
 
 // router.get("/pets/:id/milestones", getMilestones);
 

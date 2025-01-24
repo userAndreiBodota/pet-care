@@ -8,8 +8,6 @@ import {
   sendVerificationEmail,
   sendWelcomeEmail,
 } from "../mailtrap/emails.js";
-import fs from "fs";
-import path from "path";
 
 export const signup = async (req, res) => {
   const { email, password, name, dob, contactNo, address } = req.body;
@@ -179,13 +177,14 @@ export const resetPassword = async (req, res) => {
       resetPasswordToken: token,
       resetPasswordExpiresAt: { $gt: Date.now() },
     });
+
     if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid or expired reset token",
-      });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid or expired reset token" });
     }
 
+    // update password
     const hashedPassword = await bcryptjs.hash(password, 10);
 
     user.password = hashedPassword;
@@ -197,9 +196,9 @@ export const resetPassword = async (req, res) => {
 
     res
       .status(200)
-      .json({ success: true, message: "Password reset sucessful" });
+      .json({ success: true, message: "Password reset successful" });
   } catch (error) {
-    console.error("Error in resetPassword", error);
+    console.log("Error in resetPassword ", error);
     res.status(400).json({ success: false, message: error.message });
   }
 };
@@ -324,6 +323,22 @@ export const getRegisteredPets = async (req, res) => {
   }
 };
 
+export const getMilestones = async (req, res) => {
+  try {
+    const milestones = await Milestone.find(); // Fetch all milestones from the database
+    res.status(200).json({
+      success: true,
+      milestones,
+    });
+  } catch (error) {
+    console.error("Error fetching milestones:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch milestones",
+    });
+  }
+};
+
 export const deletePet = async (req, res) => {
   const { id } = req.params;
 
@@ -341,30 +356,71 @@ export const deletePet = async (req, res) => {
   }
 };
 
+// Controller
 export const addMilestone = async (req, res) => {
-  const { id } = req.params; // Get the pet ID from the URL
-  const { stage } = req.body; // Get the stage from the request body
-  const imageUrl = req.file ? req.file.path : null; // Get the file path if uploaded
-
   try {
-    // Find the pet by ID
-    const pet = await Pet.findById(id);
+    const petId = req.params.id;
+    const { stage, description, imageUrl } = req.body; // Accept the Base64 string directly
 
+    if (!imageUrl) {
+      return res.status(400).json({ message: "Image is required" });
+    }
+
+    // Convert Base64 to Buffer and save it as a file
+    const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, ""); // Remove the metadata part
+    const buffer = Buffer.from(base64Data, "base64");
+    const filename = `milestone-${Date.now()}.jpg`; // Generate a filename (you can also save it with a unique name)
+    const filePath = path.join(__dirname, "uploads", filename); // Save to uploads folder (make sure it's writable)
+
+    fs.writeFileSync(filePath, buffer); // Write the image to file system
+
+    const milestone = {
+      stage,
+      description,
+      imageUrl: `/uploads/${filename}`, // Save the file path in the database
+    };
+
+    const pet = await Pet.findById(petId);
     if (!pet) {
       return res.status(404).json({ message: "Pet not found" });
     }
-    const newMilestone = {
-      stage,
-      imageUrl,
-    };
-    pet.milestones.push({ stage, imageUrl });
 
-    // Save the pet document
+    pet.milestoneSchema.push(milestone); // Push new milestone to the pet
     await pet.save();
 
-    res.status(201).json({ message: "Milestone added successfully" });
+    res.status(201).json({
+      message: "Milestone added successfully",
+      pet,
+    });
+  } catch (err) {
+    console.error("Error adding milestone:", err);
+    res.status(500).json({
+      message: "Error adding milestone",
+      error: err.message,
+    });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  const { name, contactNo, dob, address } = req.body;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.name = name || user.name;
+    user.contactNo = contactNo || user.contactNo;
+    user.dob = dob || user.dob;
+    user.address = address || user.address;
+    user.email = email || user.email;
+    user.gender = gender || user.gender;
+
+    await user.save();
+    res.status(200).json({ message: "User updated successfully", user });
   } catch (error) {
-    console.error("Error adding milestone:", error);
-    res.status(500).json({ message: "Failed to add milestone" });
+    console.error(error);
+    res.status(500).json({ message: "Failed to update user" });
   }
 };

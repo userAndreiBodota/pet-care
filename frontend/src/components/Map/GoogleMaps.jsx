@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  DirectionsRenderer,
+} from "@react-google-maps/api";
 
 const GoogleMaps = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -11,12 +16,6 @@ const GoogleMaps = () => {
   });
 
   useEffect(() => {
-<<<<<<< HEAD
-=======
-    if (!isLoaded) return; // Ensure the library is loaded
-
-    // Get user's current location
->>>>>>> 268e472eddcc563eebbf57b036de264fe8c6ed36
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -93,9 +92,9 @@ const GoogleMaps = () => {
           mapContainerClassName="w-full max-w-4xl h-64 sm:h-96 border-0 rounded-lg shadow-md mb-24"
         >
           {currentLocation && (
-            <Marker 
-              position={currentLocation} 
-              label="You" 
+            <Marker
+              position={currentLocation}
+              label="You"
               icon={{
                 url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Custom marker icon
               }}
@@ -112,7 +111,8 @@ const GoogleMaps = () => {
               onClick={() => handleClinicSelect(clinic)} // Handle clinic click to show directions
             />
           ))}
-          {directions && <DirectionsRenderer directions={directions} />} {/* Render directions */}
+          {directions && <DirectionsRenderer directions={directions} />}{" "}
+          {/* Render directions */}
         </GoogleMap>
       </div>
     </div>

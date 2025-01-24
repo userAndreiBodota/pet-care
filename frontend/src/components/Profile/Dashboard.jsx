@@ -65,25 +65,58 @@ const Dashboard = () => {
       alert("Failed to delete the pet");
     }
   };
+  const handlePhotoUpload = async (event, petId, milestoneStage) => {
+    const file = event.target.files[0]; // Get the selected file
 
-  const handlePhotoUpload = async (e, petType, stage) => {
-    const file = e.target.files[0];
-    if (file) {
-      setUploadedPhotos((prev) => ({
-        ...prev,
-        [`${petType}-${stage}`]: URL.createObjectURL(file),
-      }));
+    if (!file) {
+      console.log("No file selected.");
+      return;
+    }
 
-      const petId = pets[currentPetIndex]._id; // Replace with the actual pet ID
+    const reader = new FileReader();
+
+    reader.onloadend = async () => {
+      const base64Image = reader.result;
 
       try {
-        await addMilestone(petId, stage, file);
-        console.log("Photo uploaded successfully");
+        setUploadedPhotos((prevState) => {
+          const newState = {
+            ...prevState,
+            [`${petId}-${milestoneStage}`]: base64Image,
+          };
+
+          localStorage.setItem("uploadedPhotos", JSON.stringify(newState));
+
+          return newState;
+        });
+
+        alert("Image uploaded successfully!");
       } catch (error) {
-        console.log("Error uploading photo", error);
+        console.error("Error processing the image:", error);
+        alert("Error uploading image");
       }
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const loadUploadedPhotosFromStorage = () => {
+    const savedPhotos = localStorage.getItem("uploadedPhotos");
+    if (savedPhotos) {
+      setUploadedPhotos(JSON.parse(savedPhotos));
     }
   };
+
+  useEffect(() => {
+    loadUploadedPhotosFromStorage();
+  }, []);
+
+  // useEffect to track changes in uploadedPhotos state
+  useEffect(() => {
+    if (uploadedPhotos) {
+      console.log("Uploaded photos state updated:", uploadedPhotos);
+    }
+  }, [uploadedPhotos]);
 
   const getMilestonesForPet = (type) => {
     const dogMilestones = [
@@ -334,11 +367,11 @@ const Dashboard = () => {
                           className="flex items-center justify-center w-full h-full bg-gray-300 text-gray-700 cursor-pointer hover:bg-gray-400 relative"
                           style={{
                             backgroundImage: uploadedPhotos[
-                              `${pets[currentPetIndex]?.type}-${milestone.stage}`
+                              `${pets[currentPetIndex]?._id}-${milestone.stage}`
                             ]
                               ? `url(${
                                   uploadedPhotos[
-                                    `${pets[currentPetIndex]?.type}-${milestone.stage}`
+                                    `${pets[currentPetIndex]?._id}-${milestone.stage}`
                                   ]
                                 })`
                               : "none",
@@ -348,9 +381,10 @@ const Dashboard = () => {
                           }}
                         >
                           {!uploadedPhotos[
-                            `${pets[currentPetIndex]?.type}-${milestone.stage}`
+                            `${pets[currentPetIndex]?._id}-${milestone.stage}`
                           ] && <span className="text-2xl font-bold">+</span>}
                         </label>
+
                         <input
                           type="file"
                           id={`upload-${pets[currentPetIndex]?.type}-${milestone.stage}`}
@@ -358,19 +392,20 @@ const Dashboard = () => {
                           onChange={(e) =>
                             handlePhotoUpload(
                               e,
-                              pets[currentPetIndex]?.type,
+                              pets[currentPetIndex]?._id,
                               milestone.stage
                             )
                           }
                         />
+
                         {uploadedPhotos[
-                          `${pets[currentPetIndex]?.type}-${milestone.stage}`
+                          `${pets[currentPetIndex]?._id}-${milestone.stage}`
                         ] && (
                           <button
                             onClick={() =>
                               setUploadedPhotos((prev) => ({
                                 ...prev,
-                                [`${pets[currentPetIndex]?.type}-${milestone.stage}`]:
+                                [`${pets[currentPetIndex]?._id}-${milestone.stage}`]:
                                   null, // Remove the uploaded image
                               }))
                             }
