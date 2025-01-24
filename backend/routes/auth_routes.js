@@ -54,10 +54,7 @@ router.get("/get-user-pets", getRegisteredPets);
 
 router.delete("/delete-pet/:id", deletePet);
 
-router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
-
-// router.get("/pets/:id/milestones", getMilestones);
-
-// router.delete("/pets/:petId/milestones/:milestoneId", removeMilestone);
+// Route to add a milestone
+router.post("/pets/:id/milestones", upload.single("image"), addMilestone)
 
 export default router;

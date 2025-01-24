@@ -41,7 +41,7 @@ const EmergencyOptions = () => {
       {/* Back Arrow Button */}
       <Link
         to="/"
-        className="absolute top-6 left-6 text-xl text-gray-600 hover:text-gray-800"
+        className="absolute -top-3 left-6 text-xl text-gray-600 hover:text-gray-800"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
