@@ -58,10 +58,6 @@ router.delete("/delete-pet/:id", deletePet);
 
 router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
 
-router.get("/milestones", getMilestones);
-
-router.put("/update", updateUser);
-
 // router.get("/pets/:id/milestones", getMilestones);
 
 // router.delete("/pets/:petId/milestones/:milestoneId", removeMilestone);

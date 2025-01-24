@@ -261,6 +261,7 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+<<<<<<< HEAD
   updateUser: async (userData) => {
     try {
       const response = await axios.put(`${API_URL}/update`, userData);
@@ -273,21 +274,37 @@ export const useAuthStore = create((set) => ({
   },
 
   addMilestone: async (petId, base64Image) => {
+=======
+  addMilestone: async (petId, stage, description, image) => {
+>>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
     set({ isLoading: true, error: null });
 
     try {
       const formData = new FormData();
+<<<<<<< HEAD
       formData.append("image", base64Image); // Append the image to FormData
 
       // Send the request to the server
+=======
+      formData.append("stage", stage);
+      formData.append("description", description); // Include the description
+      if (image) {
+        formData.append("image", image);
+      }
+  
+>>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
       const response = await axios.post(
         `${API_URL}/pets/${petId}/milestones`, // Ensure this is the correct API endpoint
         formData
       );
+<<<<<<< HEAD
 
       // Assuming the server returns an image URL
       const uploadedImageUrl = response.data.imageUrl;
 
+=======
+  
+>>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
       set({ isLoading: false, message: response.data.message });
 
       return uploadedImageUrl; // Return the image URL to be used in the UI
@@ -299,6 +316,7 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
+<<<<<<< HEAD
 
   getMilestones: async (petId) => {
     set({ isLoading: true, error: null });
@@ -312,4 +330,7 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+=======
+  
+>>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
 }));

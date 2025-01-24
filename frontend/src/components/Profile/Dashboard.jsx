@@ -1,3 +1,5 @@
+//RESPONSIVE DONE
+
 import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/authStore";
 import { Link } from "react-router-dom";
@@ -217,19 +219,19 @@ const Dashboard = () => {
       },
     ];
 
-    return type === "Dog" ? dogMilestones : catMilestones;
+    return type === "Dog" ? dogMilestones : catMilestones;    
   };
 
   return (
     <>
       <Header />
-      <div className="flex min-h-screen bg-gray-50 font-sans">
+      <div className="flex min-h-screen bg-gray-50 font-sans flex-col lg:flex-row">
         {/* Sidebar */}
         <motion.aside
           initial={{ x: -100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.5 }}
-          className="w-64 bg-white shadow-lg flex flex-col justify-between p-6"
+          className="lg:w-64 w-full bg-white shadow-lg flex flex-col justify-between p-6"
         >
           <div>
             <h1 className="text-2xl font-bold text-gray-800 mb-10">
@@ -243,7 +245,7 @@ const Dashboard = () => {
                 <span className="text-lg font-semibold">Dashboard</span>
               </Link>
 
-              <div className="flex flex-wrap gap-4 ">
+              <div className="flex flex-wrap gap-4">
                 {pets.map((pet) => (
                   <div key={pet._id} className="relative">
                     <img
@@ -298,7 +300,7 @@ const Dashboard = () => {
           <section className="mb-10">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Pets</h2>
             {pets.length > 0 ? (
-              <div className="relative flex justify-center items-center gap-96 space-x-4 bg-black p-6 rounded-lg shadow-lg">
+              <div className="relative flex justify-center items-center gap-4 bg-black p-6 rounded-lg shadow-lg lg:w-full md:w-3/4 w-full mx-auto">
                 <button
                   onClick={handlePrevPet}
                   className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2"
@@ -306,7 +308,7 @@ const Dashboard = () => {
                   &lt;
                 </button>
 
-                <div>
+                <div className="text-center">
                   <h3 className="flex items-center text-xl font-semibold text-white">
                     {pets[currentPetIndex].gender === "Male" ? (
                       <FontAwesomeIcon icon={faMars} className="mr-2" />
@@ -320,7 +322,7 @@ const Dashboard = () => {
                   </p>
                 </div>
 
-                <div className="relative w-32 h-32">
+                <div className="relative w-32 h-32 mx-6">
                   <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gray-400 opacity-30 blur-lg"></div>
                   <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gray-500 opacity-50 blur-xl"></div>
                   <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gray-600 opacity-70 blur-2xl"></div>
@@ -354,7 +356,7 @@ const Dashboard = () => {
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
                 Your Pet's Growth
               </h2>
-              <div className="grid grid-cols-6 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 {getMilestonesForPet(pets[currentPetIndex]?.type).map(
                   (milestone, index) => (
                     <div

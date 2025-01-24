@@ -1,6 +1,7 @@
 //responsive na
 
 import Cat from "../Do-you-know/image/cat.png";
+import Tipsbg from "../Do-you-know/image/tipsbg.png";
 import React, { useState } from "react";
 
 const Tips = () => {
@@ -61,14 +62,18 @@ const Tips = () => {
           Simple Practices to Keep Your Pets Happy and Thriving
         </p>
       </div>
-      <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between mb-12">
-        <div className="w-full sm:w-2/3 mb-4 sm:mb-0">
-          <h2 className="text-lg sm:text-xl font-bold mb-4 text-center">Tips for Maintaining Healthy Pets</h2>
-          <p className="text-sm sm:text-base mt-4 text-center">{texts[currentIndex]}</p>
-        </div>
 
-        <div className="w-full sm:w-1/3 flex justify-center mb-4 sm:mb-0">
-          <img src={Cat} alt="Cat Illustration" className="object-cover h-52 sm:h-64 md:h-80" />
+      <div
+        className="relative w-full max-w-5xl mx-auto bg-cover bg-center rounded-lg p-8 sm:p-16 flex flex-col items-start justify-center mb-40 mt-10"
+        style={{ backgroundImage: `url(${Tipsbg})` }}
+      >
+        <div className="w-full sm:w-12/12 mb-4 sm:mb-0 bg-opacity-75 rounded-lg p-6 flex flex-col items-start">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4">
+            Tips for Maintaining Healthy Pets
+          </h2>
+          <p className="text-base sm:text-lg mt-2 w-full">
+            {texts[currentIndex]}
+          </p>
         </div>
 
         <div className="absolute bottom-4 w-full flex justify-center space-x-2">

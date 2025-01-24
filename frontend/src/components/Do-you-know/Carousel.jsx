@@ -30,7 +30,7 @@ const Carousel = () => {
   }, [nextText]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between mb-12 shadow-lg">
+    <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between mb-12 shadow-lg mt-16">
       {/* Text Section */}
       <div
         className={`w-full sm:w-2/3 text-center sm:text-left mb-6 sm:mb-0 transition-all duration-500 ease-in-out transform ${
