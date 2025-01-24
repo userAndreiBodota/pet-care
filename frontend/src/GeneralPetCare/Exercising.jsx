@@ -324,10 +324,7 @@ const Exercising = () => {
           </>
         )}
       </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
       <Footer />
     </>
   );

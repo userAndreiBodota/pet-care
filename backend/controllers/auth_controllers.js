@@ -357,65 +357,56 @@ export const deletePet = async (req, res) => {
 };
 
 // Controller
-export const addMilestone = async (req, res) => {
-<<<<<<< HEAD
-  try {
-    const petId = req.params.id;
-    const { stage, description, imageUrl } = req.body; // Accept the Base64 string directly
+// export const addMilestone = async (req, res) => {
 
-    if (!imageUrl) {
-      return res.status(400).json({ message: "Image is required" });
-    }
+//   try {
 
-    // Convert Base64 to Buffer and save it as a file
-    const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, ""); // Remove the metadata part
-    const buffer = Buffer.from(base64Data, "base64");
-    const filename = `milestone-${Date.now()}.jpg`; // Generate a filename (you can also save it with a unique name)
-    const filePath = path.join(__dirname, "uploads", filename); // Save to uploads folder (make sure it's writable)
+//     if (!imageUrl) {
+//       return res.status(400).json({ message: "Image is required" });
+//     }
 
-    fs.writeFileSync(filePath, buffer); // Write the image to file system
+//     // Convert Base64 to Buffer and save it as a file
+//     const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, ""); // Remove the metadata part
+//     const buffer = Buffer.from(base64Data, "base64");
+//     const filename = `milestone-${Date.now()}.jpg`; // Generate a filename (you can also save it with a unique name)
+//     const filePath = path.join(__dirname, "uploads", filename); // Save to uploads folder (make sure it's writable)
 
-    const milestone = {
-      stage,
-      description,
-      imageUrl: `/uploads/${filename}`, // Save the file path in the database
-    };
+//     fs.writeFileSync(filePath, buffer); // Write the image to file system
 
-    const pet = await Pet.findById(petId);
-    if (!pet) {
-      return res.status(404).json({ message: "Pet not found" });
-    }
-=======
-  const { id } = req.params; // Pet ID from the URL
-  const { stage, description } = req.body; // Stage and description from the request body
-  const imageUrl = req.file ? req.file.path : null; // File path if uploaded
+//     const milestone = {
+//       stage,
+//       description,
+//       imageUrl: `/uploads/${filename}`, // Save the file path in the database
+//     };
 
-  try {
-    const pet = await Pet.findById(id); // Find the pet by ID
-    if (!pet) {
-      return res.status(404).json({ message: "Pet not found" });
-    }
-    
-    // Add a new milestone to the milestones array
-    const newMilestone = { stage, description, imageUrl };
-    pet.milestones.push(newMilestone);
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
+//     const pet = await Pet.findById(petId);
+//     if (!pet) {
+//       return res.status(404).json({ message: "Pet not found" });
+//     }
 
-    pet.milestoneSchema.push(milestone); // Push new milestone to the pet
-    await pet.save();
+//   const { id } = req.params; // Pet ID from the URL
+//   const { stage, description } = req.body; // Stage and description from the request body
+//   const imageUrl = req.file ? req.file.path : null; // File path if uploaded
 
-    res.status(201).json({
-      message: "Milestone added successfully",
-      pet,
-    });
-  } catch (err) {
-    console.error("Error adding milestone:", err);
-    res.status(500).json({
-      message: "Error adding milestone",
-      error: err.message,
-    });
-  }
-};
+//   try {
+//     const pet = await Pet.findById(id); // Find the pet by ID
+//     if (!pet) {
+//       return res.status(404).json({ message: "Pet not found" });
+//     }
+
+//     res.status(201).json({
+//       message: "Milestone added successfully",
+//       pet,
+//     });
+//   } catch (err) {
+//     console.error("Error adding milestone:", err);
+//     res.status(500).json({
+//       message: "Error adding milestone",
+//       error: err.message,
+//     });
+//   }
+// }
+// };
 
 export const updateUser = async (req, res) => {
   const { name, contactNo, dob, address } = req.body;
