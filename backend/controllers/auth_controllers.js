@@ -342,22 +342,19 @@ export const deletePet = async (req, res) => {
 };
 
 export const addMilestone = async (req, res) => {
-  const { id } = req.params; // Get the pet ID from the URL
-  const { stage } = req.body; // Get the stage from the request body
-  const imageUrl = req.file ? req.file.path : null; // Get the file path if uploaded
+  const { id } = req.params; // Pet ID from the URL
+  const { stage, description } = req.body; // Stage and description from the request body
+  const imageUrl = req.file ? req.file.path : null; // File path if uploaded
 
   try {
-    // Find the pet by ID
-    const pet = await Pet.findById(id);
-
+    const pet = await Pet.findById(id); // Find the pet by ID
     if (!pet) {
       return res.status(404).json({ message: "Pet not found" });
     }
-    const newMilestone = {
-      stage,
-      imageUrl,
-    };
-    pet.milestones.push({ stage, imageUrl });
+    
+    // Add a new milestone to the milestones array
+    const newMilestone = { stage, description, imageUrl };
+    pet.milestones.push(newMilestone);
 
     // Save the pet document
     await pet.save();
