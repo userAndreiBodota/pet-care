@@ -261,15 +261,16 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  addMilestone: async (petId, stage, image) => {
+  addMilestone: async (petId, stage, description, image) => {
     set({ isLoading: true, error: null });
     try {
       const formData = new FormData();
       formData.append("stage", stage);
+      formData.append("description", description); // Include the description
       if (image) {
         formData.append("image", image);
       }
-
+  
       const response = await axios.post(
         `${API_URL}/pets/${petId}/milestones`,
         formData,
@@ -279,7 +280,7 @@ export const useAuthStore = create((set) => ({
           },
         }
       );
-
+  
       set({ isLoading: false, message: response.data.message });
     } catch (error) {
       set({
@@ -289,4 +290,5 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
+  
 }));
