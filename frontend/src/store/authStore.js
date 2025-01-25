@@ -10,8 +10,6 @@ axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
   user: JSON.parse(localStorage.getItem("user")) || null, // Load user from localStorage
-
-  // user: null,
   isAuthenticated: false,
   error: null,
   isLoading: false,
@@ -32,6 +30,40 @@ export const useAuthStore = create((set) => ({
     localStorage.removeItem("user");
     localStorage.removeItem("isAuthenticated");
     set({ user: null, isAuthenticated: false });
+  },
+
+  updateUser: async (userId, updatedData) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axios.put(
+        `${API_URL}/update-user/${userId}`,
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Token for authentication
+          },
+        }
+      );
+
+      // Update user state with the response
+      const updatedUser = response.data.user;
+      set({
+        user: updatedUser,
+        isLoading: false,
+        message: response.data.message,
+      });
+
+      // Persist updated user in localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Failed to update user details",
+        isLoading: false,
+      });
+      throw error;
+    }
   },
 
   setPetImage: (image) => set({ petImage: image }),
@@ -113,6 +145,7 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+
   deletePet: async (petId) => {
     set({ isLoading: true, error: null });
     try {
@@ -126,6 +159,25 @@ export const useAuthStore = create((set) => ({
       set({
         isLoading: false,
         error: error.response?.data?.message || "Error deleting pet",
+      });
+      throw error;
+    }
+  },
+
+  // New function for updating pet details
+  updatePetDetails: async (petId, updatedData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.put(
+        `${API_URL}/update-pet/${petId}`,
+        updatedData
+      );
+      set({ isLoading: false, message: "Pet details updated successfully" });
+      return response.data.pet;
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response?.data?.message || "Error updating pet details",
       });
       throw error;
     }
@@ -261,54 +313,36 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-<<<<<<< HEAD
-  updateUser: async (userData) => {
-    try {
-      const response = await axios.put(`${API_URL}/update`, userData);
-      set((state) => ({ user: { ...state.user, ...userData } }));
-      return response.data;
-    } catch (error) {
-      console.error("Error updating user:", error);
-      throw error;
-    }
-  },
-
-  addMilestone: async (petId, base64Image) => {
-=======
   addMilestone: async (petId, stage, description, image) => {
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
     set({ isLoading: true, error: null });
 
     try {
       const formData = new FormData();
-<<<<<<< HEAD
-      formData.append("image", base64Image); // Append the image to FormData
-
-      // Send the request to the server
-=======
+      if (!stage || !description) {
+        throw new Error("Stage and description are required.");
+      }
       formData.append("stage", stage);
-      formData.append("description", description); // Include the description
+      formData.append("description", description);
       if (image) {
         formData.append("image", image);
       }
-  
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
+
+      console.log("FormData contents:");
+      for (let pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+
       const response = await axios.post(
-        `${API_URL}/pets/${petId}/milestones`, // Ensure this is the correct API endpoint
+        `${API_URL}/pets/${petId}/milestones`, // Check this endpoint
         formData
       );
-<<<<<<< HEAD
 
-      // Assuming the server returns an image URL
-      const uploadedImageUrl = response.data.imageUrl;
+      const uploadedImageUrl = response.data?.imageUrl;
 
-=======
-  
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
       set({ isLoading: false, message: response.data.message });
-
-      return uploadedImageUrl; // Return the image URL to be used in the UI
+      return uploadedImageUrl;
     } catch (error) {
+      console.log("Error response:", error.response?.data);
       set({
         error: error.response?.data?.message || "Error uploading image",
         isLoading: false,
@@ -316,21 +350,4 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
-<<<<<<< HEAD
-
-  getMilestones: async (petId) => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await axios.get(`${API_URL}/pets/${petId}/milestones`);
-      set({ milestones: response.data.milestones, isLoading: false });
-    } catch (error) {
-      set({
-        error: error.response?.data?.message || "Error fetching milestones",
-        isLoading: false,
-      });
-    }
-  },
-=======
-  
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
 }));

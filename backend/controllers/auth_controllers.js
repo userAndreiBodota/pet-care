@@ -323,6 +323,62 @@ export const getRegisteredPets = async (req, res) => {
   }
 };
 
+//UPDATE PET DETAILS
+export const updatePetDetails = async (petId, updatedData) => {
+  try {
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      throw new Error("Pet not found");
+    }
+
+    // Update the pet fields with the provided data
+    pet.name = updatedData.name || pet.name;
+    pet.breed = updatedData.breed || pet.breed;
+    pet.gender = updatedData.gender || pet.gender;
+    pet.weight = updatedData.weight || pet.weight;
+    pet.birthday = updatedData.birthday || pet.birthday;
+    pet.age = updatedData.age || pet.age;
+    pet.image = updatedData.image || pet.image;
+
+    // Save the updated pet
+    await pet.save();
+    return pet;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+//UPDATE PET IMAGE
+export const updatePetImage = async (req, res) => {
+  try {
+    const petId = req.params.id;
+    const file = req.file;
+
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // Update the pet image in the database
+    const updatedPet = await Pet.findByIdAndUpdate(
+      petId,
+      { image: file.path }, // Assuming the image path is stored
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Pet image updated successfully.",
+      pet: updatedPet,
+    });
+  } catch (error) {
+    console.error("Error updating pet image:", error.message);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const getMilestones = async (req, res) => {
   try {
     const milestones = await Milestone.find(); // Fetch all milestones from the database
@@ -358,34 +414,6 @@ export const deletePet = async (req, res) => {
 
 // Controller
 export const addMilestone = async (req, res) => {
-<<<<<<< HEAD
-  try {
-    const petId = req.params.id;
-    const { stage, description, imageUrl } = req.body; // Accept the Base64 string directly
-
-    if (!imageUrl) {
-      return res.status(400).json({ message: "Image is required" });
-    }
-
-    // Convert Base64 to Buffer and save it as a file
-    const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, ""); // Remove the metadata part
-    const buffer = Buffer.from(base64Data, "base64");
-    const filename = `milestone-${Date.now()}.jpg`; // Generate a filename (you can also save it with a unique name)
-    const filePath = path.join(__dirname, "uploads", filename); // Save to uploads folder (make sure it's writable)
-
-    fs.writeFileSync(filePath, buffer); // Write the image to file system
-
-    const milestone = {
-      stage,
-      description,
-      imageUrl: `/uploads/${filename}`, // Save the file path in the database
-    };
-
-    const pet = await Pet.findById(petId);
-    if (!pet) {
-      return res.status(404).json({ message: "Pet not found" });
-    }
-=======
   const { id } = req.params; // Pet ID from the URL
   const { stage, description } = req.body; // Stage and description from the request body
   const imageUrl = req.file ? req.file.path : null; // File path if uploaded
@@ -395,11 +423,10 @@ export const addMilestone = async (req, res) => {
     if (!pet) {
       return res.status(404).json({ message: "Pet not found" });
     }
-    
+
     // Add a new milestone to the milestones array
     const newMilestone = { stage, description, imageUrl };
     pet.milestones.push(newMilestone);
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
 
     pet.milestoneSchema.push(milestone); // Push new milestone to the pet
     await pet.save();
@@ -418,25 +445,24 @@ export const addMilestone = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  const { name, contactNo, dob, address } = req.body;
-
   try {
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const { id } = req.params; // Get user ID from URL
+    const updates = req.body; // Get updated data from request body
+
+    // Assume you have a User model connected to your database
+    const updatedUser = await User.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
     }
 
-    user.name = name || user.name;
-    user.contactNo = contactNo || user.contactNo;
-    user.dob = dob || user.dob;
-    user.address = address || user.address;
-    user.email = email || user.email;
-    user.gender = gender || user.gender;
-
-    await user.save();
-    res.status(200).json({ message: "User updated successfully", user });
+    res
+      .status(200)
+      .json({ message: "User updated successfully", user: updatedUser });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Failed to update user" });
+    res.status(500).json({ error: "Failed to update user" });
   }
 };

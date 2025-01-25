@@ -1,6 +1,5 @@
 //responsive na
 
-import Cat from "../Do-you-know/image/cat.png";
 import Tipsbg from "../Do-you-know/image/tipsbg.png";
 import React, { useState } from "react";
 
@@ -58,7 +57,7 @@ const Tips = () => {
         <h1 className="text-3xl sm:text-4xl font-bold tracking-wide mb-5 text-center">
           Tips for Maintaining Healthy Pets
         </h1>
-        <p className="font-medium text-base sm:text-lg text-green-600 text-center">
+        <p className="font-medium text-base sm:text-lg text-green-800 text-center">
           Simple Practices to Keep Your Pets Happy and Thriving
         </p>
       </div>

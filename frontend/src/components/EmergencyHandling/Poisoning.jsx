@@ -66,17 +66,17 @@ const Poisoning = () => {
         <div className="flex justify-between items-center mt-6 mb-12">
           <button
             onClick={handleBack}
-            className="flex items-center text-gray-600 hover:text-green-500 transition"
+            className="flex items-center text-gray-600 hover:text-green-800 transition"
           >
             <IoArrowBack size={24} color="#9dbeb7" />
-            <span className="ml-2 hidden sm:inline">Back</span>
+            <span className="ml-2 hidden sm:inline"></span>
           </button>
 
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4 mt-14 tracking-wide">
               Emergency Handling
             </h1>
-            <p className="text-green-600 text-lg">
+            <p className="text-green-800 text-lg">
               Some Essential Actions for Pet Emergencies
             </p>
           </div>
@@ -104,7 +104,7 @@ const Poisoning = () => {
 
         {/* Steps section */}
         <div className="bg-[#F5F5F5CC] p-4 sm:p-6 rounded-lg shadow-md mt-6 w-full sm:w-4/5 mx-auto relative flex flex-col items-center mb-20">
-          <FaPaw className="absolute top-4 right-4 text-green-500 w-8 h-8 sm:w-12 sm:h-12" />
+          <FaPaw className="absolute top-4 right-4 text-green-800 w-8 h-8 sm:w-12 sm:h-12" />
           <h2 className="text-lg sm:text-xl font-bold mb-4">
             STEPS TO HANDLE PET POISONING:
           </h2>
@@ -129,28 +129,31 @@ const Poisoning = () => {
             className="w-full sm:w-3/4 lg:w-1/2 rounded-lg shadow-lg"
           />
         </div>
+      </div>
 
-        {/* Additional information section */}
-        <div className="flex flex-col items-center mt-12 mb-20 bg-white p-6 rounded-lg shadow-md max-w-4xl">
-          <h1 className="font-medium text-2xl mb-4 text-gray-800">
-            Want to know more?
-          </h1>
-          <div className="w-full flex flex-col sm:flex-row justify-between items-center">
-            <h1 className="font-bold text-base">Visit:</h1>
-            <a
-              href="https://www.petpoisonhelpline.com/"
-              className="underline text-blue-600 font-medium text-lg mt-2 sm:mt-0"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              https://www.petpoisonhelpline.com/
-            </a>
+      {/* Additional information section */}
+      <div className="flex flex-col justify-center items-center min-h-[15vh] mb-20">
+        <h1 className="font-medium tracking-wider text-xl sm:text-2xl -mb-4">
+          Want to know more?
+        </h1>
+        <div className="flex w-full justify-center">
+          <div className="bg-[#F6F8F9] backdrop-blur-[24px] rounded-lg p-4 sm:p-6 mt-10 max-w-4xl shadow-md flex flex-col sm:flex-row items-center gap-6">
+            <h1 className="font-bold text-sm sm:text-base mb-9">Visit:</h1>
+            <div className="flex flex-col">
+              <a
+                href="https://www.petpoisonhelpline.com/"
+                className="underline text-blue-600 font-medium text-sm sm:text-lg"
+              >
+                https://www.petpoisonhelpline.com/
+              </a>
+              <h2 className="text-center text-green-800 mt-2 sm:mt-4">
+                AND SEEK IMMEDIATE VETERINARY ASSISTANCE
+              </h2>
+            </div>
           </div>
-          <h2 className="text-center text-green-500 mt-4">
-            AND SEEK IMMEDIATE VETERINARY ASSISTANCE
-          </h2>
         </div>
       </div>
+
       <Footer />
     </>
   );

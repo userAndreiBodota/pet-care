@@ -16,12 +16,9 @@ const GoogleMaps = () => {
   });
 
   useEffect(() => {
-<<<<<<< HEAD
-=======
     if (!isLoaded) return; // Ensure the library is loaded
 
     // Get user's current location
->>>>>>> 7e2fedb29bad537df0bbc9432fbc09c1f93f6b42
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
@@ -41,7 +38,7 @@ const GoogleMaps = () => {
       );
       const request = {
         location: currentLocation,
-        radius: 5000,
+        radius: 5000, //approximately 5000 meters
         type: "veterinary_care",
       };
 

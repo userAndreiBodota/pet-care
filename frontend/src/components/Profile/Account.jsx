@@ -12,12 +12,12 @@ const Account = () => {
   const { user, updateUser, pets, logout, getRegisteredPets, deletePet } =
     useAuthStore();
   const [formData, setFormData] = useState({
-    name: user.name,
-    contactNo: user.contactNo,
-    dob: new Date(user.dob).toISOString().split("T")[0],
-    address: user.address,
-    email: user.email,
-    gender: user.gender,
+    name: user?.name || "",
+    contactNo: user?.contactNo || "",
+    dob: user?.dob ? new Date(user.dob).toISOString().split("T")[0] : "",
+    address: user?.address || "",
+    email: user?.email || "",
+    gender: user?.gender || "",
   });
   const [editableField, setEditableField] = useState(null);
 
@@ -57,7 +57,7 @@ const Account = () => {
 
   const handleSave = async () => {
     try {
-      await updateUser(formData);
+      await updateUser(user._id, formData); // Pass the user ID and updated data
       alert("Account details updated successfully!");
       setEditableField(null);
     } catch (err) {
@@ -88,11 +88,10 @@ const Account = () => {
                 <span className="text-lg font-semibold">Dashboard</span>
               </Link>
 
-              <div className="flex flex-wrap gap-4 ">
+              <div className="flex flex-wrap gap-4">
                 {pets.map((pet) => (
                   <div key={pet._id} className="relative">
                     <img
-                      key={pet.id}
                       src={pet.image}
                       alt={pet.name}
                       className="w-16 h-16 object-cover rounded-full cursor-pointer"
@@ -125,7 +124,7 @@ const Account = () => {
           </div>
 
           <div className="flex items-center space-x-4 p-4 bg-gray-100 rounded-lg">
-            <p className="text-gray-800">Hello, {user.name}</p>
+            <p className="text-gray-800">Hello, {user?.name}</p>
             <button onClick={handleLogout} className="ml-auto text-red-500">
               <LogOut size={20} />
             </button>

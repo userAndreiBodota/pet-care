@@ -65,7 +65,7 @@ const EmergencyOptions = () => {
           <h1 className="font-semibold text-3xl sm:text-4xl mb-4 tracking-wider">
             Emergency Handling
           </h1>
-          <p className="text-customGray mb-8 text-lg sm:text-xl">
+          <p className="text-green-800 mb-8 text-lg sm:text-xl">
             Some Essential Actions for Pet Emergencies
           </p>
 
