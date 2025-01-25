@@ -127,98 +127,77 @@ const Exercising = () => {
               />
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
-                  Walking
+                  Fetch
                 </h2>
                 <p className="text-customWhite">
-                  Take your dog on a brisk 30-minute walk around the
-                  neighborhood or local park. This helps maintain cardiovascular
-                  health and allows your dog to explore its surroundings, which
-                  is mentally stimulating.
+                  Play a game of fetch using a ball or frisbee in your backyard,
+                  park, or open field. This activity is great for both physical
+                  exertion and interactive bonding time between you and your
+                  dog.
+                </p>
+              </div>
+            </div>
+
+            {/* Dog Agility */}
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+              <div className="flex-grow p-4 sm:p-10">
+                <h2 className="text-xl font-bold mb-2 text-customWhite">
+                  Agility Training
+                </h2>
+                <p className="text-customWhite">
+                  Set up a simple agility course in your yard with jumps,
+                  tunnels, and obstacles. Not only does this offer a fun
+                  challenge, but it also improves your dog’s coordination and
+                  focus.
                 </p>
               </div>
               <img
-                src={dogWalking}
-                alt="Dog Walking"
+                src={dogAgility}
+                alt="Dog Agility Training"
+                className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
+              />
+            </div>
+
+            {/* Dog Swimming */}
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+              <img
+                src={dogSwimming}
+                alt="Dog Swimming"
+                className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
+              />
+              <div className="flex-grow p-4 sm:p-10">
+                <h2 className="text-xl font-bold mb-2 text-customWhite">
+                  Swimming
+                </h2>
+                <p className="text-customWhite">
+                  If your dog enjoys water, take them for a swim at a
+                  dog-friendly beach or pool. Swimming is a low-impact exercise
+                  that’s easy on the joints and excellent for dogs of all ages,
+                  especially older dogs or those with joint problems.
+                </p>
+              </div>
+            </div>
+
+            {/* Dog Playdates */}
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+              <div className="flex-grow p-4 sm:p-10">
+                <h2 className="text-xl font-bold mb-2 text-customWhite">
+                  Playdates
+                </h2>
+                <p className="text-customWhite">
+                  Arrange playdates with other dogs to provide your dog with
+                  social interaction and exercise. Regular socialization helps
+                  reduce anxiety and behavioral issues.
+                </p>
+              </div>
+              <img
+                src={dogPlayDate}
+                alt="Dog Play Date"
                 className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
               />
             </div>
           </>
         )}
-
-        {/* Dog Fetch */}
-        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
-          <img
-            src={dogFetch}
-            alt="Dog Fetching"
-            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow p-4 sm:p-10">
-            <h2 className="text-xl font-bold mb-2 text-customWhite">Fetch</h2>
-            <p className="text-customWhite">
-              Play a game of fetch using a ball or frisbee in your backyard,
-              park, or open field. This activity is great for both physical
-              exertion and interactive bonding time between you and your dog.
-            </p>
-          </div>
-        </div>
-
-        {/* Dog Agility */}
-        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
-          <div className="flex-grow p-4 sm:p-10">
-            <h2 className="text-xl font-bold mb-2 text-customWhite">
-              Agility Training
-            </h2>
-            <p className="text-customWhite">
-              Set up a simple agility course in your yard with jumps, tunnels,
-              and obstacles. Not only does this offer a fun challenge, but it
-              also improves your dog’s coordination and focus.
-            </p>
-          </div>
-          <img
-            src={dogAgility}
-            alt="Dog Agility Training"
-            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
-          />
-        </div>
-
-        {/* Dog Swimming */}
-        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
-          <img
-            src={dogSwimming}
-            alt="Dog Swimming"
-            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
-          />
-          <div className="flex-grow p-4 sm:p-10">
-            <h2 className="text-xl font-bold mb-2 text-customWhite">
-              Swimming
-            </h2>
-            <p className="text-customWhite">
-              If your dog enjoys water, take them for a swim at a dog-friendly
-              beach or pool. Swimming is a low-impact exercise that’s easy on
-              the joints and excellent for dogs of all ages, especially older
-              dogs or those with joint problems.
-            </p>
-          </div>
-        </div>
-
-        {/* Dog Playdates */}
-        <div className="flex flex-col sm:flex-row justify-between items-center bg-customGrey rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
-          <div className="flex-grow p-4 sm:p-10">
-            <h2 className="text-xl font-bold mb-2 text-customWhite">
-              Playdates
-            </h2>
-            <p className="text-customWhite">
-              Arrange playdates with other dogs to provide your dog with social
-              interaction and exercise. Regular socialization helps reduce
-              anxiety and behavioral issues.
-            </p>
-          </div>
-          <img
-            src={dogPlayDate}
-            alt="Dog Play Date"
-            className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
-          />
-        </div>
 
         {/* Cat Content */}
         {filter === "Cats" && (
@@ -319,11 +298,10 @@ const Exercising = () => {
                 className="w-full sm:w-1/3 h-auto rounded-lg object-cover mb-4 sm:mb-0"
               />
             </div>
-
-            {/* Other cat activities */}
           </>
         )}
       </div>
+
       <Footer />
     </>
   );

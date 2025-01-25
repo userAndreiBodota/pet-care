@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/api/auth"
+    ? `http://localhost:5000/api/auth`
     : "/api/auth";
 
 axios.defaults.withCredentials = true;
@@ -313,7 +313,18 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  addMilestone: async (petId, stage, description, image) => {
+  updateUser: async (userData) => {
+    try {
+      const response = await axios.put(`${API_URL}/update`, userData);
+      set((state) => ({ user: { ...state.user, ...userData } }));
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  },
+
+  addMilestone: async (petId, base64Image) => {
     set({ isLoading: true, error: null });
 
     try {
@@ -332,14 +343,19 @@ export const useAuthStore = create((set) => ({
         console.log(`${pair[0]}: ${pair[1]}`);
       }
 
+      formData.append("image", base64Image); // Append the image to FormData
+
       const response = await axios.post(
         `${API_URL}/pets/${petId}/milestones`, // Check this endpoint
         formData
       );
 
-      const uploadedImageUrl = response.data?.imageUrl;
+      // Assuming the server returns an image URL
+      const uploadedImageUrl = response.data.imageUrl;
 
+  
       set({ isLoading: false, message: response.data.message });
+
       return uploadedImageUrl;
     } catch (error) {
       console.log("Error response:", error.response?.data);
@@ -348,6 +364,19 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
       throw error;
+    }
+  },
+
+  getMilestones: async (petId) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_URL}/pets/${petId}/milestones`);
+      set({ milestones: response.data.milestones, isLoading: false });
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Error fetching milestones",
+        isLoading: false,
+      });
     }
   },
 }));

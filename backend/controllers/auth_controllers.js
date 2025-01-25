@@ -423,7 +423,7 @@ export const addMilestone = async (req, res) => {
     if (!pet) {
       return res.status(404).json({ message: "Pet not found" });
     }
-
+    
     // Add a new milestone to the milestones array
     const newMilestone = { stage, description, imageUrl };
     pet.milestones.push(newMilestone);

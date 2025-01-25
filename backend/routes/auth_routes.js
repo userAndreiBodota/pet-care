@@ -1,11 +1,9 @@
 import express from "express";
 import multer from "multer";
 import {
-  addMilestone,
   checkAuth,
   deletePet,
   forgotPassword,
-  getMilestones,
   getRegisteredPets,
   login,
   logout,
@@ -56,6 +54,8 @@ router.put("/update-user/:id", verifyToken, updateUser); // Route for updating u
 router.delete("/delete-pet/:id", deletePet);
 router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
 router.put("/update-pet-image/:id", verifyToken, upload.single("image"), updatePetImage);
+
+// router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
 
 // Add route for updating pet details
 router.put("/update-pet/:id", verifyToken, async (req, res) => {

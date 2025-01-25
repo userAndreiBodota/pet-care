@@ -17,6 +17,7 @@ const GoogleMaps = () => {
 
   useEffect(() => {
     if (!isLoaded) return; // Ensure the library is loaded
+    if (!isLoaded) return;
 
     // Get user's current location
     navigator.geolocation.getCurrentPosition(
