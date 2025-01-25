@@ -313,16 +313,16 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  updateUser: async (userData) => {
-    try {
-      const response = await axios.put(`${API_URL}/update`, userData);
-      set((state) => ({ user: { ...state.user, ...userData } }));
-      return response.data;
-    } catch (error) {
-      console.error("Error updating user:", error);
-      throw error;
-    }
-  },
+  // updateUser: async (userData) => {
+  //   try {
+  //     const response = await axios.put(`${API_URL}/update`, userData);
+  //     set((state) => ({ user: { ...state.user, ...userData } }));
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Error updating user:", error);
+  //     throw error;
+  //   }
+  // },
 
   addMilestone: async (petId, base64Image) => {
     set({ isLoading: true, error: null });
