@@ -52,7 +52,7 @@ router.put("/update-user/:id", verifyToken, updateUser); // Route for updating u
 
 // Pet routes
 router.delete("/delete-pet/:id", deletePet);
-router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
+// router.post("/pets/:id/milestones", upload.single("image"), addMilestone);
 router.put("/update-pet-image/:id", verifyToken, upload.single("image"), updatePetImage);
 
 // router.post("/pets/:id/milestones", upload.single("image"), addMilestone);

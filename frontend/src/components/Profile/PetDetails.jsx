@@ -22,7 +22,7 @@ function PetDetails() {
     age: "",
     image: "",
   });
-  const [newImage, setNewImage] = useState(null); // State for new image
+  const [setNewImage] = useState(null); // State for new image
 
   useEffect(() => {
     if (pets.length === 0) {
@@ -72,13 +72,6 @@ function PetDetails() {
     }
   };
 
-  const uploadImage = async (file) => {
-    // Implement your image upload logic here
-    // For example, you could upload the image to Firebase Storage or an external API
-    const imageUrl = URL.createObjectURL(file); // Simulated image URL for now
-    return imageUrl;
-  };
-
   const handleUpdatePet = async () => {
     try {
       // Update pet details using the updatedPetData state
@@ -94,16 +87,32 @@ function PetDetails() {
   };
 
   const generatePDF = () => {
-    const element = document.getElementById("pet-id-card"); // Get only the Pet ID card
+    const element = document.getElementById("pet-id-card"); // Get only the Pet ID card section
     html2canvas(element, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
+
+      // Get the aspect ratio of the canvas
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const aspectRatio = imgWidth / imgHeight;
+
+      // Set the width and height for the PDF, ensuring the aspect ratio is maintained
+      const pdfWidth = 500; // Set a fixed width for the PDF
+      const pdfHeight = pdfWidth / aspectRatio; // Calculate height to maintain aspect ratio
+
       const pdf = new jsPDF({
-        orientation: "landscape",
-        unit: "px",
-        format: [500, 300], // Adjust size to match the card
+        orientation: "landscape", // Landscape orientation for wider content
+        unit: "px", // Use pixel units for accurate dimensions
+        format: [pdfWidth, pdfHeight], // Adjust PDF size to maintain aspect ratio
       });
-      pdf.addImage(imgData, "PNG", 0, 0, 500, 300);
-      pdf.save(`${updatedPetData.name}-PetID.pdf`); // Save as PetID.pdf
+
+      // Calculate the X and Y position to center the image in the PDF
+      const xOffset = (pdf.internal.pageSize.width - pdfWidth) / 2;
+      const yOffset = (pdf.internal.pageSize.height - pdfHeight) / 2;
+
+      // Add the image to the PDF at the calculated position
+      pdf.addImage(imgData, "PNG", xOffset, yOffset, pdfWidth, pdfHeight);
+      pdf.save(`${pet.name}-PetID.pdf`); // Save as PetID.pdf
     });
   };
 
@@ -266,7 +275,10 @@ function PetDetails() {
         </div>
 
         {/* Pet Identification Section */}
-        <div className="flex flex-col justify-center items-center h-screen bg-white -mt-32 -mb-28 px-4">
+        <div
+          id="pet-id-card"
+          className="flex flex-col justify-center items-center h-screen bg-white -mt-32 -mb-28 px-4"
+        >
           <div className="w-[600px] bg-customGray text-white rounded-lg shadow-xl p-6 relative">
             {/* Header */}
             <div className="bg-black text-white text-2xl font-bold py-2 px-4 rounded-t-lg">
@@ -329,8 +341,9 @@ function PetDetails() {
               <div className="bg-gray-300 text-black py-2 px-6 rounded text-center font-bold">
                 {pet.owner || "Jane Smith"}
               </div>
+
               <button
-                onClick={() => window.print()}
+                onClick={generatePDF}
                 className="bg-green-800 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
               >
                 Save as PDF
@@ -346,6 +359,7 @@ function PetDetails() {
             </div>
           </div>
         </div>
+
         {/* Save Button */}
         {isEditing && (
           <div className="flex justify-center mt-10 mb-20">
@@ -357,6 +371,7 @@ function PetDetails() {
             </button>
           </div>
         )}
+
         {/* Toggle Edit Mode Button */}
         {!isEditing && (
           <div className="flex justify-center mt-10 mb-20">
