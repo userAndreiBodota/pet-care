@@ -408,26 +408,28 @@ export const deletePet = async (req, res) => {
 // }
 // };
 
-export const updateUser = async (req, res) => {
+export const updateUserProfile = async (req, res) => {
   const { name, contactNo, dob, address } = req.body;
+  const userId = req.user.id; // Assuming user is authenticated and their ID is available in req.user
 
   try {
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    const user = await User.findById(userId); // Find user by ID
+    if (!user) return res.status(404).json({ message: "User not found" });
 
+    // Update the user data
     user.name = name || user.name;
     user.contactNo = contactNo || user.contactNo;
     user.dob = dob || user.dob;
     user.address = address || user.address;
-    user.email = email || user.email;
-    user.gender = gender || user.gender;
 
+    // Save the updated user
     await user.save();
-    res.status(200).json({ message: "User updated successfully", user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to update user" });
+
+    res
+      .status(200)
+      .json({ message: "User profile updated successfully", user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error updating user profile" });
   }
 };

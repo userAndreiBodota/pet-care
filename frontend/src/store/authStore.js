@@ -263,12 +263,16 @@ export const useAuthStore = create((set) => ({
 
   updateUser: async (userData) => {
     try {
-      const response = await axios.put(`${API_URL}/update`, userData);
-      set((state) => ({ user: { ...state.user, ...userData } }));
-      return response.data;
+      const response = await axios.put(`${API_URL}/update-profile`, userData);
+      // Update the user state and localStorage after a successful API call
+      const updatedUser = response.data.user; // Assuming the backend responds with the updated user object
+      set({ user: updatedUser });
+      localStorage.setItem("user", JSON.stringify(updatedUser)); // Save updated user to localStorage
+      return updatedUser;
     } catch (error) {
       console.error("Error updating user:", error);
-      throw error;
+      set({ error: "Error updating user" });
+      throw error; // Re-throw the error if needed to handle it elsewhere
     }
   },
 
