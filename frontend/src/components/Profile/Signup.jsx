@@ -98,7 +98,7 @@ const Signup = () => {
                 <p className="text-red-500 font-semibold mt-2">{error}</p>
               )}
 
-              <PasswordStrengthMeter password={password} />
+              {/* <PasswordStrengthMeter password={password} /> */}
 
               <motion.button
                 className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-gray-800 to-gray-600 text-white font-bold rounded-lg shadow-lg hover:from-gray-600 hover:to-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { PlusCircle, LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify"; // Import toast and ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 const Account = () => {
   const navigate = useNavigate();
@@ -43,10 +45,10 @@ const Account = () => {
 
     try {
       await deletePet(petId);
-      alert("Pet deleted successfully");
+      toast.success("Pet deleted successfully!"); // Use Toastify for success notification
     } catch (err) {
       console.error(err);
-      alert("Failed to delete the pet");
+      toast.error("Failed to delete the pet!"); // Use Toastify for error notification
     }
   };
 
@@ -58,11 +60,11 @@ const Account = () => {
   const handleSave = async () => {
     try {
       await updateUser(user._id, formData); // Pass the user ID and updated data
-      alert("Account details updated successfully!");
+      toast.success("Account details updated successfully!"); // Success message
       setEditableField(null);
     } catch (err) {
       console.error(err);
-      alert("Failed to update account details.");
+      toast.error("Failed to update account details."); // Error message
     }
   };
 
@@ -209,6 +211,9 @@ const Account = () => {
           </div>
         </motion.main>
       </div>
+
+      {/* Toast container to display notifications */}
+      <ToastContainer />
     </>
   );
 };
