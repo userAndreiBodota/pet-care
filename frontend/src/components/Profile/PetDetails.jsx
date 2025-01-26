@@ -150,7 +150,7 @@ function PetDetails() {
   };
 
   if (isLoading) {
-    toast.info("Loading pet details..."); // Show loading toast
+    toast.info("Loading Pet Details"); // Show loading toast
     // return <p>Loading pet details...</p>;
   }
 
@@ -180,7 +180,7 @@ function PetDetails() {
             <img
               src={updatedPetData.image}
               alt={updatedPetData.name}
-              className="w-32 h-32 sm:w-48 sm:h-48 rounded-full border-4 border-green-800 mx-auto"
+              className="w-32 h-32 sm:w-48 sm:h-48 rounded-full border-4 border-green-800 mx-auto object-cover"
             />
             {isEditing && (
               <div className="absolute bottom-2 right-2">
@@ -389,7 +389,7 @@ function PetDetails() {
         >
           <div className="w-full max-w-3xl bg-customGray text-white rounded-2xl shadow-2xl p-6 relative mx-auto">
             {/* Header */}
-            <div className="bg-black text-white text-2xl font-bold py-3 px-6 rounded-t-xl shadow-md">
+            <div className="bg-black text-white text-2xl font-bold py-3 px-6 rounded-xl shadow-md">
               PET ID
             </div>
 

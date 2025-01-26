@@ -22,6 +22,8 @@ import Adultcat from "../Profile/image/adultcat.png";
 import Maturecat from "../Profile/image/maturecat.png";
 import Seniorcat from "../Profile/image/seniorcat.png";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -53,19 +55,61 @@ const Dashboard = () => {
     );
   };
 
-  const handleDelete = async (petId) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this pet?"
+  const handleDelete = (petId) => {
+    // Display a toast with confirmation options
+    const deleteConfirmationToast = toast(
+      <div className="flex flex-col items-center justify-center py-4 px-6 space-y-4">
+        <span className="text-gray-700 text-center">
+          Are you sure you want to delete this pet?
+        </span>
+        <div className="flex flex-col space-y-2">
+          <button
+            onClick={async () => {
+              try {
+                // Attempt to delete the pet
+                await deletePet(petId);
+                // Update the toast with a success message
+                toast.update(deleteConfirmationToast, {
+                  render: "Pet deleted successfully!",
+                  type: "success",
+                  isLoading: false,
+                  autoClose: 5000,
+                  closeOnClick: true,
+                });
+              } catch (err) {
+                console.error(err);
+                // Update the toast with an error message
+                toast.update(deleteConfirmationToast, {
+                  render: "Failed to delete the pet!",
+                  type: "error",
+                  isLoading: false,
+                  autoClose: 5000,
+                  closeOnClick: true,
+                });
+              }
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors w-full"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(deleteConfirmationToast); // Close the toast without action
+            }}
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors w-full"
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false, // Keep open until user selects an option
+        closeOnClick: false, // Disable closing when clicked
+        draggable: false, // Disable drag-to-close
+        className: "confirmation-toast rounded-lg shadow-md", // Optional: Add custom class for styling
+      }
     );
-    if (!confirmed) return;
-
-    try {
-      await deletePet(petId);
-      alert("Pet deleted successfully");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete the pet");
-    }
   };
   const handlePhotoUpload = async (event, petId, milestoneStage) => {
     const file = event.target.files[0]; // Get the selected file
@@ -219,7 +263,7 @@ const Dashboard = () => {
       },
     ];
 
-    return type === "Dog" ? dogMilestones : catMilestones;    
+    return type === "Dog" ? dogMilestones : catMilestones;
   };
 
   return (
@@ -233,23 +277,24 @@ const Dashboard = () => {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="lg:w-64 w-full bg-white shadow-lg flex flex-col justify-between p-6"
         >
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-10">
-              Pet-Care <span className="text-green-500">Hub</span>
+          <div className="border border-gray-300 bg-white shadow-md rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-gray-800 mb-10 border-b pb-2 border-gray-200">
+              Pet-Care <span className="text-green-800">Hub</span>
             </h1>
             <nav className="space-y-6">
               <Link
                 to="/dashboard"
-                className="flex items-center space-x-3 text-gray-800 hover:bg-gray-100 rounded-lg p-3"
+                className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
               >
                 <span className="text-lg font-semibold">Dashboard</span>
               </Link>
-
-              <div className="flex flex-wrap gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {pets.map((pet) => (
-                  <div key={pet._id} className="relative">
+                  <div
+                    key={pet._id}
+                    className="relative border border-gray-300 rounded-lg p-2 shadow-sm hover:shadow-md transition-shadow ml-6 mr-9"
+                  >
                     <img
-                      key={pet.id}
                       src={pet.image}
                       alt={pet.name}
                       className="w-16 h-16 object-cover rounded-full cursor-pointer"
@@ -257,24 +302,23 @@ const Dashboard = () => {
                     />
                     <button
                       onClick={() => handleDelete(pet._id)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full py-0 px-1 hover:bg-red-600"
                     >
                       &times;
                     </button>
                   </div>
                 ))}
               </div>
-
               <Link
                 to="/add-pet"
-                className="flex items-center space-x-3 text-gray-800 hover:bg-gray-100 rounded-lg p-3"
+                className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
               >
                 <PlusCircle size={20} />
                 <span className="text-lg font-semibold">Add New</span>
               </Link>
               <Link
                 to="/account"
-                className="flex items-center space-x-3 text-gray-800 hover:bg-gray-100 rounded-lg p-3"
+                className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
               >
                 <span>Account</span>
               </Link>
@@ -448,6 +492,7 @@ const Dashboard = () => {
         </motion.main>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };
