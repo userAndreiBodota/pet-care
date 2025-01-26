@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "backend/index.js",
   "scripts": {
-    "dev": "nodemon backend/index.js"
+    "start": "node server.js",
+    "build": "react-scripts build"
   },
   "keywords": [],
   "author": "",
@@ -29,9 +30,11 @@
     "nodemon": "^3.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^11.0.3"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "concurrently": "^9.1.2"
   }
 }
