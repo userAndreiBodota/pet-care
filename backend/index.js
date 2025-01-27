@@ -44,15 +44,21 @@ app.use(cookieParser());
 // API routes
 app.use("/api/auth", authRoutes);
 
+// Serve static files in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
+
 // Error-handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Something went wrong!", error: err.message });
-});
-
-// Fallback route to handle unhandled requests
-app.use("*", (req, res) => {
-  res.status(404).json({ message: "Route not found" });
+  res
+    .status(500)
+    .json({ message: "Something went wrong!", error: err.message });
 });
 
 // Start server and connect to databases
@@ -64,7 +70,10 @@ app.listen(PORT, async () => {
     console.log("Connected to pet database.");
     console.log(`Server is running on port: ${PORT}`);
   } catch (error) {
-    console.error("Failed to start server or connect to databases:", error.message);
+    console.error(
+      "Failed to start server or connect to databases:",
+      error.message
+    );
     process.exit(1);
   }
 });

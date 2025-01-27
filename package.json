@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "main": "backend/index.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "react-scripts build"
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
