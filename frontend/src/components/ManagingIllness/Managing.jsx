@@ -38,7 +38,7 @@ const Managing = () => {
           <h1 className="font-semibold text-3xl mb-4 tracking-wider">
             Recognizing and Managing Illness
           </h1>
-          <p className="text-green-600 mb-8">
+          <p className="text-green-800 mb-8">
             Early Detection and Care Tips to Keep Your Pets Healthy
           </p>
 

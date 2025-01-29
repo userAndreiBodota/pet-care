@@ -2,12 +2,13 @@ import { motion } from "framer-motion";
 import { Loader, Lock, Mail, User, Phone, Calendar, Home } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useAuthStore } from "../../store/authStore.js";
 import PasswordStrengthMeter from "../../parts/passWordStrengthMeter";
 import Input from "../../parts/Input";
 import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -22,6 +23,13 @@ const Signup = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    // Contact number validation: 11 digits only, no letters
+    const contactNumberRegex = /^[0-9]{11}$/;
+    if (!contactNumberRegex.test(contactNo)) {
+      toast.error("Please enter a valid 11-digit contact number."); // Toast for invalid contact number
+      return;
+    }
 
     try {
       await signup(email, password, name, contactNo, dob, address);
@@ -98,8 +106,6 @@ const Signup = () => {
                 <p className="text-red-500 font-semibold mt-2">{error}</p>
               )}
 
-              <PasswordStrengthMeter password={password} />
-
               <motion.button
                 className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-gray-800 to-gray-600 text-white font-bold rounded-lg shadow-lg hover:from-gray-600 hover:to-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-950 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
                 whileHover={{ scale: 1.02 }}
@@ -118,15 +124,15 @@ const Signup = () => {
           <div className="px-8 py-4 flex justify-center">
             <p className="text-sm text-gray-400">
               Already have an account?{" "}
-              <Link to={"/login"} className="text-green-400 hover:underline">
+              <Link to={"/login"} className="text-green-700 hover:underline">
                 Login
               </Link>
             </p>
           </div>
         </motion.div>
       </div>
-
       <Footer />
+      <ToastContainer />
     </>
   );
 };

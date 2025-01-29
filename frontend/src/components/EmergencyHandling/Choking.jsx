@@ -74,10 +74,10 @@ const Choking = () => {
         <div className="flex justify-between items-center mt-6 mb-12">
           <button
             onClick={handleBack}
-            className="flex items-center text-gray-600 hover:text-green-500 transition"
+            className="flex items-center text-gray-600 hover:text-green-800 transition"
           >
             <IoArrowBack size={24} color="#9dbeb7" />
-            <span className="ml-2 hidden sm:inline">Back</span>
+            <span className="ml-2 hidden sm:inline"></span>
           </button>
 
           <div className="text-center max-w-4xl mx-auto">
@@ -85,7 +85,7 @@ const Choking = () => {
               Emergency Handling
             </h1>
 
-            <p className="text-green-600 text-lg sm:text-xl">
+            <p className="text-green-800 text-lg sm:text-xl">
               Some Essential Actions for Pet Emergencies
             </p>
           </div>
@@ -94,10 +94,10 @@ const Choking = () => {
           <img
             src={chokingpet}
             alt="Choking Pet"
-            className="w-full sm:w-5/6 h-64 sm:h-80 object-cover rounded-md"
+            className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 h-80 object-cover rounded-md shadow-lg"
           />
-          <div className="overlay absolute left-60">
-            <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
+          <div className="overlay absolute inset-0 flex justify-center items-center">
+          <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
               <h2 className="text-white text-lg sm:text-xl font-semibold mb-2">
                 How to handle
               </h2>
@@ -109,7 +109,7 @@ const Choking = () => {
         </div>
 
         <div className="bg-[#F5F5F5CC] p-4 sm:p-6 rounded-lg shadow-md mt-6 w-full sm:w-4/5 mx-auto relative flex flex-col items-center mb-20">
-          <FaPaw className="absolute top-4 right-4 text-green-500 w-8 h-8 sm:w-12 sm:h-12" />
+          <FaPaw className="absolute top-4 right-4 text-green-800 w-8 h-8 sm:w-12 sm:h-12" />
           <h2 className="text-lg sm:text-xl font-bold mb-4">
             STEPS TO HANDLE CHOKING PETS:
           </h2>
@@ -135,13 +135,13 @@ const Choking = () => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center mb-20">
-        <h1 className="font-medium tracking-wider text-xl sm:text-2xl mb-4">
+      <div className="flex flex-col justify-center items-center min-h-[15vh] mb-20">
+        <h1 className="font-medium tracking-wider text-xl sm:text-2xl -mb-4"  >
           Want to know more?
         </h1>
         <div className="flex w-full justify-center">
           <div className="bg-[#F6F8F9] backdrop-blur-[24px] rounded-lg p-4 sm:p-6 mt-10 max-w-4xl shadow-md flex flex-col sm:flex-row items-center gap-6">
-            <h1 className="font-bold text-sm sm:text-base">Visit:</h1>
+            <h1 className="font-bold text-sm sm:text-base mb-9 -mr-4">Visit:</h1>
             <div className="flex flex-col">
               <a
                 href="https://animalervolusia.com/blog/how-to-help-a-choking-pet/"
@@ -149,13 +149,14 @@ const Choking = () => {
               >
                 https://animalervolusia.com/blog/how-to-help-a-choking-pet/
               </a>
-              <h2 className="text-center text-green-500 mt-2 sm:mt-4">
+              <h2 className="text-center text-green-800 mt-2 sm:mt-4">
                 AND SEEK IMMEDIATE VETERINARY ASSISTANCE
               </h2>
             </div>
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

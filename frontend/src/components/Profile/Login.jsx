@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
-
 import Input from "../../parts/Input";
 import { useAuthStore } from "../../store/authStore";
 import Header from "../Header/Header";
@@ -11,11 +10,26 @@ import Footer from "../Footer/Footer";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading, error } = useAuthStore();
+  const { login, isLoading, error, clearError } = useAuthStore(); // Add clearError if needed
+  const [validationError, setValidationError] = useState(""); // State to handle validation error
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    clearError(); // Clear any previous errors
+    setValidationError(""); // Reset validation error
+
+    // Validate if both email and password are provided
+    if (!email || !password) {
+      setValidationError("Please enter both email and password.");
+      return;
+    }
+
+    try {
+      await login(email, password);
+    } catch (err) {
+      console.error("Login error:", err);
+      // Handle and display specific error message to user
+    }
   };
 
   return (
@@ -56,11 +70,16 @@ const Login = () => {
               <div className="flex items-center mb-6">
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-green-400 hover:underline"
+                  className="text-sm text-green-700 hover:underline"
                 >
                   Forgot password?
                 </Link>
               </div>
+
+              {/* Display validation error */}
+              {validationError && (
+                <p className="text-red-500 font-semibold mb-2">{validationError}</p>
+              )}
 
               {error && (
                 <p className="text-red-500 font-semibold mb-2">{error}</p>
@@ -85,7 +104,7 @@ const Login = () => {
           <div className="px-8 py-4 flex justify-center">
             <p className="text-sm text-gray-400">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-green-400 hover:underline">
+              <Link to="/signup" className="text-green-700 hover:underline">
                 Sign up
               </Link>
             </p>

@@ -277,25 +277,43 @@ export const registerPetStage2 = async (req, res) => {
   }
 };
 
+//ADJUSTED FOR AGE DISPLAY
 export const registerPetStage3 = async (req, res) => {
   const { petId, birthday, age } = req.body;
 
   try {
+    // Validate all required fields
     if (!petId || !birthday || age === undefined) {
-      throw new Error("All fields (petId, birthday, age) are required.");
+      return res.status(400).json({
+        success: false,
+        message: "All fields (petId, birthday, age) are required.",
+      });
     }
 
+    // Validate and parse the birthday
     const birthDate = new Date(birthday);
+    if (isNaN(birthDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid birthday format. Please provide a valid date.",
+      });
+    }
 
+    // Find the pet by ID
     const pet = await Pet.findById(petId);
     if (!pet) {
-      throw new Error("Pet not found.");
+      return res.status(404).json({
+        success: false,
+        message: "Pet not found.",
+      });
     }
 
+    // Update the pet's birthday and age
     pet.birthday = birthDate;
-    pet.age = age;
+    pet.age = age; // Ensure this is a string (e.g., '2 years') or a number if needed
     await pet.save();
 
+    // Respond with success
     res.status(200).json({
       success: true,
       message: "Pet birthday and age updated successfully.",
@@ -303,7 +321,10 @@ export const registerPetStage3 = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in registerPetStage3:", error.message);
-    res.status(400).json({ success: false, message: error.message });
+    res.status(500).json({
+      success: false,
+      message: "An unexpected error occurred. Please try again.",
+    });
   }
 };
 
@@ -319,6 +340,62 @@ export const getRegisteredPets = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to fetch registered pets",
+    });
+  }
+};
+
+//UPDATE PET DETAILS
+export const updatePetDetails = async (petId, updatedData) => {
+  try {
+    const pet = await Pet.findById(petId);
+    if (!pet) {
+      throw new Error("Pet not found");
+    }
+
+    // Update the pet fields with the provided data
+    pet.name = updatedData.name || pet.name;
+    pet.breed = updatedData.breed || pet.breed;
+    pet.gender = updatedData.gender || pet.gender;
+    pet.weight = updatedData.weight || pet.weight;
+    pet.birthday = updatedData.birthday || pet.birthday;
+    pet.age = updatedData.age || pet.age;
+    pet.image = updatedData.image || pet.image;
+
+    // Save the updated pet
+    await pet.save();
+    return pet;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+//UPDATE PET IMAGE
+export const updatePetImage = async (req, res) => {
+  try {
+    const petId = req.params.id;
+    const file = req.file;
+
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    // Update the pet image in the database
+    const updatedPet = await Pet.findByIdAndUpdate(
+      petId,
+      { image: file.path }, // Assuming the image path is stored
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Pet image updated successfully.",
+      pet: updatedPet,
+    });
+  } catch (error) {
+    console.error("Error updating pet image:", error.message);
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };
@@ -357,6 +434,7 @@ export const deletePet = async (req, res) => {
 };
 
 // Controller
+<<<<<<< HEAD
 // export const addMilestone = async (req, res) => {
 
 //   try {
@@ -431,5 +509,58 @@ export const updateUserProfile = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error updating user profile" });
+=======
+export const addMilestone = async (req, res) => {
+  const { id } = req.params; // Pet ID from the URL
+  const { stage, description } = req.body; // Stage and description from the request body
+  const imageUrl = req.file ? req.file.path : null; // File path if uploaded
+
+  try {
+    const pet = await Pet.findById(id); // Find the pet by ID
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    // Add a new milestone to the milestones array
+    const newMilestone = { stage, description, imageUrl };
+    pet.milestones.push(newMilestone);
+
+    pet.milestoneSchema.push(milestone); // Push new milestone to the pet
+    await pet.save();
+
+    res.status(201).json({
+      message: "Milestone added successfully",
+      pet,
+    });
+  } catch (err) {
+    console.error("Error adding milestone:", err);
+    res.status(500).json({
+      message: "Error adding milestone",
+      error: err.message,
+    });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params; // Get user ID from URL
+    const updates = req.body; // Get updated data from request body
+
+    // Assume you have a User model connected to your database
+    const updatedUser = await User.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to update user" });
+>>>>>>> 5c1a0ff60c93cc6d4bb2f6446e3ce34f03d72953
   }
 };

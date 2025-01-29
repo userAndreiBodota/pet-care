@@ -22,6 +22,8 @@ import Adultcat from "../Profile/image/adultcat.png";
 import Maturecat from "../Profile/image/maturecat.png";
 import Seniorcat from "../Profile/image/seniorcat.png";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -44,81 +46,184 @@ const Dashboard = () => {
   };
 
   const handleNextPet = () => {
-    setCurrentPetIndex((prevIndex) => (prevIndex + 1) % pets.length);
+    // Find the next pet index, ensuring that the pet has all required details
+    let nextIndex = (currentPetIndex + 1) % pets.length;
+
+    // Loop to find the next valid pet (with complete details)
+    while (
+      !(
+        pets[nextIndex].name &&
+        pets[nextIndex].breed &&
+        pets[nextIndex].gender &&
+        pets[nextIndex].weight &&
+        pets[nextIndex].birthday &&
+        //pets[nextIndex].age &&
+        pets[nextIndex].image
+      )
+    ) {
+      nextIndex = (nextIndex + 1) % pets.length;
+    }
+
+    // Set the current pet to the next valid pet
+    setCurrentPetIndex(nextIndex);
   };
 
   const handlePrevPet = () => {
-    setCurrentPetIndex((prevIndex) =>
-      prevIndex === 0 ? pets.length - 1 : prevIndex - 1
-    );
-  };
+    // Find the previous pet index, ensuring that the pet has all required details
+    let prevIndex =
+      currentPetIndex === 0 ? pets.length - 1 : currentPetIndex - 1;
 
-  const handleDelete = async (petId) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this pet?"
-    );
-    if (!confirmed) return;
-
-    try {
-      await deletePet(petId);
-      alert("Pet deleted successfully");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete the pet");
+    // Loop to find the previous valid pet (with complete details)
+    while (
+      !(
+        pets[prevIndex].name &&
+        pets[prevIndex].breed &&
+        pets[prevIndex].gender &&
+        pets[prevIndex].weight &&
+        pets[prevIndex].birthday &&
+        //pets[prevIndex].age &&
+        pets[prevIndex].image
+      )
+    ) {
+      prevIndex = prevIndex === 0 ? pets.length - 1 : prevIndex - 1;
     }
+
+    // Set the current pet to the previous valid pet
+    setCurrentPetIndex(prevIndex);
   };
+
+  const handleDelete = (petId) => {
+    // Display a toast with confirmation options
+    const deleteConfirmationToast = toast(
+      <div className="flex flex-col items-center justify-center py-4 px-6 space-y-4">
+        <span className="text-gray-700 text-center">
+          Are you sure you want to delete this pet?
+        </span>
+        <div className="flex flex-col space-y-2">
+          <button
+            onClick={async () => {
+              try {
+                // Attempt to delete the pet
+                await deletePet(petId);
+                // Update the toast with a success message
+                toast.update(deleteConfirmationToast, {
+                  render: "Pet deleted successfully!",
+                  type: "success",
+                  isLoading: false,
+                  autoClose: 5000,
+                  closeOnClick: true,
+                });
+              } catch (err) {
+                console.error(err);
+                // Update the toast with an error message
+                toast.update(deleteConfirmationToast, {
+                  render: "Failed to delete the pet!",
+                  type: "error",
+                  isLoading: false,
+                  autoClose: 5000,
+                  closeOnClick: true,
+                });
+              }
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors w-full"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(deleteConfirmationToast); // Close the toast without action
+            }}
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors w-full"
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false, // Keep open until user selects an option
+        closeOnClick: false, // Disable closing when clicked
+        draggable: false, // Disable drag-to-close
+        className: "confirmation-toast rounded-lg shadow-md", // Optional: Add custom class for styling
+      }
+    );
+  };
+
   const handlePhotoUpload = async (event, petId, milestoneStage) => {
     const file = event.target.files[0]; // Get the selected file
-
+  
     if (!file) {
       console.log("No file selected.");
       return;
     }
-
+  
+    // Check if the file is of type JPG or PNG
+    const validFileTypes = ["image/jpeg", "image/png"];
+    if (!validFileTypes.includes(file.type)) {
+      toast.error("Unsupported file type. Please upload a JPG or PNG image."); // Toast for unsupported file type
+      return;
+    }
+  
     const reader = new FileReader();
-
+  
     reader.onloadend = async () => {
       const base64Image = reader.result;
-
+  
       try {
         setUploadedPhotos((prevState) => {
           const newState = {
             ...prevState,
             [`${petId}-${milestoneStage}`]: base64Image,
           };
-
-          localStorage.setItem("uploadedPhotos", JSON.stringify(newState));
-
+  
+          localStorage.setItem("uploadedPhotos", JSON.stringify(newState)); // Save to localStorage
+  
           return newState;
         });
-
-        alert("Image uploaded successfully!");
+  
+        toast.success("Image uploaded successfully!"); // Toast for successful upload
       } catch (error) {
         console.error("Error processing the image:", error);
-        alert("Error uploading image");
+        toast.error("Error uploading image"); // Toast for error during upload
       }
     };
-
+  
     reader.readAsDataURL(file);
   };
-
+  
   const loadUploadedPhotosFromStorage = () => {
     const savedPhotos = localStorage.getItem("uploadedPhotos");
     if (savedPhotos) {
-      setUploadedPhotos(JSON.parse(savedPhotos));
+      setUploadedPhotos(JSON.parse(savedPhotos)); // Load from localStorage
     }
   };
-
+  
   useEffect(() => {
     loadUploadedPhotosFromStorage();
   }, []);
-
-  // useEffect to track changes in uploadedPhotos state
+  
+  // Reset localStorage once
+  const resetLocalStorageOnce = () => {
+    // Check if localStorage has been reset already
+    if (!localStorage.getItem("isLocalStorageReset")) {
+      localStorage.removeItem("uploadedPhotos"); // Reset uploadedPhotos
+      localStorage.setItem("isLocalStorageReset", "true"); // Mark that localStorage has been reset
+    }
+  };
+  
+  useEffect(() => {
+    resetLocalStorageOnce(); // Run once to reset localStorage
+  
+    // Load the photos after reset
+    loadUploadedPhotosFromStorage();
+  }, []);
+  
   useEffect(() => {
     if (uploadedPhotos) {
       console.log("Uploaded photos state updated:", uploadedPhotos);
     }
   }, [uploadedPhotos]);
+  
 
   const getMilestonesForPet = (type) => {
     const dogMilestones = [
@@ -219,7 +324,7 @@ const Dashboard = () => {
       },
     ];
 
-    return type === "Dog" ? dogMilestones : catMilestones;    
+    return type === "Dog" ? dogMilestones : catMilestones;
   };
 
   return (
@@ -233,55 +338,67 @@ const Dashboard = () => {
           transition={{ delay: 0.1, duration: 0.5 }}
           className="lg:w-64 w-full bg-white shadow-lg flex flex-col justify-between p-6"
         >
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800 mb-10">
-              Pet-Care <span className="text-green-500">Hub</span>
+          <div className="border border-gray-300 bg-white shadow-md rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-gray-800 mb-10 border-b pb-2 border-gray-200">
+              Pet-Care <span className="text-green-800">Hub</span>
             </h1>
             <nav className="space-y-6">
               <Link
                 to="/dashboard"
-                className="flex items-center space-x-3 text-gray-800 hover:bg-gray-100 rounded-lg p-3"
+                className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
               >
                 <span className="text-lg font-semibold">Dashboard</span>
               </Link>
-
-              <div className="flex flex-wrap gap-4">
-                {pets.map((pet) => (
-                  <div key={pet._id} className="relative">
-                    <img
-                      key={pet.id}
-                      src={pet.image}
-                      alt={pet.name}
-                      className="w-16 h-16 object-cover rounded-full cursor-pointer"
-                      onClick={() => handlePetClick(pet._id)}
-                    />
-                    <button
-                      onClick={() => handleDelete(pet._id)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+              <div className="grid grid-cols-1 gap-4">
+                {pets
+                  .filter(
+                    (pet) =>
+                      pet.name &&
+                      pet.breed &&
+                      pet.gender &&
+                      pet.weight &&
+                      pet.birthday &&
+                      // pet.age &&
+                      pet.image
+                  ) // Filter pets with all required details
+                  .map((pet) => (
+                    <div
+                      key={pet._id}
+                      className="relative border border-gray-300 rounded-lg p-2 shadow-sm hover:shadow-md transition-shadow ml-6 mr-9"
                     >
-                      &times;
-                    </button>
-                  </div>
-                ))}
+                      <img
+                        src={pet.image}
+                        alt={pet.name}
+                        className="w-16 h-16 object-cover rounded-full cursor-pointer"
+                        onClick={() => handlePetClick(pet._id)}
+                      />
+                      <button
+                        onClick={() => handleDelete(pet._id)}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full py-0 px-1 hover:bg-red-600"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
               </div>
 
               <Link
                 to="/add-pet"
-                className="flex items-center space-x-3 text-gray-800 hover:bg-gray-100 rounded-lg p-3"
+                className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
               >
                 <PlusCircle size={20} />
                 <span className="text-lg font-semibold">Add New</span>
               </Link>
               <Link
                 to="/account"
-                className="flex items-center space-x-3 text-gray-800 hover:bg-gray-100 rounded-lg p-3"
+                className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
               >
                 <span>Account</span>
               </Link>
             </nav>
           </div>
 
-          <div className="flex items-center space-x-4 p-4 bg-gray-100 rounded-lg">
+          <div className="flex items-center space-x-4 p-4 bg-gray-100 rounded-lg py-2">
             <p className="text-gray-800">Hello, {user.name}</p>
             <button onClick={handleLogout} className="ml-auto text-red-500">
               <LogOut size={20} />
@@ -448,6 +565,7 @@ const Dashboard = () => {
         </motion.main>
       </div>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

@@ -35,14 +35,14 @@ const Cats = () => {
               Recognizing and Managing Illness
             </h1>
 
-            <p className="text-green-600 text-lg tracking-wide">
+            <p className="text-green-800 text-lg tracking-wide">
               Early Detection and Care Tips to Keep Your Pets Healthy
             </p>
           </div>
         </div>
 
         <div className="flex flex-col m-6 sm:m-12 lg:m-24">
-          <h2 className="font-bold text-4xl uppercase text-left text-green-700 tracking-wider">
+          <h2 className="font-bold text-4xl uppercase text-left text-black tracking-wider">
             Cats
           </h2>
         </div>

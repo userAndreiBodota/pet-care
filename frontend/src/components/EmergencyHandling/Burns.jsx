@@ -71,10 +71,10 @@ const Burns = () => {
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 mb-12">
           <button
             onClick={handleBack}
-            className="flex items-center text-gray-600 hover:text-green-500 transition mb-4 sm:mb-0"
+            className="flex items-center text-gray-600 hover:text-green-800 transition mb-4 sm:mb-0"
           >
             <IoArrowBack size={24} color="#9dbeb7" />
-            <span className="ml-2 hidden sm:inline">Back</span>
+            <span className="ml-2 hidden sm:inline"></span>
           </button>
 
           <div className="text-center max-w-4xl mx-auto">
@@ -94,12 +94,12 @@ const Burns = () => {
             alt="Choking Pet"
             className="w-full max-w-5xl h-80 md:h-96 object-cover rounded-md"
           />
-          <div className="overlay absolute left-60">
-            <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center">
+          <div className="overlay absolute inset-0 flex justify-center items-center">
+            <div className="text-content bg-white bg-opacity-40 backdrop-blur-sm p-4 sm:p-6 rounded-lg w-11/12 sm:w-96 h-52 flex flex-col justify-center ml-20">
               <h2 className="text-white text-lg sm:text-xl font-semibold mb-2">
                 How to handle How to handle
               </h2>
-              <h1 className="text-customGray text-3xl font-bold text-center">
+              <h1 className="text-customGray text-2xl sm:text-3xl font-bold">
                 PET BURNS?
               </h1>
             </div>
@@ -135,12 +135,12 @@ const Burns = () => {
         </div>
 
         {/* Additional information section */}
-        <div className="flex flex-col justify-center items-center mb-20">
-          <h1 className="font-medium tracking-wider text-2xl mb-4">
+        <div className="flex flex-col justify-center items-center min-h-[30vh] mb-20">
+          <h1 className="font-medium tracking-wider text-2xl -mb-4">
             Want to know more?
           </h1>
           <div className="bg-[#F6F8F9] backdrop-blur-[24px] rounded-lg p-6 mt-10 max-w-4xl shadow-md flex flex-col sm:flex-row items-center gap-4 sm:gap-10">
-            <h1 className="font-bold text-base">Visit:</h1>
+            <h1 className="font-bold text-base mb-14">Visit:</h1>
             <div className="flex flex-col items-center sm:items-start">
               <a
                 href="https://animalemergencycare.net/aecprevents/understanding-and-treating-burns-on-your-pet/"

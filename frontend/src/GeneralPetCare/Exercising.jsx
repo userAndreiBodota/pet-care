@@ -44,7 +44,7 @@ const Exercising = () => {
               General Pet Care
             </h1>
 
-            <p className="text-green-600">
+            <p className="text-green-800">
               Essential Guidelines for Keeping Your Pets Safe and Healthy
             </p>
           </div>
@@ -53,7 +53,7 @@ const Exercising = () => {
         <div className="flex justify-center mb-6">
           <button
             onClick={toggleDropdown}
-            className="px-6 py-2 font-semibold text-white rounded-lg bg-green-600 flex items-center"
+            className="px-6 py-2 font-semibold text-white rounded-lg bg-customGray flex items-center"
           >
             <IoFilterSharp size={20} className="mr-2" />
             {filter}

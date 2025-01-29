@@ -40,7 +40,7 @@ const General = () => {
         <h1 className="font-semibold text-3xl mb-4 tracking-wider">
           General Pet Care
         </h1>
-        <p className="text-green-600 mb-8">
+        <p className="text-green-800 mb-8">
           Essential Guidelines for Keeping Your Pets Safe and Healthy
         </p>
 

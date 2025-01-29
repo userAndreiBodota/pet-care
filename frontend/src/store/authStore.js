@@ -10,8 +10,6 @@ axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
   user: JSON.parse(localStorage.getItem("user")) || null, // Load user from localStorage
-
-  // user: null,
   isAuthenticated: false,
   error: null,
   isLoading: false,
@@ -32,6 +30,40 @@ export const useAuthStore = create((set) => ({
     localStorage.removeItem("user");
     localStorage.removeItem("isAuthenticated");
     set({ user: null, isAuthenticated: false });
+  },
+
+  updateUser: async (userId, updatedData) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axios.put(
+        `${API_URL}/update-user/${userId}`,
+        updatedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Token for authentication
+          },
+        }
+      );
+
+      // Update user state with the response
+      const updatedUser = response.data.user;
+      set({
+        user: updatedUser,
+        isLoading: false,
+        message: response.data.message,
+      });
+
+      // Persist updated user in localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    } catch (error) {
+      set({
+        error: error.response?.data?.message || "Failed to update user details",
+        isLoading: false,
+      });
+      throw error;
+    }
   },
 
   setPetImage: (image) => set({ petImage: image }),
@@ -113,6 +145,7 @@ export const useAuthStore = create((set) => ({
       });
     }
   },
+
   deletePet: async (petId) => {
     set({ isLoading: true, error: null });
     try {
@@ -126,6 +159,25 @@ export const useAuthStore = create((set) => ({
       set({
         isLoading: false,
         error: error.response?.data?.message || "Error deleting pet",
+      });
+      throw error;
+    }
+  },
+
+  // New function for updating pet details
+  updatePetDetails: async (petId, updatedData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.put(
+        `${API_URL}/update-pet/${petId}`,
+        updatedData
+      );
+      set({ isLoading: false, message: "Pet details updated successfully" });
+      return response.data.pet;
+    } catch (error) {
+      set({
+        isLoading: false,
+        error: error.response?.data?.message || "Error updating pet details",
       });
       throw error;
     }
@@ -156,6 +208,7 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+  //UPDATED FOR ERROR HANDLING WHEN CREDENTIALS ARE INVALID
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
@@ -170,13 +223,20 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
     } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "An error occurred while logging in. Please try again.";
+
       set({
-        error: error.response?.data?.message || "Error logging in",
+        error: errorMessage,
         isLoading: false,
       });
-      throw error;
     }
   },
+
+  // Adding clearError function
+  clearError: () => set({ error: null }),
 
   logout: async () => {
     set({ isLoading: true, error: null });
@@ -261,6 +321,7 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+<<<<<<< HEAD
   updateUser: async (userData) => {
     try {
       const response = await axios.put(`${API_URL}/update-profile`, userData);
@@ -304,6 +365,8 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+=======
+>>>>>>> 5c1a0ff60c93cc6d4bb2f6446e3ce34f03d72953
   getMilestones: async (petId) => {
     set({ isLoading: true, error: null });
     try {

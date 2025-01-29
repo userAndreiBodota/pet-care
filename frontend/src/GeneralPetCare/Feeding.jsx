@@ -43,7 +43,7 @@ const Feeding = () => {
               General Pet Care
             </h1>
 
-            <p className="text-green-600">
+            <p className="text-green-800">
               Essential Guidelines for Keeping Your Pets Safe and Healthy
             </p>
           </div>
@@ -52,7 +52,7 @@ const Feeding = () => {
         <div className="flex justify-center mb-6">
           <button
             onClick={toggleDropdown}
-            className="px-6 py-2 font-semibold text-white rounded-lg bg-green-600 flex items-center"
+            className="px-6 py-2 font-semibold text-white rounded-lg bg-customGray flex items-center"
           >
             <IoFilterSharp size={20} className="mr-2" />
             {filter}
@@ -170,7 +170,7 @@ const Feeding = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-20">
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
                   Healthy Treats
@@ -191,18 +191,18 @@ const Feeding = () => {
           </>
         )}
 
-        {/* Cats */}
-        <div className="flex flex-col px-6 sm:px-8 lg:px-24 pb-6 gap-6">
-          <h1 className="font-bold text-3xl">Feeding Guidelines:</h1>
-          <h2 className="font-semibold text-2xl">{filter}:</h2>
-          <p className="font-normal text-xl tracking-wide">
-            Cats are obligate carnivores, meaning their diet should be rich in
-            animal-based proteins. Proper feeding habits ensure they receive the
-            necessary nutrients for a long, healthy life.
-          </p>
-        </div>
         {filter == "Cats" && (
           <>
+            {/* Cats */}
+            <div className="flex flex-col px-6 sm:px-8 lg:px-24 pb-6 gap-6">
+              <h1 className="font-bold text-3xl">Feeding Guidelines:</h1>
+              <h2 className="font-semibold text-2xl">{filter}:</h2>
+              <p className="font-normal text-xl tracking-wide">
+                Cats are obligate carnivores, meaning their diet should be rich
+                in animal-based proteins. Proper feeding habits ensure they
+                receive the necessary nutrients for a long, healthy life.
+              </p>
+            </div>
             <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-10">
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
@@ -276,7 +276,7 @@ const Feeding = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-40">
+            <div className="flex flex-col sm:flex-row justify-between items-center bg-customGray rounded-lg w-11/12 sm:w-4/5 mx-auto mb-20">
               <div className="flex-grow p-4 sm:p-10">
                 <h2 className="text-xl font-bold mb-2 text-customWhite">
                   Fresh Water
