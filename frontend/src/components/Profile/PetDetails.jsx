@@ -351,7 +351,7 @@ function PetDetails() {
                 />
               ) : (
                 <div className="p-3 border-2 border-green-800 rounded-lg bg-green-50 text-gray-800 w-full text-center">
-                  {updatedPetData.age} years old
+                  {updatedPetData.age}
                 </div>
               )}
             </div>

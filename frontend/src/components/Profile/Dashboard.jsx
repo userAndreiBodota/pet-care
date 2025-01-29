@@ -46,13 +46,50 @@ const Dashboard = () => {
   };
 
   const handleNextPet = () => {
-    setCurrentPetIndex((prevIndex) => (prevIndex + 1) % pets.length);
+    // Find the next pet index, ensuring that the pet has all required details
+    let nextIndex = (currentPetIndex + 1) % pets.length;
+
+    // Loop to find the next valid pet (with complete details)
+    while (
+      !(
+        pets[nextIndex].name &&
+        pets[nextIndex].breed &&
+        pets[nextIndex].gender &&
+        pets[nextIndex].weight &&
+        pets[nextIndex].birthday &&
+        //pets[nextIndex].age &&
+        pets[nextIndex].image
+      )
+    ) {
+      nextIndex = (nextIndex + 1) % pets.length;
+    }
+
+    // Set the current pet to the next valid pet
+    setCurrentPetIndex(nextIndex);
   };
 
   const handlePrevPet = () => {
-    setCurrentPetIndex((prevIndex) =>
-      prevIndex === 0 ? pets.length - 1 : prevIndex - 1
-    );
+    // Find the previous pet index, ensuring that the pet has all required details
+    let prevIndex =
+      currentPetIndex === 0 ? pets.length - 1 : currentPetIndex - 1;
+
+    // Loop to find the previous valid pet (with complete details)
+    while (
+      !(
+        pets[prevIndex].name &&
+        pets[prevIndex].breed &&
+        pets[prevIndex].gender &&
+        pets[prevIndex].weight &&
+        pets[prevIndex].birthday &&
+        //pets[prevIndex].age &&
+        pets[prevIndex].image
+      )
+    ) {
+      prevIndex = prevIndex === 0 ? pets.length - 1 : prevIndex - 1;
+    }
+
+    // Set the current pet to the previous valid pet
+    setCurrentPetIndex(prevIndex);
   };
 
   const handleDelete = (petId) => {
@@ -111,6 +148,7 @@ const Dashboard = () => {
       }
     );
   };
+
   const handlePhotoUpload = async (event, petId, milestoneStage) => {
     const file = event.target.files[0]; // Get the selected file
 
@@ -289,26 +327,38 @@ const Dashboard = () => {
                 <span className="text-lg font-semibold">Dashboard</span>
               </Link>
               <div className="grid grid-cols-1 gap-4">
-                {pets.map((pet) => (
-                  <div
-                    key={pet._id}
-                    className="relative border border-gray-300 rounded-lg p-2 shadow-sm hover:shadow-md transition-shadow ml-6 mr-9"
-                  >
-                    <img
-                      src={pet.image}
-                      alt={pet.name}
-                      className="w-16 h-16 object-cover rounded-full cursor-pointer"
-                      onClick={() => handlePetClick(pet._id)}
-                    />
-                    <button
-                      onClick={() => handleDelete(pet._id)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full py-0 px-1 hover:bg-red-600"
+                {pets
+                  .filter(
+                    (pet) =>
+                      pet.name &&
+                      pet.breed &&
+                      pet.gender &&
+                      pet.weight &&
+                      pet.birthday &&
+                      // pet.age &&
+                      pet.image
+                  ) // Filter pets with all required details
+                  .map((pet) => (
+                    <div
+                      key={pet._id}
+                      className="relative border border-gray-300 rounded-lg p-2 shadow-sm hover:shadow-md transition-shadow ml-6 mr-9"
                     >
-                      &times;
-                    </button>
-                  </div>
-                ))}
+                      <img
+                        src={pet.image}
+                        alt={pet.name}
+                        className="w-16 h-16 object-cover rounded-full cursor-pointer"
+                        onClick={() => handlePetClick(pet._id)}
+                      />
+                      <button
+                        onClick={() => handleDelete(pet._id)}
+                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full py-0 px-1 hover:bg-red-600"
+                      >
+                        &times;
+                      </button>
+                    </div>
+                  ))}
               </div>
+
               <Link
                 to="/add-pet"
                 className="flex items-center space-x-3 text-gray-800 hover:bg-green-100 rounded-lg p-3 transition-colors border border-gray-200 shadow-sm"
@@ -325,7 +375,7 @@ const Dashboard = () => {
             </nav>
           </div>
 
-          <div className="flex items-center space-x-4 p-4 bg-gray-100 rounded-lg">
+          <div className="flex items-center space-x-4 p-4 bg-gray-100 rounded-lg py-2">
             <p className="text-gray-800">Hello, {user.name}</p>
             <button onClick={handleLogout} className="ml-auto text-red-500">
               <LogOut size={20} />

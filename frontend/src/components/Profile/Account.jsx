@@ -72,19 +72,61 @@ const Account = () => {
     navigate(`/pets/${petId}`);
   };
 
-  const handleDelete = async (petId) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this pet?"
+  const handleDelete = (petId) => {
+    // Display a toast with confirmation options
+    const deleteConfirmationToast = toast(
+      <div className="flex flex-col items-center justify-center py-4 px-6 space-y-4">
+        <span className="text-gray-700 text-center">
+          Are you sure you want to delete this pet?
+        </span>
+        <div className="flex flex-col space-y-2">
+          <button
+            onClick={async () => {
+              try {
+                // Attempt to delete the pet
+                await deletePet(petId);
+                // Update the toast with a success message
+                toast.update(deleteConfirmationToast, {
+                  render: "Pet deleted successfully!",
+                  type: "success",
+                  isLoading: false,
+                  autoClose: 5000,
+                  closeOnClick: true,
+                });
+              } catch (err) {
+                console.error(err);
+                // Update the toast with an error message
+                toast.update(deleteConfirmationToast, {
+                  render: "Failed to delete the pet!",
+                  type: "error",
+                  isLoading: false,
+                  autoClose: 5000,
+                  closeOnClick: true,
+                });
+              }
+            }}
+            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors w-full"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(deleteConfirmationToast); // Close the toast without action
+            }}
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors w-full"
+          >
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false, // Keep open until user selects an option
+        closeOnClick: false, // Disable closing when clicked
+        draggable: false, // Disable drag-to-close
+        className: "confirmation-toast rounded-lg shadow-md", // Optional: Add custom class for styling
+      }
     );
-    if (!confirmed) return;
-
-    try {
-      await deletePet(petId);
-      toast.success("Pet deleted successfully!");
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to delete the pet!");
-    }
   };
 
   return (
@@ -208,7 +250,7 @@ const Account = () => {
                     disabled={!isEditing || field.disabled}
                     className={`w-3/4 px-4 py-2 rounded-lg border ${
                       isEditing
-                        ? "border-green-300 bg-green-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        ? "border-green-300 bg-green-50 focus:outline-none focus:ring-2 focus:ring-green-500"
                         : "bg-gray-100 border-gray-300 cursor-not-allowed"
                     }`}
                   />

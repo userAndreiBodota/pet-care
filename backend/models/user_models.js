@@ -17,7 +17,7 @@ const petSchema = new mongoose.Schema(
     weight: { type: Number },
     gender: { type: String, enum: ["Male", "Female"] },
     birthday: { type: Date },
-    age: { type: Number },
+    age: { type: String },
     image: { type: String },
     milestones: [milestoneSchema], // Embed the milestones array
   },
