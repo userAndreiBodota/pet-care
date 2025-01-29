@@ -216,13 +216,16 @@ const Account = () => {
               <h2 className="text-2xl font-bold text-gray-800">
                 Account Details
               </h2>
-              <button
-                onClick={() => setIsEditing(!isEditing)}
-                className="px-4 py-2 bg-customGray text-white rounded-lg shadow hover:bg-customGrey transition-colors"
-              >
-                {isEditing ? "Cancel" : "Edit"}
-              </button>
+              {!isEditing && (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="px-4 py-2 bg-customGray text-white rounded-lg shadow hover:bg-customGrey transition-colors"
+                >
+                  Edit
+                </button>
+              )}
             </div>
+
             <div className="space-y-6">
               {[
                 { label: "Name", name: "name" },
