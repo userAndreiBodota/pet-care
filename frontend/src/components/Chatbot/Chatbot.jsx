@@ -1,45 +1,100 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const ChatSupport = () => {
   const [isChatOpen, setChatOpen] = useState(false);
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null);
+  const [userMessages, setUserMessages] = useState([]);
+  const [botMessages, setBotMessages] = useState([]);
+  const [userInput, setUserInput] = useState("");
 
-  const questionsAndAnswers = [
-    {
-      question: "How often should i take my pet to the vet?",
-      answer:
-        "Schedule annual wellness exams with your veterinarian. Regular visits help detect health issues early and keep vaccinations up to date.",
-    },
-    {
-      question: "What should I feed my pey to keep them healthy?",
-      answer:
-        "Provide a balanced diet tailored to their age, breed, size and activity level.",
-    },
-    {
-      question: "How can I mentally stimulate my pet?",
-      answer:
-        "Use puzzle toys, training sessions, and interactive play like fetch or hide and seek. These keep your pet mentally engaged and happy.",
-    },
-    {
-      question: "How do I maintain my pet's dental health?",
-      answer:
-        "Brush their teeth regularly with pet-safe toothpaste and provide dental treats or toys to prevent oral issues.",
-    },
-    {
-      question: "How do I protect my pet from fleas and ticks?",
-      answer:
-        "Use veterinaria-recommended preventive medications and check your pet regularly for signs like scratching or skin irritation.",
-    },
-  ];
+  const chatEndRef = useRef(null); // Reference to scroll to the bottom
+
+  const handleUserInput = (e) => {
+    setUserInput(e.target.value);
+  };
+
+  const responses = {
+    greetings: ["hello", "hi", "hey"],
+    vetCare: ["vet", "veterinarian", "doctor"],
+    feeding: ["feed", "diet", "nutrition"],
+    mentalStimulation: ["mental", "stimulate", "play"],
+    dentalCare: ["dental", "teeth", "grooming"],
+    fleasTicks: ["fleas", "ticks", "parasites"],
+    exercise: ["exercise", "active"],
+    bathGrooming: ["bath", "shower", "grooming"],
+    socialization: ["social", "friendly"],
+    adoption: ["adopt", "adoption"],
+    age: ["age", "old"],
+    petInsurance: ["pet insurance"],
+    allergies: ["allergy", "sensitive"],
+    sick: ["sick", "ill"],
+    boredom: ["bored", "lonely"],
+  };
+
+  const defaultReply = "I'm sorry, I don't understand that yet.";
+
+  const responsesMap = {
+    greetings: "Hello! How can I assist you with your pet today?",
+    vetCare:
+      "You should take your pet to the vet at least once a year for a checkup and vaccinations.",
+    feeding:
+      "A balanced diet tailored to your pet’s age, breed, size, and activity level is important for their health.",
+    mentalStimulation:
+      "Try puzzle toys, training sessions, and games like fetch or hide and seek to keep your pet mentally engaged!",
+    dentalCare:
+      "Regularly brush your pet’s teeth with pet-safe toothpaste and provide dental chews to prevent issues.",
+    fleasTicks:
+      "Use vet-recommended flea and tick preventatives, and check your pet regularly for signs of infestations.",
+    exercise:
+      "Exercise is key to keeping your pet healthy. Regular walks, playtime, and activities are important.",
+    bathGrooming:
+      "Give your pet a bath as needed based on their breed and activity level, and regularly groom them to maintain their coat.",
+    socialization:
+      "Socializing your pet with other animals and people is important for their well-being. Start early if possible!",
+    adoption:
+      "Adopting a pet is a great way to give them a loving home! Make sure you choose a pet that fits your lifestyle and home.",
+    age: "The ideal age for a pet to start regular vet visits is as a young adult, but it’s never too late to care for them!",
+    petInsurance:
+      "Pet insurance can help cover medical costs, especially in emergencies. It’s a good idea for peace of mind.",
+    allergies:
+      "Some pets have food or environmental allergies. If you suspect an allergy, consult your vet for guidance.",
+    sick: "If your pet is showing signs of illness, such as vomiting, lethargy, or loss of appetite, take them to the vet.",
+    boredom:
+      "If your pet seems bored or lonely, provide more playtime, social interaction, or consider adopting a companion.",
+  };
+
+  const handleSendMessage = () => {
+    if (userInput.trim() !== "") {
+      // Capture user message
+      setUserMessages([...userMessages, userInput]);
+
+      // Normalize user input to lowercase
+      const normalizedInput = userInput.toLowerCase();
+
+      // Check if the input matches any keyword categories and get the response
+      let botReply = defaultReply;
+
+      // Iterate through response categories
+      for (let key in responses) {
+        if (responses[key].some((phrase) => normalizedInput.includes(phrase))) {
+          botReply = responsesMap[key];
+          break;
+        }
+      }
+
+      // Add bot's response
+      setBotMessages([...botMessages, botReply]);
+      setUserInput(""); // Clear input after sending
+    }
+  };
 
   const toggleChat = () => {
     setChatOpen(!isChatOpen);
-    setSelectedQuestionIndex(null);
   };
 
-  const handleQuestionClick = (index) => {
-    setSelectedQuestionIndex(index);
-  };
+  // Scroll to the bottom every time the messages change
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [userMessages, botMessages]);
 
   return (
     <div className="fixed bottom-4 right-10 z-50">
@@ -91,36 +146,48 @@ const ChatSupport = () => {
               </div>
             </div>
 
-            {/* Questions */}
-            {selectedQuestionIndex === null &&
-              questionsAndAnswers.map((item, index) => (
-                <button
-                  key={index}
-                  className="w-full text-left bg-gray-100 hover:bg-gray-200 text-sm py-2 px-3 rounded-md mb-2 focus:outline-none"
-                  onClick={() => handleQuestionClick(index)}
-                >
-                  {item.question}
-                </button>
-              ))}
-
-            {selectedQuestionIndex !== null && (
-              <div>
-                <p className="font-semibold text-gray-700 mb-2">
-                  {questionsAndAnswers[selectedQuestionIndex].question}
-                </p>
-
-                <p className="bg-blue-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm">
-                  {questionsAndAnswers[selectedQuestionIndex].answer}
-                </p>
-
-                <button
-                  className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-600 focus:outline-none"
-                  onClick={() => setSelectedQuestionIndex(null)}
-                >
-                  Back to Questions
-                </button>
+            {/* User's Messages */}
+            {userMessages.map((message, index) => (
+              <div key={index} className="flex items-start justify-end">
+                <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm">
+                  {message}
+                </div>
               </div>
-            )}
+            ))}
+
+            {/* Bot's Responses */}
+            {botMessages.map((message, index) => (
+              <div key={index} className="flex items-start">
+                <img
+                  src="/images/furbot.png"
+                  alt="FurBot Logo"
+                  className="w-6 h-6 rounded-full mr-3"
+                />
+                <div className="bg-blue-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm">
+                  {message}
+                </div>
+              </div>
+            ))}
+
+            {/* Scroll to bottom */}
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* User Input Field */}
+          <div className="flex items-center p-3 border-t border-gray-300">
+            <input
+              type="text"
+              className="flex-grow p-2 border rounded-lg focus:outline-none"
+              placeholder="Ask me anything..."
+              value={userInput}
+              onChange={handleUserInput}
+            />
+            <button
+              className="ml-3 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              onClick={handleSendMessage}
+            >
+              Send
+            </button>
           </div>
         </div>
       )}
