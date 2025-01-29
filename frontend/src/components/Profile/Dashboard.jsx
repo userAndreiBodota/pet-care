@@ -151,56 +151,79 @@ const Dashboard = () => {
 
   const handlePhotoUpload = async (event, petId, milestoneStage) => {
     const file = event.target.files[0]; // Get the selected file
-
+  
     if (!file) {
       console.log("No file selected.");
       return;
     }
-
+  
+    // Check if the file is of type JPG or PNG
+    const validFileTypes = ["image/jpeg", "image/png"];
+    if (!validFileTypes.includes(file.type)) {
+      toast.error("Unsupported file type. Please upload a JPG or PNG image."); // Toast for unsupported file type
+      return;
+    }
+  
     const reader = new FileReader();
-
+  
     reader.onloadend = async () => {
       const base64Image = reader.result;
-
+  
       try {
         setUploadedPhotos((prevState) => {
           const newState = {
             ...prevState,
             [`${petId}-${milestoneStage}`]: base64Image,
           };
-
-          localStorage.setItem("uploadedPhotos", JSON.stringify(newState));
-
+  
+          localStorage.setItem("uploadedPhotos", JSON.stringify(newState)); // Save to localStorage
+  
           return newState;
         });
-
-        alert("Image uploaded successfully!");
+  
+        toast.success("Image uploaded successfully!"); // Toast for successful upload
       } catch (error) {
         console.error("Error processing the image:", error);
-        alert("Error uploading image");
+        toast.error("Error uploading image"); // Toast for error during upload
       }
     };
-
+  
     reader.readAsDataURL(file);
   };
-
+  
   const loadUploadedPhotosFromStorage = () => {
     const savedPhotos = localStorage.getItem("uploadedPhotos");
     if (savedPhotos) {
-      setUploadedPhotos(JSON.parse(savedPhotos));
+      setUploadedPhotos(JSON.parse(savedPhotos)); // Load from localStorage
     }
   };
-
+  
   useEffect(() => {
     loadUploadedPhotosFromStorage();
   }, []);
-
-  // useEffect to track changes in uploadedPhotos state
+  
+  // Reset localStorage once
+  const resetLocalStorageOnce = () => {
+    // Check if localStorage has been reset already
+    if (!localStorage.getItem("isLocalStorageReset")) {
+      localStorage.removeItem("uploadedPhotos"); // Reset uploadedPhotos
+      localStorage.setItem("isLocalStorageReset", "true"); // Mark that localStorage has been reset
+    }
+  };
+  
+  useEffect(() => {
+    resetLocalStorageOnce(); // Run once to reset localStorage
+  
+    // Load the photos after reset
+    loadUploadedPhotosFromStorage();
+  }, []);
+  
   useEffect(() => {
     if (uploadedPhotos) {
       console.log("Uploaded photos state updated:", uploadedPhotos);
     }
   }, [uploadedPhotos]);
+  
 
   const getMilestonesForPet = (type) => {
     const dogMilestones = [

@@ -34,30 +34,51 @@ const Profile = () => {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-gray-100">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+      <motion.div
+        className="flex flex-col items-center justify-center min-h-screen px-4 bg-gray-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.h1
+          className="text-3xl md:text-4xl font-bold text-gray-800 mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           Personalized Pet Profiles
-        </h1>
-        <p className="text-center text-gray-600 mb-8 max-w-md">
+        </motion.h1>
+        <motion.p
+          className="text-center text-gray-600 mb-8 max-w-md"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           Create personalized profiles for each of your beloved pets on Pet-Care
           Hub. Share their name, breed, and age while connecting with a vibrant
           community.
-        </p>
+        </motion.p>
         <div className="flex flex-col items-center w-full max-w-xs">
           <motion.button
             onClick={handleGetStarted}
             className="bg-black text-white w-full py-3 rounded-md text-lg font-semibold mb-4 hover:bg-gray-800 hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
           >
             Get Started
           </motion.button>
-          <button
+          <motion.button
             onClick={handleBack}
             className="text-gray-500 hover:text-gray-700"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
           >
             Sign up later
-          </button>
+          </motion.button>
         </div>
-      </div>
+      </motion.div>
       <Footer />
     </>
   );

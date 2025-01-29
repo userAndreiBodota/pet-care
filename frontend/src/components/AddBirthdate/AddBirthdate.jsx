@@ -109,6 +109,7 @@ const AddBirthdate = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
+          <div className="border border-gray-300 bg-white shadow-md rounded-lg p-6">
             <h1 className="text-2xl font-bold text-gray-800 mb-10">
               Pet-Care <span className="text-green-800">Hub</span>
             </h1>
@@ -133,6 +134,7 @@ const AddBirthdate = () => {
                 <span className="text-lg font-semibold">Account</span>
               </Link>
             </nav>
+          </div>
           </motion.div>
           <motion.div
             initial={{ y: 20, opacity: 0 }}

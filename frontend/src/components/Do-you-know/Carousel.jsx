@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Cat from "../Do-you-know/image/cat.png";
+import { motion } from "framer-motion"; // Import motion for animations
 
 const Carousel = () => {
   const texts = [
@@ -32,36 +33,36 @@ const Carousel = () => {
   return (
     <div className="relative w-full max-w-4xl mx-auto bg-gray-100 rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between mb-12 shadow-lg mt-16">
       {/* Text Section */}
-      <div
-        className={`w-full sm:w-2/3 text-center sm:text-left mb-6 sm:mb-0 transition-all duration-500 ease-in-out transform ${
-          direction === "left" ? "translate-x-0" : "translate-x-full"
-        }`}
+      <motion.div
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 100 }}
+        transition={{ duration: 0.5 }}
+        className={`w-full sm:w-2/3 text-center sm:text-left mb-6 sm:mb-0`}
         style={{
           opacity: 1,
-          transition: "opacity 0.5s ease, transform 0.5s ease",
         }}
       >
         <h2 className="text-lg sm:text-xl font-bold text-gray-900">Do you know?</h2>
         <p className="text-sm sm:text-base mt-4 text-gray-700 leading-relaxed">
           {texts[currentIndex]}
         </p>
-      </div>
+      </motion.div>
 
       {/* Image Section */}
-      <div
-        className={`w-full sm:w-1/3 flex justify-center transition-transform duration-500 ease-in-out transform ${
-          direction === "left" ? "translate-x-0" : "translate-x-full"
-        }`}
-        style={{
-          transition: "transform 0.5s ease",
-        }}
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 0.5 }}
+        className={`w-full sm:w-1/3 flex justify-center`}
       >
         <img
           src={Cat}
           alt="Cat Illustration"
           className="object-cover h-40 sm:h-52 rounded-md"
         />
-      </div>
+      </motion.div>
 
       {/* Indicators */}
       <div className="absolute bottom-4 w-full flex justify-center space-x-2">

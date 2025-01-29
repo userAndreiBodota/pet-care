@@ -343,7 +343,7 @@ function PetDetails() {
               </span>
               {isEditing ? (
                 <input
-                  type="number"
+                  type="text" // Changed from "number" to "text"
                   name="age"
                   value={updatedPetData.age}
                   onChange={handleInputChange}

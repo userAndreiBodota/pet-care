@@ -208,6 +208,7 @@ export const useAuthStore = create((set) => ({
     }
   },
 
+  //UPDATED FOR ERROR HANDLING WHEN CREDENTIALS ARE INVALID
   login: async (email, password) => {
     set({ isLoading: true, error: null });
     try {
@@ -222,13 +223,20 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
       });
     } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "An error occurred while logging in. Please try again.";
+
       set({
-        error: error.response?.data?.message || "Error logging in",
+        error: errorMessage,
         isLoading: false,
       });
-      throw error;
     }
   },
+
+  // Adding clearError function
+  clearError: () => set({ error: null }),
 
   logout: async () => {
     set({ isLoading: true, error: null });
