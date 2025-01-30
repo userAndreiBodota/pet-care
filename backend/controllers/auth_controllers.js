@@ -205,6 +205,11 @@ export const resetPassword = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
   try {
+    // Allow CORS for this specific route
+    res.header("Access-Control-Allow-Origin", "*"); // or specify the frontend domain
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
     const user = await User.findById(req.userId).select("-password");
     if (!user) {
       return res
@@ -218,6 +223,7 @@ export const checkAuth = async (req, res) => {
     res.status(400).json({ success: false, message: error.message });
   }
 };
+
 
 export const registerPetStage1 = async (req, res) => {
   const { name, type, breed, owner, image } = req.body;

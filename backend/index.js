@@ -28,16 +28,16 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // CORS configuration
 app.use(
   cors({
-    origin: "*", // Allow all origins temporarily for debugging
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "*", // or specify the frontend domain
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow required HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Allow cookies, if needed
+    credentials: true, // if you're sending cookies
   })
 );
 
-
-// Explicit handling of OPTIONS requests for preflight checks
+// Explicitly handle OPTIONS requests for preflight CORS checks
 app.options("*", cors());
+
 
 // Middleware for parsing requests
 app.use(express.json({ limit: "10mb" }));
