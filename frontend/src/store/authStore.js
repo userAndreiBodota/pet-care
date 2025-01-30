@@ -321,52 +321,6 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-<<<<<<< HEAD
-  updateUser: async (userData) => {
-    try {
-      const response = await axios.put(`${API_URL}/update-profile`, userData);
-      // Update the user state and localStorage after a successful API call
-      const updatedUser = response.data.user; // Assuming the backend responds with the updated user object
-      set({ user: updatedUser });
-      localStorage.setItem("user", JSON.stringify(updatedUser)); // Save updated user to localStorage
-      return updatedUser;
-    } catch (error) {
-      console.error("Error updating user:", error);
-      set({ error: "Error updating user" });
-      throw error; // Re-throw the error if needed to handle it elsewhere
-    }
-  },
-
-  addMilestone: async (petId, base64Image) => {
-    set({ isLoading: true, error: null });
-
-    try {
-      const formData = new FormData();
-
-      formData.append("image", base64Image); // Append the image to FormData
-
-      const response = await axios.post(
-        `${API_URL}/pets/${petId}/milestones`, // Ensure this is the correct API endpoint
-        formData
-      );
-
-      // Assuming the server returns an image URL
-      const uploadedImageUrl = response.data.imageUrl;
-
-      set({ isLoading: false, message: response.data.message });
-
-      return uploadedImageUrl;
-    } catch (error) {
-      set({
-        error: error.response?.data?.message || "Error uploading image",
-        isLoading: false,
-      });
-      throw error;
-    }
-  },
-
-=======
->>>>>>> 5c1a0ff60c93cc6d4bb2f6446e3ce34f03d72953
   getMilestones: async (petId) => {
     set({ isLoading: true, error: null });
     try {

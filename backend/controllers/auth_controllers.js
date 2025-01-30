@@ -434,82 +434,6 @@ export const deletePet = async (req, res) => {
 };
 
 // Controller
-<<<<<<< HEAD
-// export const addMilestone = async (req, res) => {
-
-//   try {
-
-//     if (!imageUrl) {
-//       return res.status(400).json({ message: "Image is required" });
-//     }
-
-//     // Convert Base64 to Buffer and save it as a file
-//     const base64Data = imageUrl.replace(/^data:image\/\w+;base64,/, ""); // Remove the metadata part
-//     const buffer = Buffer.from(base64Data, "base64");
-//     const filename = `milestone-${Date.now()}.jpg`; // Generate a filename (you can also save it with a unique name)
-//     const filePath = path.join(__dirname, "uploads", filename); // Save to uploads folder (make sure it's writable)
-
-//     fs.writeFileSync(filePath, buffer); // Write the image to file system
-
-//     const milestone = {
-//       stage,
-//       description,
-//       imageUrl: `/uploads/${filename}`, // Save the file path in the database
-//     };
-
-//     const pet = await Pet.findById(petId);
-//     if (!pet) {
-//       return res.status(404).json({ message: "Pet not found" });
-//     }
-
-//   const { id } = req.params; // Pet ID from the URL
-//   const { stage, description } = req.body; // Stage and description from the request body
-//   const imageUrl = req.file ? req.file.path : null; // File path if uploaded
-
-//   try {
-//     const pet = await Pet.findById(id); // Find the pet by ID
-//     if (!pet) {
-//       return res.status(404).json({ message: "Pet not found" });
-//     }
-
-//     res.status(201).json({
-//       message: "Milestone added successfully",
-//       pet,
-//     });
-//   } catch (err) {
-//     console.error("Error adding milestone:", err);
-//     res.status(500).json({
-//       message: "Error adding milestone",
-//       error: err.message,
-//     });
-//   }
-// }
-// };
-
-export const updateUserProfile = async (req, res) => {
-  const { name, contactNo, dob, address } = req.body;
-  const userId = req.user.id; // Assuming user is authenticated and their ID is available in req.user
-
-  try {
-    const user = await User.findById(userId); // Find user by ID
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    // Update the user data
-    user.name = name || user.name;
-    user.contactNo = contactNo || user.contactNo;
-    user.dob = dob || user.dob;
-    user.address = address || user.address;
-
-    // Save the updated user
-    await user.save();
-
-    res
-      .status(200)
-      .json({ message: "User profile updated successfully", user });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error updating user profile" });
-=======
 export const addMilestone = async (req, res) => {
   const { id } = req.params; // Pet ID from the URL
   const { stage, description } = req.body; // Stage and description from the request body
@@ -561,6 +485,5 @@ export const updateUser = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to update user" });
->>>>>>> 5c1a0ff60c93cc6d4bb2f6446e3ce34f03d72953
   }
 };
