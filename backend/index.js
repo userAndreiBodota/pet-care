@@ -28,13 +28,18 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // CORS configuration
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://your-frontend-domain.com"]
-        : ["http://localhost:3000", "http://localhost:5173"],
-    credentials: true,
+    origin: [
+      "https://inquisitive-griffin-758efb.netlify.app", // Allow frontend domain
+      "https://pet-care-2.onrender.com", // Allow backend domain (if needed for cross communication)
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow these HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
+    credentials: true, // Allow cookies, if needed
   })
 );
+
+// Explicit handling of OPTIONS requests for preflight checks
+app.options("*", cors());
 
 // Middleware for parsing requests
 app.use(express.json({ limit: "10mb" }));
