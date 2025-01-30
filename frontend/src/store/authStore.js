@@ -3,8 +3,9 @@ import axios from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_BASEURL
-    : "/api/auth";
+    ? "https://inquisitive-griffin-758efb.netlify.app" 
+    : "https://pet-care-2.onrender.com"; 
+
 
 axios.defaults.withCredentials = true;
 
@@ -274,19 +275,19 @@ export const useAuthStore = create((set) => ({
     }
   },
 
-  checkAuth: async () => {
-    set({ isCheckingAuth: true, error: null });
-    try {
-      const response = await axios.get(`${API_URL}/check-auth`);
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isCheckingAuth: false,
-      });
-    } catch (error) {
-      set({ error: null, isCheckingAuth: false, isAuthenticated: false });
-    }
-  },
+  // checkAuth: async () => {
+  //   set({ isCheckingAuth: true, error: null });
+  //   try {
+  //     const response = await axios.get(`${API_URL}/check-auth`);
+  //     set({
+  //       user: response.data.user,
+  //       isAuthenticated: true,
+  //       isCheckingAuth: false,
+  //     });
+  //   } catch (error) {
+  //     set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+  //   }
+  // },
 
   forgotPassword: async (email) => {
     set({ isLoading: true, error: null });
