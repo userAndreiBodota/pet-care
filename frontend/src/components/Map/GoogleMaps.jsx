@@ -11,7 +11,7 @@ const GoogleMaps = () => {
   const [vetClinics, setVetClinics] = useState([]);
   const [directions, setDirections] = useState(null); // Store directions here
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyARLZY2L1jjZ8_MtPadHDfiSn98UPDenAI",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: ["places"],
   });
 
