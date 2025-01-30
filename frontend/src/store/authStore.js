@@ -3,7 +3,7 @@ import axios from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "development"
-    ? "https://profound-kangaroo-184b65.netlify.app/" 
+    ? "https://profound-kangaroo-184b65.netlify.app" 
     : "https://pet-care-2.onrender.com"; 
 
 
