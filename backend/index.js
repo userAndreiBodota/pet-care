@@ -28,16 +28,15 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // CORS configuration
 app.use(
   cors({
-    origin: "*", // or specify the frontend domain
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allow required HTTP methods
+    origin: "https://inquisitive-griffin-758efb.netlify.app", // Replace with your frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // if you're sending cookies
+    credentials: true, // Only if you're sending cookies
   })
 );
 
 // Explicitly handle OPTIONS requests for preflight CORS checks
 app.options("*", cors());
-
 
 // Middleware for parsing requests
 app.use(express.json({ limit: "10mb" }));
