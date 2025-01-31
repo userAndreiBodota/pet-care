@@ -3,8 +3,7 @@ import axios from "axios";
 
 const API_URL =
   process.env.NODE_ENV === "development"
-    ? "https://inquisitive-griffin-758efb.netlify.app" 
-    : "https://pet-care-2.onrender.com"; 
+  "https://inquisitive-griffin-758efb.netlify.app"; 
 
 
 axios.defaults.withCredentials = true;

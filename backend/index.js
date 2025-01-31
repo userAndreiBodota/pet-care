@@ -25,15 +25,16 @@ if (!fs.existsSync(uploadDir)) {
 // Middleware for serving static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// CORS configuration
+// CORS configuration (Ensure your frontend URL is allowed)
 app.use(
   cors({
-    origin: "https://inquisitive-griffin-758efb.netlify.app", // Replace with your frontend URL
+    origin: "https://inquisitive-griffin-758efb.netlify.app", // Your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Only if you're sending cookies
+    credentials: true, // Allow cookies or auth tokens
   })
 );
+
 
 // Explicitly handle OPTIONS requests for preflight CORS checks
 app.options("*", cors());
