@@ -27,12 +27,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // CORS configuration (Ensure your frontend URL is allowed)
 app.use(
-  cors({
-    origin: "https://inquisitive-griffin-758efb.netlify.app", // Your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Allow cookies or auth tokens
-  })
+  cors({})
 );
 
 
