@@ -1,16 +1,12 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API_URL =
-  process.env.NODE_ENV === "development"
-    ? "https://inquisitive-griffin-758efb.netlify.app" 
-    : "https://pet-care-2.onrender.com"; 
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 axios.defaults.withCredentials = true;
 
 export const useAuthStore = create((set) => ({
-  user: JSON.parse(localStorage.getItem("user")) || null, // Load user from localStorage
+  user: JSON.parse(localStorage.getItem("user")) || null,
   isAuthenticated: false,
   error: null,
   isLoading: false,
@@ -32,7 +28,6 @@ export const useAuthStore = create((set) => ({
     localStorage.removeItem("isAuthenticated");
     set({ user: null, isAuthenticated: false });
   },
-
   updateUser: async (userId, updatedData) => {
     set({ isLoading: true, error: null });
 
@@ -274,18 +269,32 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
-
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {
-      const response = await axios.get(`${API_URL}/check-auth`);
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isCheckingAuth: false,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/check-auth`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        set({
+          user: data.user,
+          isAuthenticated: true,
+          isCheckingAuth: false,
+        });
+      } else {
+        throw new Error("Authentication failed");
+      }
     } catch (error) {
       set({ error: null, isCheckingAuth: false, isAuthenticated: false });
+      // Clear localStorage if the authentication check fails
+      localStorage.removeItem("user");
+      localStorage.removeItem("isAuthenticated");
     }
   },
 

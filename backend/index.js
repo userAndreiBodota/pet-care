@@ -13,7 +13,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
-// Ensure "uploads" directory exists
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
@@ -22,31 +21,28 @@ if (!fs.existsSync(uploadDir)) {
   console.log("Uploads directory already exists");
 }
 
-// Middleware for serving static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // CORS configuration
 app.use(
   cors({
-    origin: "https://inquisitive-griffin-758efb.netlify.app", // Replace with your frontend URL
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Only if you're sending cookies
+    origin: [
+      "http://localhost:5173", // Local dev
+      "http://localhost:3000", // Local dev
+      "https://pet-care-elective-finals-8rh0n11fw.vercel.app", // Production URL
+    ],
+    credentials: true,
   })
 );
 
-// Explicitly handle OPTIONS requests for preflight CORS checks
 app.options("*", cors());
 
-// Middleware for parsing requests
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 
-// API routes
 app.use("/api/auth", authRoutes);
 
-// Serve static files in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
@@ -55,7 +51,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Error-handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
