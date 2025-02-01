@@ -23,7 +23,7 @@ if (!fs.existsSync(uploadDir)) {
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// CORS configuration
+// CORS configuration (Ensure your frontend URL is allowed)
 app.use(
   cors({
     origin: [

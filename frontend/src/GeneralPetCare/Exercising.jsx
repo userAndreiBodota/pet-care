@@ -21,7 +21,7 @@ const Exercising = () => {
 
   const handleBack = () => {
     navigate(-1);
-  };
+  };//hnjkhnjhjhjhj
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
